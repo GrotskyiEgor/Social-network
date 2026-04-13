@@ -8,53 +8,96 @@
         {% block links %}{% endblock %}
     </head>
     <header>
-        <div class="logo-image-div">
-            <img src="{% static 'images/WorldIT.svg' %}" alt="World IT logo" class="logo-image">
-        </div>
-        <div class='conteiner'>
-            <nav>
-                <div class = 'nav-link'>
-                    <div class="nav-image-div">
-                        <img src="{% static 'images/house.svg' %}" alt="house" class="nav-image">
+        <div class="header-container">
+            <div class="logo-image-div">
+                <img src="{% static 'images/WorldIT.svg' %}" alt="World IT logo" class="logo-image">
+            </div>
+            <div class='conteiner'>
+                <nav>
+                    <div class = 'nav-link'>
+                        <a href="{% url 'home' %}">
+                            <div class="nav-image-div">
+                                <img src="{% static 'images/house.svg' %}" alt="house" class="nav-image">
+                            </div>
+                            Головна
+                        </a>
                     </div>
-                    <a href="{% url 'home' %}">Головна</a>
-                </div>
-                <div class = 'nav-link'>
-                    <div class="nav-image-div">
-                        <img src="{% static 'images/house.svg' %}" alt="post" class="nav-image">
+                    <div class = 'nav-link'>
+                        <a href="{% url 'post' %}">
+                            <div class="nav-image-div">
+                                <img src="{% static 'images/post.svg' %}" alt="post" class="nav-image">
+                            </div>
+                            Мої публікації
+                        </a>
                     </div>
-                    <a href="{% url 'post' %}">Мої публікації</a>
-                </div>
-                <div class = 'nav-link'>
-                    <div class="nav-image-div">
-                        <img src="{% static 'images/house.svg' %}" alt="friends" class="nav-image">
-                    </div>   
-                    <a href="{% url 'friends' %}">Друзі</a>
-                </div>
-                <div class = 'nav-link'>
-                    <div class="nav-image-div">
-                        <img src="{% static 'images/house.svg' %}" alt="house" class="nav-image">
+                    <div class = 'nav-link'>
+                        
+                        <a href="{% url 'friends' %}">
+                            <div class="nav-image-div">
+                                <img src="{% static 'images/friends.svg' %}" alt="friends" class="nav-image">
+                            </div>
+                            Друзі
+                        </a>
                     </div>
-                    <a href="#">Чати</a>
-                </div>
-                <div class = 'nav-link'>
-                    <div class="nav-image-div">
-                        <img src="{% static 'images/house.svg' %}" alt="settings" class="nav-image">
-                    </div>   
-                    <a href="{% url 'settings' %}">Налаштування</a>
-                </div>
-            </nav>
-            <button class='logout'>
-                <div class="logout-image-div">
-                    <img src="{% static 'images/vector.svg' %}" alt="vector" class="logout-image">
-                </div>  
-                Вихід
-            </button>
+                    <div class = 'nav-link'>
+                        
+                        <a href="#">
+                            <div class="nav-image-div">
+                            <img src="{% static 'images/chat.svg' %}" alt="house" class="nav-image">
+                        </div>
+                            Чати   
+                        </a>
+                    </div>
+                    <div class = 'nav-link'>        
+                        <a href="{% url 'settings' %}">
+                            <div class="nav-image-div">
+                                <img src="{% static 'images/settings.svg' %}" alt="settings" class="nav-image">
+                            </div>
+                            Налаштування
+                        </a>
+                    </div>
+                </nav>
+                <button class='logout'>
+                    <div class="logout-image-div">
+                        <img src="{% static 'images/vector.svg' %}" alt="vector" class="logout-image">
+                    </div>  
+                    Вихід
+                </button>
+            </div>
         </div>
     </header>
     <body>
-        {% block content %}
-            
-        {% endblock %}
+        <div class="content-container">
+            <div class="profile-container content-border-container">
+                <div class="profile-user-container">
+                    <div class="profile-user-image-container">
+                        <img class="profile-user-image" src="{% static 'images/indicator.svg' %}" alt="">
+                    </div>
+                    <div class="profile-username">
+                        <p class="username-text">Lina Li</p>
+                        <p class="email-text">@thelili</p>
+                    </div>      
+                </div>
+                <div class="profile-statistics-container">
+                    <div class="profile-static">
+                        <p class="static-text">566</p>
+                        <p class="name-static-text">Дописи</p>
+                    </div>
+                    <div class="profile-static profile-static-border">
+                        <p class="static-text">12.1K</p>
+                        <p class="name-static-text">Читачі</p>
+                    </div>
+                    <div class="profile-static">
+                        <p class="static-text">222</p>
+                        <p class="name-static-text">Друзі</p>
+                    </div>
+                </div>
+            </div>
+            <div class="scrolls-container content-border-container">  
+                {% block content %}
+                
+                {% endblock %}
+            </div>  
+        </div>
     </body>
 </html>
