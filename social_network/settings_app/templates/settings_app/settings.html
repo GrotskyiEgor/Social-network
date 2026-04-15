@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Settings
@@ -7,6 +8,15 @@
 {% block links %}
 {% endblock %}
 
-{% block content %}
-    <h1>Settings app</h1>
+{% block info-content %}
+    <div class="info-navigations">
+        <p class="info-navigations-active-test">Особиста інформація</p>
+        <p class="info-navigations-text">Альбоми</p>
+    </div>
+{% endblock %}
+
+{% block main-content %}
+    <div class="scrolls-container content-border-container"> 
+        <h1>Settings app</h1>
+    </div>
 {% endblock %}

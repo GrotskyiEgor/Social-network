@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Home
@@ -7,6 +8,142 @@
 {% block links %}
 {% endblock %}
 
-{% block content %}
-    <h1>Home app</h1>
+{% block info-content %}
+    <div class="profile-container content-border-container">
+        <div class="profile-user-container">
+            <div class="profile-user-image-container">
+                <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+            </div>
+            <div class="profile-username">
+                <p class="username-text">Lina Li</p>
+                <p class="email-text">@thelili</p>
+            </div>      
+        </div>
+        <div class="profile-statistics-container">
+            <div class="profile-static">
+                <p class="static-text">566</p>
+                <p class="name-static-text">Дописи</p>
+            </div>
+            <div class="profile-static profile-static-border">
+                <p class="static-text">12.1K</p>
+                <p class="name-static-text">Читачі</p>
+            </div>
+            <div class="profile-static">
+                <p class="static-text">222</p>
+                <p class="name-static-text">Друзі</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="requests-container content-border-container">
+        <div class="container-header">
+            <div class="container-header-name-container">
+                <div class="container-image-container">
+                    <img class="container-image" src="{% static 'images/icons/people.svg' %}" alt="">
+                </div>
+                <p class="container-header-name">Запити</p>
+            </div>
+            <button class="container-header-button">Дивитись всі</button>
+        </div>
+
+        <div class="followers-conotainer">
+            <div class="followers-user-block">
+                <div class="followers-conotainer-image-container">
+                    <img class="followers-image" src="{% static 'images/users/avatar1.svg' %}" alt="">
+                </div>
+                <div class="user-block-info">
+                    <p class="user-block-username">Yehor Aung</p>
+                    <p class="user-block-email">4.3к підписників</p>
+                </div>
+            </div>
+
+            <div class="followers-user-block">
+                <div class="followers-conotainer-image-container">
+                    <img class="followers-image" src="{% static 'images/users/avatar2.svg' %}" alt="">
+                </div>
+                <div class="user-block-info">
+                    <p class="user-block-username">Ann Ann</p>
+                    <p class="user-block-email">1.6к підписників</p>
+                </div>
+            </div>
+
+            <div class="followers-user-block">
+                <div class="followers-conotainer-image-container">
+                    <img class="followers-image" src="{% static 'images/users/avatar3.svg' %}" alt="">
+                </div>
+                <div class="user-block-info">
+                    <p class="user-block-username">Yeugen Jenua</p>
+                    <p class="user-block-email">10.3к підписників</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-container content-border-container">
+        <div class="container-header">
+            <div class="container-header-name-container">
+                <div class="container-image-container">
+                    <img class="container-image" src="{% static 'images/icons/message.svg' %}" alt="">
+                </div>
+                <p class="container-header-name">Повідомлення</p>
+            </div>
+            <button class="container-header-button">Дивитись всі</button>
+        </div>
+
+        <div class="message-conotainer">
+            <div class="message-user-block">
+                <div class="message-user-block">
+                    <div class="message-conotainer-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
+                    </div>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Mona Lisa</p>
+                            <p class="message-block-time">09:41</p>
+                        </div>
+                        <p class="message-block-email">Привіт! Як справи ?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-user-block">
+                <div class="message-user-block">
+                    <div class="message-conotainer-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
+                    </div>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Ann Ti</p>
+                            <p class="message-block-time">25.04.2025</p>
+                        </div>
+                        <p class="message-block-email">Привіт!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-user-block">
+                <div class="message-user-block">
+                    <div class="message-conotainer-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar6.svg' %}" alt="">
+                    </div>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Ness Ty</p>
+                            <p class="message-block-time">25.04.2025</p>
+                        </div>
+                        <p class="message-block-email">Привіт!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main-content %}
+    <div class="scrolls-container content-border-container">   
+        <h1>Home app</h1>
+    </div>
 {% endblock %}
