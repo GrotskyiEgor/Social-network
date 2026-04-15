@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block meta %}{% endblock %}
         <title>{% block title %}{% endblock  %}</title>
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         {% block links %}{% endblock %}
@@ -15,55 +16,36 @@
                 </div>
                 <div class='conteiner'>
                     <nav>
-                        <div class = 'nav-link'>
-                            <a href="{% url 'home' %}">
-                                <div class="nav-image-div">
-                                    <img src="{% static 'images/icons/house.svg' %}" alt="house" class="nav-image">
-                                </div>
-                                Головна
-                            </a>
-                        </div>
-                        <div class = 'nav-link'>
-                            <a href="{% url 'post' %}">
-                                <div class="nav-image-div">
-                                    <img src="{% static 'images/icons/post.svg' %}" alt="post" class="nav-image">
-                                </div>
-                                Мої публікації
-                            </a>
-                        </div>
-                        <div class = 'nav-link'>
-                            
-                            <a href="{% url 'friends' %}">
-                                <div class="nav-image-div">
-                                    <img src="{% static 'images/icons/friends.svg' %}" alt="friends" class="nav-image">
-                                </div>
-                                Друзі
-                            </a>
-                        </div>
-                        <div class = 'nav-link'>
-                            
-                            <a href="#">
-                                <div class="nav-image-div">
-                                <img src="{% static 'images/icons/chat.svg' %}" alt="house" class="nav-image">
-                            </div>
-                                Чати   
-                            </a>
-                        </div>
-                        <div class = 'nav-link'>        
-                            <a href="{% url 'settings' %}">
-                                <div class="nav-image-div">
-                                    <img src="{% static 'images/icons/settings.svg' %}" alt="settings" class="nav-image">
-                                </div>
-                                Налаштування
-                            </a>
-                        </div>
+                        <a href="{% url 'home' %}" class="nav-link" id="house">
+                            <img src="{% static 'images/icons/house.svg' %}" alt="house" class="nav-image-div">
+                            <span class="nav-span">Головна</span>
+                        </a>
+
+                        <a href="{% url 'post' %}" class="nav-link" id="post">
+                            <img src="{% static 'images/icons/post.svg' %}" alt="post" class="nav-image-div">
+                            <span class="nav-span">Мої публікації</span>
+                        </a>
+
+                        <a href="{% url 'friends' %}" class="nav-link" id="friends">
+                            <img src="{% static 'images/icons/friends.svg' %}" alt="friends" class="nav-image-div">
+                            <span class="nav-span">Друзі</span>
+                        </a>
+
+                        <a href="" class="nav-link" id="house">
+                            <img src="{% static 'images/icons/chat.svg' %}" alt="house" class="nav-image-div">
+                            <span class="nav-span">Чати</span>
+                        </a>
+
+                        <a href="{% url 'settings' %}" class="nav-link" id="settings">
+                            <img src="{% static 'images/icons/settings.svg' %}" alt="settings" class="nav-image-div">
+                            <span class="nav-span">Налаштування</span>
+                        </a>
                     </nav>
-                    <button class='logout'>
-                        <div class="logout-image-div">
-                            <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
-                        </div>  
-                        Вихід
-                    </button>
+
+                    <a href="#" class='logout'>
+                        <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
+                        <span class="logout-span">Вихід</span>
+                    </a>
                 </div>
             </div>
         </header>
@@ -80,6 +62,9 @@
                 {% endblock %}
             </div>  
         </main>
+
+        <script src="{% static 'js/open_page.js' %}"></script>
+        {% block script %}{% endblock %}
     </body>
 </html>
 
