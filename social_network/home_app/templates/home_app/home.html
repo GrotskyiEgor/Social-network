@@ -46,9 +46,9 @@
             <button class="container-header-button">Дивитись всі</button>
         </div>
 
-        <div class="followers-conotainer">
+        <div class="followers-container">
             <div class="followers-user-block">
-                <div class="followers-conotainer-image-container">
+                <div class="followers-container-image-container">
                     <img class="followers-image" src="{% static 'images/users/avatar1.svg' %}" alt="">
                 </div>
                 <div class="user-block-info">
@@ -58,7 +58,7 @@
             </div>
 
             <div class="followers-user-block">
-                <div class="followers-conotainer-image-container">
+                <div class="followers-container-image-container">
                     <img class="followers-image" src="{% static 'images/users/avatar2.svg' %}" alt="">
                 </div>
                 <div class="user-block-info">
@@ -68,7 +68,7 @@
             </div>
 
             <div class="followers-user-block">
-                <div class="followers-conotainer-image-container">
+                <div class="followers-container-image-container">
                     <img class="followers-image" src="{% static 'images/users/avatar3.svg' %}" alt="">
                 </div>
                 <div class="user-block-info">
@@ -90,10 +90,10 @@
             <button class="container-header-button">Дивитись всі</button>
         </div>
 
-        <div class="message-conotainer">
+        <div class="message-list">
             <div class="message-user-block">
                 <div class="message-user-block">
-                    <div class="message-conotainer-image-container">
+                    <div class="message-container-image-container">
                         <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
                     </div>
                     
@@ -109,7 +109,7 @@
 
             <div class="message-user-block">
                 <div class="message-user-block">
-                    <div class="message-conotainer-image-container">
+                    <div class="message-container-image-container">
                         <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
                     </div>
                     
@@ -125,7 +125,7 @@
 
             <div class="message-user-block">
                 <div class="message-user-block">
-                    <div class="message-conotainer-image-container">
+                    <div class="message-container-image-container">
                         <img class="message-image" src="{% static 'images/users/avatar6.svg' %}" alt="">
                     </div>
                     
@@ -143,7 +143,9 @@
 {% endblock %}
 
 {% block main-content %}
-    <div class="scrolls-container content-border-container">   
-        <h1>Home app</h1>
-    </div>
+    {% for i in "......................." %}    
+        <div class="scrolls-container content-border-container">   
+            <h1>Home app</h1>
+        </div>
+    {% endfor %}
 {% endblock %}

@@ -11,8 +11,8 @@ html {
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 56.25rem;
     background-color: #E9E5EE;
     display: flex;
     flex-direction: column;
@@ -21,8 +21,18 @@ body {
     font-family: 'GT Walsheim Pro', sans-serif;
 }
 
-.info-container, .main-container {
+.info-container {
     height: fit-content;
+}
+
+.main-container {
+    width: 57.9rem;
+    height: 49.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 
@@ -45,7 +55,7 @@ header {
     align-items: center;
 }
 
-.conteiner {
+.container {
     gap: 1.5rem;
     display: flex;
     flex-direction: row;
@@ -92,7 +102,7 @@ nav .nav-link:hover {
     color: #070A1C;
 }
 
-.followers-image, .logo-image, .nav-image, .logout-image, .profile-user-image, .container-image {
+.followers-image, .logo-image, .logout-image, .profile-user-image, .container-image {
     height: 100%;
 }
 
@@ -121,10 +131,9 @@ nav .nav-link:hover {
 
 /*  */
 main {
-    background-color: #E9E5EE;
     margin-top: 6.5rem;
     width: 80rem;
-    height: 100%;
+    height: calc(100vh - 6.5rem);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -221,10 +230,9 @@ main {
 }
 
 .scrolls-container {
-    width: 57.9rem;
+    width: 100%;
     height: fit-content;
-    justify-content: center;
-    align-items: center;
+    padding: 1rem 1rem;
 }
 
 .info-navigations {
@@ -299,7 +307,7 @@ main {
     border: none;
 }
 
-.followers-conotainer, .message-conotainer {
+.followers-container, .message-list {
     width: 20rem;
     height: fit-content;
     display: flex;
@@ -317,7 +325,7 @@ main {
     gap: 0.5rem;
 }
 
-.message-image, .followers-conotainer-image-container, .message-conotainer-image-container {
+.message-image, .followers-container-image-container, .message-container-image-container {
     width: 2.875rem;
     height: 2.875rem;
 }
