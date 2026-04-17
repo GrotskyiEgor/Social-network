@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'home_app',
     'friends_app',
     'post_app',
-    'settings_app'
+    'settings_app',
+    'user_app'
 ]
 
 MIDDLEWARE = [
@@ -104,6 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'user_app.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

@@ -106,7 +106,7 @@ nav .nav-link:hover {
     height: 100%;
 }
 
-.logout {
+.logout, .sing-in-up {
     padding: 0.63rem 0.93rem;
     width: 6rem;
     height: 2.5rem;
@@ -118,13 +118,18 @@ nav .nav-link:hover {
     align-items: center;
 }
 
-.logout-span {
+.logout-span, .sing-in-up-span {
     font-size: 0.87rem;
     font-weight: 500;
     color: #543C52;
 }
 
 .logout:hover {
+    cursor: pointer;
+    background-color: #E9E5EE;
+}
+
+.sing-in-up {
     cursor: pointer;
     background-color: #E9E5EE;
 }
@@ -363,3 +368,7 @@ main {
     font-size: 0.875rem;
     color: #81818D;
 }
+
+/* .modal-bg {
+    display: none;
+} */

@@ -1,0 +1,15 @@
+.container, .info-container, .main-container {
+    display: none;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

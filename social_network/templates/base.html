@@ -11,9 +11,9 @@
     <body>
         <header>
             <div class="header-container">
-                <div class="logo-image-div">
+                <a href="{% url 'home' %}" class="logo-image-div">
                     <img src="{% static 'images/icons/WorldIT.svg' %}" alt="World IT logo" class="logo-image">
-                </div>
+                </a>
                 <div class='container'>
                     <nav>
                         <a href="{% url 'home' %}" class="nav-link" id="house">
@@ -42,10 +42,17 @@
                         </a>
                     </nav>
 
-                    <a href="#" class='logout'>
-                        <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
-                        <span class="logout-span">Вихід</span>
-                    </a>
+                    {% if current_user.is_aunthenticated %}
+                        <a href="#" class='logout'>
+                            <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
+                            <span class="logout-span">Вихід</span>
+                        </a>             
+                    {% else %}      
+                        <a href="{% url 'registration' %}" class='sing-in-up'>
+                            <span class="sing-in-up-span">Sing in/up</span>
+                        </a>
+                    {% endif %}
+    
                 </div>
             </div>
         </header>
@@ -61,8 +68,26 @@
                 
                 {% endblock %}
             </div>  
+            {% block content %}
+            
+            {% endblock %}
         </main>
 
+        
+        <div class="modal-bg">
+            <div class="modal-registration-view">
+                <p>Додай деталі про себе</p>
+                <p>Псевдонім автора</p>
+                <input type="text" type = ''>
+                <p>Ім'я користувача</p>
+                <input type="text" type = ''>
+            </div>
+
+            {% block modals %}
+            
+            {% endblock %}
+        </div>
+        
         <script src="{% static 'js/open_page.js' %}"></script>
         {% block script %}{% endblock %}
     </body>
