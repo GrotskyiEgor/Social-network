@@ -1,30 +1,4 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block meta %}{% endblock %}
-
-{% block title %}WorldIT Авторизація{% endblock %}
-
-{% block links %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
-
-{% block content %}
-    <div>
-        <div>
-            <a href="{% url 'registration' %}">Реєстрація</a>
-            <a href="{% url 'login' %}">Авторизація</a>
-        </div>
-
-        <form method="post">
-            {% csrf_token %}
-            {{ form.email }}
-            {{ form.password }}
-            <button type="submit">Авторизація</button>
-        </form>
-    </div>
-{% endblock %}
-
-{% block modals %}{% endblock %}
-
-{% block script %}{% endblock %}
+<form action="" method="POST" id="login_form" class="form">
+    {% csrf_token %}
+    {{ login_form.as_p }}
+</form>

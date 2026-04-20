@@ -3,7 +3,9 @@
 
 {% block title %}WorldIT Головна{% endblock %}
 
-{% block links %}{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+{% endblock %}
 
 {% block info-content %}
     <div class="profile-container content-border-container">
@@ -104,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="message-user-block">
+            <div class="message-user-block">  
                 <div class="message-user-block">
                     <div class="message-container-image-container">
                         <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
@@ -147,6 +149,27 @@
     {% endfor %}
 {% endblock %}
 
-{% block modals %}{% endblock %}
+{% block modals %}
+    <div class="modal-bg">
+        <div class="modal-registration-view">
+            <form action="">
+                {% csrf_token %}
+                <p class="detail">Додай деталі про себе</p>
+                <div class="author-username">
+                    <p class="username-text">Псевдонім автора</p>
+                    {{ modal_form.username }}
+                </div>
+                <div class="name">
+                    <p class="name-text">Ім'я користувача</p>
+                    {{ modal_form.name }}
+                    <p class="small-text">Або оберіть:</p><p class="generete-name">запропоновані варіанті згідно Ім'я та Прізвища</p>
+                </div>
+                <div class="button-frame">
+                    <button type="submit" class = 'button-continue'>Продовжити</button>
+                </div>
+            </form>
+        </div>  
+    </div>
+{% endblock %}
 
 {% block script %}{% endblock %}

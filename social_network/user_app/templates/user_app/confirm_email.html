@@ -1,0 +1,4 @@
+<form action="" method="POST" id="confirm_email_form" class="form">
+    {% csrf_token %}
+    {{ confirm_email_form.as_p }}
+</form>

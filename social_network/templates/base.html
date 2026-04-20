@@ -1,5 +1,5 @@
-{% load static %}
 <html lang="en">
+    {% load static %}
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +48,7 @@
                             <span class="logout-span">Вихід</span>
                         </a>             
                     {% else %}      
-                        <a href="{% url 'registration' %}" class='sing-in-up'>
+                        <a href="{% url 'auth' %}" class='sing-in-up'>
                             <span class="sing-in-up-span">Sing in/up</span>
                         </a>
                     {% endif %}
@@ -73,21 +73,11 @@
             {% endblock %}
         </main>
 
+        {% block modals %}
         
-        <div class="modal-bg">
-            <div class="modal-registration-view">
-                <p>Додай деталі про себе</p>
-                <p>Псевдонім автора</p>
-                <input type="text" type = ''>
-                <p>Ім'я користувача</p>
-                <input type="text" type = ''>
-            </div>
-
-            {% block modals %}
-            
-            {% endblock %}
-        </div>
+        {% endblock %}
         
+        <script src="{% static 'js/jquery-4.0.0.min.js' %}"></script>
         <script src="{% static 'js/open_page.js' %}"></script>
         {% block script %}{% endblock %}
     </body>

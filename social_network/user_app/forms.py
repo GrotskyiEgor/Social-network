@@ -3,6 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import User
 
+class ConfirmEmail(forms.Form):
+    confirm_code = forms.CharField(max_length=6, widget=forms.EmailInput)
+
 class RegistrationForm(UserCreationForm):
     class Meta:
         model = User

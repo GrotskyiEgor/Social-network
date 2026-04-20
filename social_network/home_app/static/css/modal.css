@@ -1,0 +1,82 @@
+/* .modal-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+} */
+
+.modal-registration-view { 
+    background-color: #FFFFFF;
+    border-radius: 1.4rem;  
+} 
+
+.detail { 
+    padding: 2rem;
+    font-weight: 500; 
+    font-size: 2rem; 
+}
+
+.author-username {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.username-text { 
+    font-weight: 400; 
+    font-size: 1rem; 
+} 
+.username-input {
+    border: 2px solid;
+    border-radius: 1rem;
+}
+
+.name {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.name-text { 
+     font-weight: 400; 
+     font-size: 1rem; 
+}
+.name-input {
+    border: 2px solid;
+    border-radius: 1rem;
+}
+
+.button-frame {
+    padding: 1rem;
+    display: flex;
+    justify-content: end;
+    align-items: end
+    
+    
+}
+.button-continue {
+    background-color: darkmagenta;
+    border-radius: 1rem;
+    color: #FFFFFF;
+
+}
+
+.small-text {
+    font-weight: 300; 
+    font-size: 0.5rem; 
+}
+
+.generete-name {
+    font-weight: 300; 
+    font-size: 0.5rem; 
+    cursor: pointer; 
+    color: greenyellow;
+} 
