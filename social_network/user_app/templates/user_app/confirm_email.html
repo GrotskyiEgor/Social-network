@@ -1,4 +1,8 @@
-<form action="" method="POST" id="confirm_email_form" class="form">
-    {% csrf_token %}
-    {{ confirm_email_form.as_p }}
-</form>
+<p class="under-auth-navigation-text">Ми надіслали 6-значний код на вашу пошту (you@example.com). Введіть його нижче, щоб підтвердити акаунт</p>
+
+<div class="auth-form"> 
+    <form action="" method="POST" id="confirm_email_form" class="form">
+        {% csrf_token %}
+        {{ confirm_email_form.as_p }}
+    </form>
+</div>

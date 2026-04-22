@@ -19,13 +19,10 @@
                 <p id="show_registration" class="auth-text-active">Реєстрація</p>
                 <p id="show_login" class="auth-text">Авторизація</p>
             </div>
-            
-            <div class="auth-form">
-                {% include 'user_app/registration.html' %}
-                {% include 'user_app/login.html' %}
-                {% include 'user_app/confirm_email.html' %}
-            </div>
-
+        
+            {% include 'user_app/registration.html' %}
+            {% include 'user_app/login.html' %}
+            {% include 'user_app/confirm_email.html' %}
         </div>
         
         <div class="auth-image-div">

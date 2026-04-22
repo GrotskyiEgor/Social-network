@@ -1,4 +1,4 @@
-const formsArray = document.querySelectorAll('.form');
+const authForm = document.querySelectorAll('.auth-form');
 const loginButton = document.getElementById('show_login');
 const registrationButton = document.getElementById('show_registration');
 
@@ -19,15 +19,17 @@ registrationButton.addEventListener('click', function(){
     showForm('registration_form');
 });
 
-formsArray.forEach(form => {
-    form.addEventListener('submit', function(event){
+authForm.forEach(auth => {
+    const form = $(auth).find('.form');
+
+    form.on('submit', function(event){
         event.preventDefault();
 
         $.ajax({
             url: $(form).attr('action'),
             method: 'POST',
             data: $(form).serialize(),
-            sussces: function(response){
+            success: function(response){
                 console.log('200')
             },
             error: function(response){
@@ -39,12 +41,19 @@ formsArray.forEach(form => {
 
 function showForm(id_form){
     console.log('showFrom');
-    formsArray.forEach(form =>{
-        if (form.id !== id_form) {
-            form.style.display = 'none';
+
+    authForm.forEach(auth =>{
+        const form = $(auth).find('.form');
+        const authText = $(auth).prev('.under-auth-navigation-text');
+        console.log(authText)
+        console.log(form.attr('id') !== id_form, form.attr('id'), id_form)
+        if (form.attr('id') !== id_form) {
+            auth.style.display = 'none';
+            authText.css('display', 'none');
         }
         else {
-            form.style.display = 'block';
+            auth.style.display = 'block';
+            authText.css('display', 'block');
         };
     });
 };

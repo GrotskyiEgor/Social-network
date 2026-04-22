@@ -1,5 +1,20 @@
-<form action="{% url 'registraction' %}" method="POST" id="registration_form" class="form">
-    {% csrf_token %}
-    {{ registration_form.as_p }}
-    <button type="submit">Зареєструватися</button>
-</form>
+<p class="under-auth-navigation-text">Приєднуйся до World IT</p>
+
+<div class="auth-form">
+    <form action="{% url 'registration' %}" method="POST" id="registration_form" class="form">
+        {% csrf_token %}
+        <p>
+            <p>Email: </p>
+            {{ registration_form.email }}
+        </p>
+        <p>
+            <p>Password: </p>
+            {{ registration_form.password1 }}
+        </p>
+        <p>
+            <p>Password confirmation: </p>
+            {{ registration_form.password2 }}
+        </p>
+        <button type="submit">Зареєструватися</button>
+    </form>
+</div>

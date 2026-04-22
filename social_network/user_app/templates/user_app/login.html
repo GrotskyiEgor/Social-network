@@ -1,18 +1,20 @@
 <p class="under-auth-navigation-text">Раді тебе знову бачити!</p>
 
-<form action="{% url 'login' %}" method="POST" id="login_form" class="form">
-    {% csrf_token %}
-    <div class="modal-registration-inputs">
-        <div class="modal-registration-inputs">
-            <p class="registration-text">Псевдонім автора</p>
-            {{ login_form.email }}
+<div class="auth-form">
+    <form action="{% url 'login' %}" method="POST" id="login_form" class="form">
+        {% csrf_token %}
+        <div class="modal-registration-inputs-div">
+            <div class="modal-registration-inputs">
+                <p class="registration-text">Псевдонім автора</p>
+                {{ login_form.email }}
+            </div>
+            <div class="modal-registration-inputs">
+                <p class="registration-text">Ім'я користувача</p>
+                {{ login_form.password }}
+            </div>
         </div>
-        <div class="modal-registration-inputs">
-            <p class="registration-text">Ім'я користувача</p>
-            {{ login_form.password }}
-        </div>
-    </div>
+    </form>
     <div class="registration-btn-div">
-        <button type="submit" class='registration-btn'>Увійти</button>
+        <button type='submit' form='login_form' class='registration-btn'>Увійти</button>
     </div>
-</form>
+</div>
