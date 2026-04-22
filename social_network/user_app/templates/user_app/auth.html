@@ -7,9 +7,7 @@
 
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
-    <link rel="stylesheet" href="{% static 'css/confirm_email.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -34,5 +32,6 @@
 {% block modals %}{% endblock %}
 
 {% block script %}
+    <script src="{% static 'js/input_code.js' %}"></script>
     <script src="{% static 'js/auth_manager.js' %}"></script>
 {% endblock %}

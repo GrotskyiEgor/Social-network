@@ -45,7 +45,6 @@ class RegistrationView(CreateView):
 
 class LoginPageView(LoginView):
     form_class = LoginForm
-    # template_name = 'user_app/login.html'
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')

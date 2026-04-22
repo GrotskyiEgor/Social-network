@@ -28,17 +28,18 @@ main {
     height: 34.5rem;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .auth-form-container {
     width: 30.5rem;
-    height: 34.5rem;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     background-color: #FFFFFF;
     border-radius: 1.4rem;
     padding: 2.75rem;
-    /* gap: 2.25rem; */ 
+    z-index: 100;
 }
 
 .auth-navigation {
@@ -46,6 +47,7 @@ main {
     height: 3rem;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 1.5rem;
 }
 
@@ -58,10 +60,17 @@ main {
     cursor: pointer;
 }
 
+.confirm-text-active {
+    color: #070A1C;
+    font-size: 2.125rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 .auth-text {
     cursor: pointer;
     color: #81818D;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 2.125rem;
     
 }
@@ -69,4 +78,16 @@ main {
 .auth-image-div {
     width: 30.5rem;
     height: 34.5rem;
+
+    position: relative;
+    z-index: 0;
+}
+
+.auth-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: auto;
+    transform: translateX(9rem);
 }

@@ -3,18 +3,22 @@
 <div class="auth-form">
     <form action="{% url 'registration' %}" method="POST" id="registration_form" class="form">
         {% csrf_token %}
-        <p>
-            <p>Email: </p>
-            {{ registration_form.email }}
-        </p>
-        <p>
-            <p>Password: </p>
-            {{ registration_form.password1 }}
-        </p>
-        <p>
-            <p>Password confirmation: </p>
-            {{ registration_form.password2 }}
-        </p>
-        <button type="submit">Зареєструватися</button>
+        <div class="modal-registration-inputs-div">
+            <div class="modal-registration-inputs">
+                <p class="registration-text">Електронна пошта</p>
+                {{ registration_form.email }}
+            </div>
+            <div class="modal-registration-inputs">
+                <p class="registration-text">Пароль</p>
+                {{ registration_form.password1 }}
+            </div>
+            <div class="modal-registration-inputs">
+                <p class="registration-text">Підтверди пароль</p>
+                {{ registration_form.password2 }}
+            </div>
+        </div>
     </form>
+    <div class="registration-btn-div">
+        <button type='submit' form='registration_form' class='registration-btn'>Увійти</button>
+    </div>
 </div>
