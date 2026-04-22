@@ -1,18 +1,41 @@
-const formsArray = document.querySelectorAll('.form')
-const loginButtomn = document.getElementById('show_login')
-const registrationButtomn = document.getElementById('show_registration')
+const formsArray = document.querySelectorAll('.form');
+const loginButton = document.getElementById('show_login');
+const registrationButton = document.getElementById('show_registration');
 
-showForm('registration_form')
+console.log(jQuery.fn.jquery);
+showForm('registration_form');
 
-loginButtomn.addEventListener('click', function(){
+loginButton.addEventListener('click', function(){
     console.log('Вы нажали на параграф! login_form');
-    showForm('login_form')
-})
+    registrationButton.className = 'auth-text';
+    this.className = 'auth-text-active';
+    showForm('login_form');
+});
 
-registrationButtomn.addEventListener('click', function(){
+registrationButton.addEventListener('click', function(){
     console.log('Вы нажали на параграф! registration_form');
-    showForm('registration_form')
-})
+    loginButton.className = 'auth-text';
+    this.className = 'auth-text-active';
+    showForm('registration_form');
+});
+
+formsArray.forEach(form => {
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        $.ajax({
+            url: $(form).attr('action'),
+            method: 'POST',
+            data: $(form).serialize(),
+            sussces: function(response){
+                console.log('200')
+            },
+            error: function(response){
+                console.log('400', response)
+            }
+        })
+    });
+});
 
 function showForm(id_form){
     console.log('showFrom');
@@ -22,6 +45,6 @@ function showForm(id_form){
         }
         else {
             form.style.display = 'block';
-        }
-    }
-)}
+        };
+    });
+};

@@ -5,7 +5,7 @@ class ModalForm(forms.Form):
         max_length=20, 
         widget=forms.TextInput(
             attrs={
-                'class': 'username-input',
+                'class': 'registration-input',
                 'placeholder': 'Введіть Псевдонім автора'
             }
         )
@@ -14,7 +14,7 @@ class ModalForm(forms.Form):
         max_length=30,
         widget=forms.TextInput(
             attrs={
-                'class': 'name-input',
+                'class': 'registration-input',
                 'placeholder': '@'
             }
         )

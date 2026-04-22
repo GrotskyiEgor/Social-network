@@ -54,10 +54,13 @@ main {
     color: #070A1C;
     font-weight: 700;
     font-size: 2.125rem;
-    
+    border-bottom: 0.125rem solid #070A1C;
+    padding-bottom: 0.2rem;
+    cursor: pointer;
 }
 
 .auth-text {
+    cursor: pointer;
     color: #81818D;
     font-weight: 700;
     font-size: 2.125rem;

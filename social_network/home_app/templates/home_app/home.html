@@ -152,20 +152,27 @@
 {% block modals %}
     <div class="modal-bg">
         <div class="modal-registration-view">
-            <form action="">
+            <form action="" method="POST" class="modal-registration-view-form">
                 {% csrf_token %}
-                <p class="detail">Додай деталі про себе</p>
-                <div class="author-username">
-                    <p class="username-text">Псевдонім автора</p>
-                    {{ modal_form.username }}
+                <div class="modal-registration-text-div">
+                    <p class="modal-registration-text">Додай деталі про себе</p>
                 </div>
-                <div class="name">
-                    <p class="name-text">Ім'я користувача</p>
-                    {{ modal_form.name }}
-                    <p class="small-text">Або оберіть:</p><p class="generete-name">запропоновані варіанті згідно Ім'я та Прізвища</p>
+                <div class="modal-registration-inputs">
+                    <div class="modal-registration-inputs-div">
+                        <p class="registration-text">Псевдонім автора</p>
+                        {{ modal_form.username }}
+                    </div>
+                    <div class="modal-registration-inputs-div">
+                        <p class="registration-text">Ім'я користувача</p>
+                        {{ modal_form.name }}
+                        <div class="text-under-input">
+                            <p class="registration-small-text">Або оберіть: </p>
+                            <p class="registration-small-text generete-text">Запропоновані варіанти відповідно до Ім’я та Прізвища</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="button-frame">
-                    <button type="submit" class = 'button-continue'>Продовжити</button>
+                <div class="registration-btn-div">
+                    <button type="submit" class='registration-btn'>Продовжити</button>
                 </div>
             </form>
         </div>  

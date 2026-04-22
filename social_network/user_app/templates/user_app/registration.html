@@ -1,4 +1,5 @@
-<form action="" method="POST" id="registration_form" class="form">
+<form action="{% url 'registraction' %}" method="POST" id="registration_form" class="form">
     {% csrf_token %}
     {{ registration_form.as_p }}
+    <button type="submit">Зареєструватися</button>
 </form>

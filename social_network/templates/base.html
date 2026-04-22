@@ -43,7 +43,7 @@
                     </nav>
 
                     {% if current_user.is_aunthenticated %}
-                        <a href="#" class='logout'>
+                        <a href="{% url 'logout' %}" class='logout'>
                             <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
                             <span class="logout-span">Вихід</span>
                         </a>             

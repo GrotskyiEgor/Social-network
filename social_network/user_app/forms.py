@@ -13,6 +13,20 @@ class RegistrationForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    email = forms.CharField(widget=forms.EmailInput)
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.CharField(
+        widget=forms.EmailInput(
+             attrs={
+                'class': 'registration-input',
+                'placeholder': 'you@example.com'
+            }
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'registration-input',
+                'placeholder': 'Введи пароль'
+            }
+        )
+    )
     
