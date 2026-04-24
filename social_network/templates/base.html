@@ -32,22 +32,30 @@
                             <span class="nav-span">Друзі</span>
                         </a>
 
-                        <a href="" class="nav-link" id="house">
-                            <img src="{% static 'images/icons/chat.svg' %}" alt="house" class="nav-image-div">
+                        <a href="" class="nav-link" id="chat">
+                            <img src="{% static 'images/icons/chat.svg' %}" alt="chat" class="nav-image-div">
                             <span class="nav-span">Чати</span>
                         </a>
+
+                        <!-- <button href="" class="nav-link" id="openModal">
+                            <img src="{% static 'images/icons/chat.svg' %}" alt="chat" class="nav-image-div">
+                            <span class="nav-span">Чати</span>
+                        </button> -->
 
                         <a href="{% url 'settings' %}" class="nav-link" id="settings">
                             <img src="{% static 'images/icons/settings.svg' %}" alt="settings" class="nav-image-div">
                             <span class="nav-span">Налаштування</span>
                         </a>
                     </nav>
-
-                    {% if current_user.is_aunthenticated %}
-                        <a href="{% url 'logout' %}" class='logout'>
-                            <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
-                            <span class="logout-span">Вихід</span>
-                        </a>             
+                    
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'logout' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class='logout' id="logout">
+                                <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
+                                <span class="logout-span">Вихід</span>
+                            </button>             
+                        </form>
                     {% else %}      
                         <a href="{% url 'auth' %}" class='sing-in-up'>
                             <span class="sing-in-up-span">Sing in/up</span>

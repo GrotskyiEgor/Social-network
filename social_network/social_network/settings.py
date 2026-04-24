@@ -45,6 +45,21 @@ INSTALLED_APPS = [
     'user_app'
 ]
 
+AUTH_USER_MODEL = 'user_app.User'
+
+# EMAIL_BACKEND = 'django.core.email.backend.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'my@gmail.com'
+EMAIL_HOST_PASSWORD = 'my_password'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -104,8 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-AUTH_USER_MODEL = 'user_app.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

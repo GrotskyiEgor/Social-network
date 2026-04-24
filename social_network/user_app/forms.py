@@ -7,7 +7,7 @@ class ConfirmEmail(forms.Form):
     confirm_code = forms.CharField(max_length=6)
 
 class RegistrationForm(UserCreationForm):
-    email = forms.CharField(
+    email = forms.EmailField(
         widget=forms.EmailInput(
              attrs={
                 'class': 'registration-input',
@@ -39,8 +39,8 @@ class RegistrationForm(UserCreationForm):
         fields = ('email',)
 
 
-class LoginForm(AuthenticationForm):
-    email = forms.CharField(
+class LoginForm(forms.Form):
+    email = forms.EmailField(
         widget=forms.EmailInput(
              attrs={
                 'class': 'registration-input',
@@ -57,4 +57,3 @@ class LoginForm(AuthenticationForm):
             }
         )
     )
-    

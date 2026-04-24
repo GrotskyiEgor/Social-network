@@ -5,6 +5,10 @@
     text-decoration: none;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+}
+
 html {
     font-size: 16px;
     scrollbar-width: none;
@@ -12,7 +16,8 @@ html {
 
 body {
     width: 100%;
-    height: 56.25rem;
+    height: 100vh;
+    /* height: 56.25rem; */
     background-color: #E9E5EE;
     display: flex;
     flex-direction: column;

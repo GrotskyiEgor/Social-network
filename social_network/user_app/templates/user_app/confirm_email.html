@@ -5,7 +5,7 @@
 </div>
 
 <div class="auth-form"> 
-    <form action="" method="POST" id="confirm_email_form" class="form">
+    <form action="{% url 'confirm_email' %}" method="POST" id="confirm_email_form" class="form">
         {% csrf_token %}
         <div class="modal-registration-inputs-div">
             <div class="modal-registration-inputs">

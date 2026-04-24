@@ -28,32 +28,38 @@ authForm.forEach(auth => {
     form.on('submit', function(event){
         event.preventDefault();
 
+        const code = getEmailCode();
         const button = $(document.activeElement);
-        if (button.attr('form') === 'registration_form') {
-            showForm('confirm_email_form');
-            ajaxRequests(form);
-        }; 
 
-        if (button.attr('form') === 'confirm_email_form') {
-            const code = getEmailCode();
-            ajaxRequests(form, code);
-        }; 
-
-        if (button.attr('form') === 'login_form') {
-            ajaxRequests(form);
-        }; 
+        ajaxRequests(form, button.attr('form'), code);
     });
 });
 
-function ajaxRequests(form, code=null){
-    console.log(code);
+function ajaxRequests(form, form_id, code){
+    user_data = form.serialize()
+
+    if (code){
+        user_data += `&confirm_code=${code}`;
+    };
 
     $.ajax({
         url: form.attr('action'),
         method: 'POST',
-        data: form.serialize(),
+        data: user_data,
         success: function(response){
             console.log('200');
+
+            if (form_id === 'registration_form') {
+                showForm('confirm_email_form');
+            }; 
+
+            if (form_id === 'confirm_email_form') {
+                showForm('login_form');
+            }; 
+
+            if (form_id === 'login_form') {
+                window.location = '/';
+            }; 
         },
         error: function(response){
             console.log('400', response);
@@ -107,3 +113,4 @@ function showForm(id_form){
         };
     });
 };
+
