@@ -1,4 +1,5 @@
 import random
+from django.db import IntegrityError
 from django.contrib.auth.hashers import make_password
 
 from ..models import User
@@ -14,19 +15,26 @@ def generate_code(length=6):
     return code
 
 def start_registration(request, cleaned_data):
-    code = generate_code()
-    request.session['registration_data'] = cleaned_data
-    request.session['confirm_code'] = code
+    try:
+        code = generate_code()
+        request.session['registration_data'] = cleaned_data
+        request.session['confirm_code'] = code
 
-    send_email_code(cleaned_data['email'], code)
+        send_email_code(cleaned_data['email'], code)
+    except IntegrityError:
+        return {
+            'error': 'Користувач з таким email вже існує'
+        }
 
 def confirm_email(request, cleaned_data):
-    if request.session.get('confirm_code') == cleaned_data['confirm_code']:                
-        user_data = request.session.get('registration_data')
+    if request.session.get('confirm_code') != cleaned_data['confirm_code']:  
+        return None
+                  
+    user_data = request.session.get('registration_data')
 
-        user = User.objects.create(
-            email = user_data['email'],
-            password = make_password(user_data['password1'])
-        )
+    user = User.objects.create(
+        email = user_data['email'],
+        password = make_password(user_data['password1'])
+    )
 
-        return user
+    return user

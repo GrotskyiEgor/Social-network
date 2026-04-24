@@ -162,3 +162,13 @@
     background: 
         linear-gradient(#81818D, #81818D) center 75% / 50% 0.0625rem no-repeat;
 }
+
+.error-text {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: #FF4C4C;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+}

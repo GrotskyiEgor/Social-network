@@ -16,7 +16,14 @@ class ConfirmEmaiView(View):
         if form.is_valid():
             user = confirm_email(request=request, cleaned_data=form.cleaned_data)
 
-            if user:
-                return JsonResponse({'success': True})
+            if not user:
+                return JsonResponse({
+                    'success': False, 
+                    'error': {
+                        'confirm_code': ['Неверный код']
+                    }
+                }, status=400)
 
-        return JsonResponse({'success': False}, status=400)
+            return JsonResponse({'success': True})
+
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)

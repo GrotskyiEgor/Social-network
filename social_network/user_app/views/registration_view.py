@@ -19,4 +19,4 @@ class RegistrationView(CreateView):
             start_registration(request=request, cleaned_data=form.cleaned_data)
             return JsonResponse({'success': True})
         
-        return JsonResponse({'success': False}, status=400)
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)

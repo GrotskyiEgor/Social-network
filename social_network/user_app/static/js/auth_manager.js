@@ -49,6 +49,10 @@ function ajaxRequests(form, form_id, code){
         success: function(response){
             console.log('200');
 
+            const errorText = getErrorText(form);
+            errorText.innerText = ''
+            errorText.style.display = 'none'
+
             if (form_id === 'registration_form') {
                 showForm('confirm_email_form');
             }; 
@@ -62,7 +66,21 @@ function ajaxRequests(form, form_id, code){
             }; 
         },
         error: function(response){
-            console.log('400', response);
+            let data = response.responseJSON
+            const errorText = getErrorText(form);
+
+            if (data?.error) {
+                const errors = data.error;
+
+                const firstKey = Object.keys(errors)[0];
+                const message = errors[firstKey][0];
+
+                errorText.innerText = message;
+            } else {
+                errorText.innerText = 'Помилка серверу';
+            }
+
+            errorText.style.display = 'block'
         }
     })
 }
@@ -113,4 +131,3 @@ function showForm(id_form){
         };
     });
 };
-

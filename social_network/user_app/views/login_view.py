@@ -16,7 +16,7 @@ class LoginPageView(LoginView):
             login(request, form.user)
             return JsonResponse({'success': True})
         
-        return JsonResponse({'success': False}, status=400)
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)
         
 
 class LogoutView(LogoutView):

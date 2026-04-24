@@ -8,6 +8,10 @@ function getEmailCode(){
     return emailCode;
 }
 
+function getErrorText(form) {
+    return $(form).closest('.auth-form').find('.error-text')[0];
+}
+
 const inputs = document.querySelectorAll('.code-letter');
 
 inputs[0].addEventListener('paste', (e) => {
