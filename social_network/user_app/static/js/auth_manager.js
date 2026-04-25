@@ -1,5 +1,6 @@
 const authState = getCookie('authState');
 
+const authFormContainer = $('.auth-form-container')
 const authForm = document.querySelectorAll('.auth-form');
 const loginButton = document.getElementById('show_login');
 const registrationButton = document.getElementById('show_registration');
@@ -8,7 +9,7 @@ if (authState){
     showForm(authState);
 } else {
     showForm('registration_form')
-}
+};
 
 loginButton.addEventListener('click', function(){
     registrationButton.className = 'auth-text';
@@ -36,7 +37,7 @@ authForm.forEach(auth => {
 });
 
 function ajaxRequests(form, form_id, code){
-    user_data = form.serialize()
+    user_data = form.serialize();
 
     if (code){
         user_data += `&confirm_code=${code}`;
@@ -50,8 +51,9 @@ function ajaxRequests(form, form_id, code){
             console.log('200');
 
             const errorText = getErrorText(form);
-            errorText.innerText = ''
-            errorText.style.display = 'none'
+            errorText.innerText = '';
+            errorText.classList.add('hidden');
+            errorText.classList.remove('visible');
 
             if (form_id === 'registration_form') {
                 showForm('confirm_email_form');
@@ -66,7 +68,7 @@ function ajaxRequests(form, form_id, code){
             }; 
         },
         error: function(response){
-            let data = response.responseJSON
+            let data = response.responseJSON;
             const errorText = getErrorText(form);
 
             if (data?.error) {
@@ -78,9 +80,10 @@ function ajaxRequests(form, form_id, code){
                 errorText.innerText = message;
             } else {
                 errorText.innerText = 'Помилка серверу';
-            }
+            };
 
-            errorText.style.display = 'block'
+            errorText.classList.remove('hidden');
+            errorText.classList.add('visible');
         }
     })
 }
@@ -94,21 +97,31 @@ function showForm(id_form){
         const navigation = $('.auth-navigation');
         const confirmEmailText = $('.under-auth-navigation-div');
 
+        authFormContainer.removeClass('registration_form login_form confirm_email_form');
+        authFormContainer.addClass(id_form);
+
         if (form.attr('id') !== id_form) {
-            auth.style.display = 'none';
-            authText.css('display', 'none');
+            auth.classList.add('hidden');
+            auth.classList.remove('visible');
+            authText.addClass('hidden');
+            authText.removeClass('visible');
         }
         else {
-            auth.style.display = 'block';
-            authText.css('display', 'block');
+            auth.classList.remove('hidden');
+            auth.classList.add('visible');
+            authText.removeClass('hidden');
+            authText.addClass('visible');
         };
 
         if (id_form === 'confirm_email_form'){
             navigation.html(`
                 <p id="show_registration" class="confirm-text-active">Підтвердження пошти</p>
             `);
-
-            confirmEmailText.css('display', 'block');
+            
+            confirmEmailText.removeClass('hidden');
+            confirmEmailText.addClass('visible');
+            
+            $('#show_confirm_email').off('click');
 
             $('#show_confirm_email').on('click', function(){
                 showForm('registration_form');
@@ -118,8 +131,12 @@ function showForm(id_form){
                 <p id="show_registration" class="${id_form === 'registration_form' ? 'auth-text-active' : 'auth-text'}">Реєстрація</p>
                 <p id="show_login" class="${id_form === 'login_form' ? 'auth-text-active' : 'auth-text'}">Авторизація</p>
             `);
-
-            confirmEmailText.css('display', 'none');
+            
+            confirmEmailText.addClass('hidden');
+            confirmEmailText.removeClass('visible');
+            
+            $('#show_login').off('click');
+            $('#show_registration').off('click');
 
             $('#show_login').on('click', function(){
                 showForm('login_form');

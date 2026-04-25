@@ -9,6 +9,8 @@
     <div class="info-navigations">
         <p class="info-navigations-active-test">Особиста інформація</p>
         <p class="info-navigations-text">Альбоми</p>
+
+        <button id="themeToggle">Change theme</button>
     </div>
 {% endblock %}
 
@@ -22,4 +24,6 @@
 
 {% block modals %}{% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+    <script src="{% static 'js/theme_change.js' %}"></script>
+{% endblock %}

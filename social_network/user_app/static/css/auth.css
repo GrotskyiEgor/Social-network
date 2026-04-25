@@ -33,16 +33,28 @@ main {
 
 .auth-form-container {
     width: 30.5rem;
-    height: fit-content;
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 1.4rem;
     padding: 2.75rem;
     z-index: 100;
 
-    transition: hight 0.3s ease;
+    transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.registration_form {
+    height: 34.5rem;
+}
+
+.login_form {
+    height: 30rem;
+}
+
+.confirm_email_form {
+    height: 27.75rem;
+}
+
 
 .auth-navigation {
     width: 25rem;
@@ -53,28 +65,12 @@ main {
     gap: 1.5rem;
 }
 
-.auth-text-active {
-    color: #070A1C;
-    font-weight: 700;
-    font-size: 2.125rem;
-    border-bottom: 0.125rem solid #070A1C;
-    padding-bottom: 0.2rem;
-    cursor: pointer;
-}
-
-.confirm-text-active {
-    color: #070A1C;
-    font-size: 2.125rem;
-    font-weight: 700;
-    cursor: pointer;
-}
-
 .auth-text {
+    position: relative;
     cursor: pointer;
-    color: #81818D;
+    color: var(--text-muted);
     font-weight: 500;
     font-size: 2.125rem;
-    
 }
 
 .auth-image-div {
@@ -83,6 +79,22 @@ main {
 
     position: relative;
     z-index: 0;
+}
+
+.auth-text-active {
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 2.125rem;
+    border-bottom: 0.125rem solid var(--text-main);
+    padding-bottom: 0.2rem;
+    cursor: pointer;
+}
+
+.confirm-text-active {
+    color: var(--text-main);
+    font-size: 2.125rem;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .auth-image {
