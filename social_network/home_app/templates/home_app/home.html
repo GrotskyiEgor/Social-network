@@ -144,9 +144,9 @@
 {% endblock %}
 
 {% block modals %}
-    <div class="modal-bg">
+    <div class="modal-bg hidden">
         <div class="modal-registration-view">
-            <form action="" method="POST" class="modal-registration-view-form">
+            <form method="POST" class="modal-registration-view-form">
                 {% csrf_token %}
                 <div class="modal-registration-text-div">
                     <p class="modal-registration-text">Додай деталі про себе</p>
@@ -158,7 +158,7 @@
                     </div>
                     <div class="modal-registration-inputs-div">
                         <p class="registration-text">Ім'я користувача</p>
-                        {{ modal_form.name }}
+                        {{ modal_form.user_handle }}
                         <div class="text-under-input">
                             <p class="registration-small-text">Або оберіть: </p>
                             <p class="registration-small-text generete-text">Запропоновані варіанти відповідно до Ім’я та Прізвища</p>
@@ -174,5 +174,9 @@
 {% endblock %}
 
 {% block script %}
+    <script defer>
+        let first_registration = "{{ first_registration }}"
+    </script>
+
     <script src="{% static 'js/modal.js' %}"></script>
 {% endblock %}

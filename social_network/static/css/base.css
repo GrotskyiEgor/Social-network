@@ -11,12 +11,12 @@
 }
 
 [data-theme="dark"] {
-    --white: #141414;
-    --bg-body: #0F0F12;
+    --white: #222222;
+    --bg-body: #141418;
 
     --text-main: #F5F5F5;
     --text-muted: #A0A0A0;
-    --text-accent: #B48EAD;
+    --text-accent: #543C52;
 
     --border-light: #2A2A2A;
     --text-error: #FF6B6B;

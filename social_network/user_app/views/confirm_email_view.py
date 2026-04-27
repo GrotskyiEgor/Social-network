@@ -1,5 +1,5 @@
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from ..forms.confirm_email_form import ConfirmEmail
 
 from ..models import User
@@ -10,11 +10,12 @@ class ConfirmEmaiView(View):
     model = User
     form_class = ConfirmEmail
     
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs):
         form = self.form_class(request.POST)
         
         if form.is_valid():
-            user = confirm_email(request=request, cleaned_data=form.cleaned_data)
+            user_data = form.cleaned_data
+            user = confirm_email(request=request, cleaned_data=user_data)
 
             if not user:
                 return JsonResponse({

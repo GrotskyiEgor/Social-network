@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.views.generic import CreateView
 from ..forms.registration_form import RegistrationForm
 
@@ -12,11 +12,14 @@ class RegistrationView(CreateView):
     form_class = RegistrationForm
     success_url = reverse_lazy('home')
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            start_registration(request=request, cleaned_data=form.cleaned_data)
+            user_data = form.cleaned_data
+            start_registration(request=request, cleaned_data=user_data)
+            request.session['first_registration'] = user_data['email']
+            
             return JsonResponse({'success': True})
         
         return JsonResponse({'success': False, 'error': form.errors}, status=400)

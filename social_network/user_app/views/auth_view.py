@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.http import  HttpRequest
 from ..forms.login_form import LoginForm
 from ..forms.confirm_email_form import ConfirmEmail
 from ..forms.registration_form import RegistrationForm

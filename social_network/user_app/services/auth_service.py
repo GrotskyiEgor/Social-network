@@ -1,4 +1,5 @@
 import random
+from django.http import HttpRequest
 from django.db import IntegrityError
 from django.contrib.auth.hashers import make_password
 
@@ -14,7 +15,7 @@ def generate_code(length=6):
 
     return code
 
-def start_registration(request, cleaned_data):
+def start_registration(request: HttpRequest, cleaned_data):
     try:
         code = generate_code()
         request.session['registration_data'] = cleaned_data
@@ -26,7 +27,7 @@ def start_registration(request, cleaned_data):
             'error': 'Користувач з таким email вже існує'
         }
 
-def confirm_email(request, cleaned_data):
+def confirm_email(request: HttpRequest, cleaned_data):
     if request.session.get('confirm_code') != cleaned_data['confirm_code']:  
         return None
                   
@@ -38,3 +39,4 @@ def confirm_email(request, cleaned_data):
     )
 
     return user
+

@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from django.shortcuts import redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView, LogoutView
@@ -9,7 +9,7 @@ from ..forms.login_form import LoginForm
 class LoginPageView(LoginView):
     form_class = LoginForm
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: HttpRequest, *args, **kwargs):
         form = self.form_class(request.POST)
 
         if form.is_valid():
