@@ -4,7 +4,7 @@ from django.views.generic import CreateView
 from ..forms.registration_form import RegistrationForm
 
 from ..models import User
-from ..services.auth_service import start_registration
+from ..services.auth_service import save_registration
 
 
 class RegistrationView(CreateView):
@@ -17,7 +17,7 @@ class RegistrationView(CreateView):
 
         if form.is_valid():
             user_data = form.cleaned_data
-            start_registration(request=request, cleaned_data=user_data)
+            save_registration(request=request, cleaned_data=user_data)
             request.session['first_registration'] = user_data['email']
             
             return JsonResponse({'success': True})

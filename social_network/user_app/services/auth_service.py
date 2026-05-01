@@ -1,7 +1,7 @@
 import random
 from django.http import HttpRequest
 from django.db import IntegrityError
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 
 from ..models import User
 from ..services.email_service import send_email_code
@@ -15,11 +15,18 @@ def generate_code(length=6):
 
     return code
 
-def start_registration(request: HttpRequest, cleaned_data):
+def save_registration(request: HttpRequest, cleaned_data):
     try:
         code = generate_code()
         request.session['registration_data'] = cleaned_data
         request.session['confirm_code'] = code
+
+        # user = User.objects.create(
+        #     email = cleaned_data['email'],
+        #     password = make_password(cleaned_data['password1']),
+        #     confirm_code = make_password(code),
+        #     is_active = 0
+        # )
 
         send_email_code(cleaned_data['email'], code)
     except IntegrityError:
@@ -28,14 +35,14 @@ def start_registration(request: HttpRequest, cleaned_data):
         }
 
 def confirm_email(request: HttpRequest, cleaned_data):
-    if request.session.get('confirm_code') != cleaned_data['confirm_code']:  
+    if request.session.get('confirm_code') != cleaned_data['confirm_code'].strip():  
         return None
                   
     user_data = request.session.get('registration_data')
 
     user = User.objects.create(
-        email = user_data['email'],
-        password = make_password(user_data['password1'])
+        email = user_data['email'].strip(),
+        password = make_password(user_data['password1'].strip())
     )
 
     return user

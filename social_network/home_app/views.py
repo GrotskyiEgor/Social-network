@@ -5,21 +5,23 @@ from django.views.generic import TemplateView
 from .forms import ModalForm
 from user_app.models import User
 
-# Create your views here.
+
 class HomeView(TemplateView):
     template_name = 'home_app/home.html'
     form_class = ModalForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         first_registration = self.request.session.get('first_registration')
-        print('first_registration', first_registration, type(first_registration))
         if first_registration != None and first_registration != '':
-            print('first_registration', True)
             first_registration = True
-
-        print(first_registration)
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
@@ -45,7 +47,7 @@ class HomeView(TemplateView):
         return JsonResponse({  
             'success': False, 
             'error': {
-                'confirm_code': ['Неверный код']
+                'wrong_username': ['Такий username вже зайнятий']
             }
         }, status=400)
         

@@ -1,3 +1,4 @@
+import re
 from django import forms
 
 from user_app.models import User
@@ -9,7 +10,10 @@ class ModalForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'registration-input',
-                'placeholder': 'Введіть Псевдонім автора'
+                'placeholder': 'Введіть Псевдонім автора',
+                'autofocus': True,
+                'name': 'username'
+                
             }
         )
     )
@@ -19,15 +23,37 @@ class ModalForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'registration-input',
-                'placeholder': '@'
+                'placeholder': '@',
+                'name': 'user_handle'
             }
         )
     )   
 
-    def clean(cleaned_data):
-        cleaned_data = super().clean()
+    def clean_user_handle(self):
+        user_handle = self.cleaned_data.get('user_handle', '').strip()
 
-        if User.objects.filter(user_handle=cleaned_data.get('user_handle')).exists():
-            raise forms.ValidationError("Has username") 
+        print('user_handle', user_handle)
 
-        return cleaned_data
+        user_handle = user_handle.lstrip('@')
+
+        if not user_handle:
+            print('Введить username')
+            raise forms.ValidationError('Введить user_handle')
+        
+        if not re.fullmatch(r'[a-zA-Z0-9]+', user_handle):
+            print("Тільки латиниця, цифри та '_'")
+            raise forms.ValidationError("Тільки латиниця, цифри та '_'")
+
+        user_handle = '@' + user_handle
+        
+        # if user_handle.count('@') != 1:
+        #     print('У usename має бути тільки одна @')
+        #     raise forms.ValidationError('У usename має бути тільки одна @')
+            
+        if User.objects.filter(user_handle=user_handle).exists():
+            print("Такий username вже зайнятий")
+            raise forms.ValidationError('Такий username вже зайнятий') 
+
+        print('user_handle', user_handle)
+
+        return user_handle

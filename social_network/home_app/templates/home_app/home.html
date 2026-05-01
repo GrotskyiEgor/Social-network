@@ -4,14 +4,14 @@
 {% block title %}WorldIT Головна{% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registration_modal.css' %}">
 {% endblock %}
 
 {% block info-content %}
-    <div class="profile-container content-border-container">
+    <!-- <div class="profile-container content-border-container">
         <div class="profile-user-container">
             <div class="profile-user-image-container">
-                <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                <img class="profile-user-image svg-icon" src="{% static 'images/icons/indicator.svg' %}" alt="">
             </div>
             <div class="profile-username">
                 <p class="username-text">Lina Li</p>
@@ -32,6 +32,32 @@
                 <p class="name-static-text">Друзі</p>
             </div>
         </div>
+    </div> -->
+
+    <div class="profile-container content-border-container">
+        <div class="profile-user-container">
+            <div class="profile-user-image-container">
+                <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+            </div>
+            <div class="profile-username">
+                <p class="username-text">{{ user.username }}</p>
+                <p class="email-text">{{ user.user_handle }}</p>
+            </div>      
+        </div>
+        <div class="profile-statistics-container">
+            <div class="profile-static">
+                <p class="static-text">{{ user.signature|default:'0' }}</p>
+                <p class="name-static-text">Дописи</p>
+            </div>
+            <div class="profile-static profile-static-border">
+                <p class="static-text">{{ user.reader|default:'0' }}</p>
+                <p class="name-static-text">Читачі</p>
+            </div>
+            <div class="profile-static">
+                <p class="static-text">{{ user.friends|length|default:'0' }}</p>
+                <p class="name-static-text">Друзі</p>
+            </div>
+        </div>
     </div>
 
     <div class="requests-container content-border-container">
@@ -45,6 +71,8 @@
             <button class="container-header-button">Дивитись всі</button>
         </div>
 
+        <!-- {% if user.friends %}
+        {% endif %} -->
         <div class="followers-container">
             <div class="followers-user-block">
                 <div class="followers-container-image-container">
@@ -89,49 +117,51 @@
             <button class="container-header-button">Дивитись всі</button>
         </div>
 
-        <div class="message-list">
-            <div class="message-user-block">
-                <div class="message-container-image-container">
-                    <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
-                </div>
-                
-                <div class="message-block-info">
-                    <div class="message-block-info-header">
-                        <p class="message-block-username">Mona Lisa</p>
-                        <p class="message-block-time">09:41</p>
+        {% if user.is_authenticated %}
+            <div class="message-list">
+                <div class="message-user-block">
+                    <div class="message-container-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
                     </div>
-                    <p class="message-block-email">Привіт! Як справи ?</p>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Mona Lisa</p>
+                            <p class="message-block-time">09:41</p>
+                        </div>
+                        <p class="message-block-email">Привіт! Як справи ?</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="message-user-block">  
-                <div class="message-container-image-container">
-                    <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
-                </div>
-                
-                <div class="message-block-info">
-                    <div class="message-block-info-header">
-                        <p class="message-block-username">Ann Ti</p>
-                        <p class="message-block-time">25.04.2025</p>
+                <div class="message-user-block">  
+                    <div class="message-container-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
                     </div>
-                    <p class="message-block-email">Привіт!</p>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Ann Ti</p>
+                            <p class="message-block-time">25.04.2025</p>
+                        </div>
+                        <p class="message-block-email">Привіт!</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="message-user-block">
-                <div class="message-container-image-container">
-                    <img class="message-image" src="{% static 'images/users/avatar6.svg' %}" alt="">
-                </div>
-                
-                <div class="message-block-info">
-                    <div class="message-block-info-header">
-                        <p class="message-block-username">Ness Ty</p>
-                        <p class="message-block-time">25.04.2025</p>
+                <div class="message-user-block">
+                    <div class="message-container-image-container">
+                        <img class="message-image" src="{% static 'images/users/avatar6.svg' %}" alt="">
                     </div>
-                    <p class="message-block-email">Привіт!</p>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">
+                            <p class="message-block-username">Ness Ty</p>
+                            <p class="message-block-time">25.04.2025</p>
+                        </div>
+                        <p class="message-block-email">Привіт!</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -146,7 +176,7 @@
 {% block modals %}
     <div class="modal-bg hidden">
         <div class="modal-registration-view">
-            <form method="POST" class="modal-registration-view-form">
+            <form method="POST" class="modal-registration-view-form" id="registration-modal">
                 {% csrf_token %}
                 <div class="modal-registration-text-div">
                     <p class="modal-registration-text">Додай деталі про себе</p>
@@ -178,5 +208,5 @@
         let first_registration = "{{ first_registration }}"
     </script>
 
-    <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/registration_modal.js' %}"></script>
 {% endblock %}

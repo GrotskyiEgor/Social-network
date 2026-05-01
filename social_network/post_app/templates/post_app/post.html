@@ -3,7 +3,9 @@
 
 {% block title %}WorldIT Мої публікації{% endblock %}
 
-{% block links %}{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/create_post_modal.css' %}">
+{% endblock %}
 
 {% block info-content %}
     <div class="profile-container content-border-container">
@@ -34,13 +36,71 @@
 {% endblock %}
 
 {% block main-content %}
-    {% for i in "......................." %}    
-        <div class="scrolls-container content-border-container">   
-            <h1>Мої публікації</h1>
-        </div>
-    {% endfor %}
+    <div class="scrolls-container content-border-container">   
+        <button id="open-modal-create-post">Перейти до оформлення</button>
+    </div>
 {% endblock %}
 
-{% block modals %}{% endblock %}
+{% block modals %}
+    <!-- <div class="modal-registration-inputs-div">
+        <p class="registration-text">Назва публікації</p>
+        {{ post_form.title }}
+    </div> -->
 
-{% block script %}{% endblock %}
+    <div class="modal-bg hidden">
+        <div action="{% url 'create_post' %}"  class="modal-create-post-view">
+            <form method="POST" class="modal-create-post-view-form" id="create_post_modal">
+                {% csrf_token %}
+                <div class="modal-create-post-button-div">
+                    <img src="{% static 'images/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                </div>
+                <div class="modal-create-post-text-div">
+                    <p class="modal-create-post-text">Створення публікації</p>
+                </div>
+                <div class="modal-create-post-inputs">
+                    <div class="modal-create-post-inputs-div">
+                        <p class="create-post-text">Назва публікації</p>
+                        {{ post_form.title }}
+                    </div>
+                    <div class="modal-create-post-inputs-div">
+                        <p class="create-post-text">Тема публікації</p>
+                        {{ post_form.topic }}
+                    </div>
+
+                    <div class="tags">
+                        <div class="tag">1ffffff</div>
+                        <div class="tag">2ffffff</div>
+                        <div class="tag">3ffffff</div>
+                    </div>
+
+                    <div class="text-area-div">
+                        <!-- <textarea name="" id="" 
+                            placeholder="Інколи найкращі ідеї народжуються в тиші
+                            Природа, книга і спокій — усе, що потрібно, аби перезавантажитись.
+                            #відпочинок #натхнення #життя #природа #читання #спокій #гармонія">
+                        </textarea> -->
+                        {{ post_form.content }}
+                    </div>
+
+                    <div class="modal-create-post-inputs-div" id="modal_create_post_urls_div">
+                        <p class="create-post-text">Посилання</p>
+                        <div class="modal-urls-div">
+                            <input type="url" name="links" class="create-post-input" placeholder="https://www.instagram.com/world.it.ac">                   
+                            <div class="modal-add-urls-div">
+                                <img src="{% static 'images/add_url.svg' %}" alt="add_url" class="add-url-btn" id='add_url_btn'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="create-post-btn-div" form="create_post_modal">
+                <img src="{% static 'images/create_post_button.svg' %}" alt="create-post-btn" class="create-post-btn">
+            </div> 
+        </div>  
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src= "{% static 'js/create_post_modal.js' %}"></script>
+{% endblock %}

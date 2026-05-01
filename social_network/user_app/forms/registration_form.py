@@ -8,7 +8,10 @@ class RegistrationForm(UserCreationForm):
         widget=forms.EmailInput(
              attrs={
                 'class': 'registration-input',
-                'placeholder': 'you@example.com'
+                'placeholder': 'you@example.com',
+                'autofocus': True,
+                'autocomplete': 'email',
+                'name': 'email'
             }
         )
     )
@@ -17,7 +20,9 @@ class RegistrationForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'registration-input',
-                'placeholder': 'Введи пароль'
+                'placeholder': 'Введи пароль',
+                'autocomplete': 'current-password',
+                'name': 'password1'
             }
         )
     )
@@ -26,7 +31,8 @@ class RegistrationForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'registration-input',
-                'placeholder': 'Введи пароль'
+                'placeholder': 'Введи пароль',
+                'name': 'password2'
             }
         )
     )

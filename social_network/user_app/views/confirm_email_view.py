@@ -21,7 +21,7 @@ class ConfirmEmaiView(View):
                 return JsonResponse({
                     'success': False, 
                     'error': {
-                        'confirm_code': ['Неверный код']
+                        'confirm_code': ['Неправильний код']
                     }
                 }, status=400)
 

@@ -5,18 +5,23 @@ from django.contrib.auth import authenticate
 class LoginForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(
-             attrs={
+             attrs = {
                 'class': 'registration-input',
-                'placeholder': 'you@example.com'
+                'placeholder': 'you@example.com',
+                'autofocus': True,
+                'autocomplete': 'email',
+                'name': 'email'
             }
         )
     )
     
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={
+            attrs = {
                 'class': 'registration-input',
-                'placeholder': 'Введи пароль'
+                'placeholder': 'Введи пароль',
+                'autocomplete': 'current-password',
+                'name': 'password'
             }
         )
     )
@@ -24,7 +29,7 @@ class LoginForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
 
-        email = cleaned_data.get('email')
+        email = cleaned_data.get('email').strip()
         password = cleaned_data.get('password')
         user = authenticate(email=email, password=password)
 
