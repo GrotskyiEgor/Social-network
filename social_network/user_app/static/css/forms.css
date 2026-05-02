@@ -173,23 +173,3 @@
     align-self: center;
     justify-self: center;
 }
-
-.hidden {
-    opacity: 0;
-    transform: translateY(10px);
-    visibility: hidden;
-    pointer-events: none;
-    position: absolute;
-}
-
-.visible {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
-    position: relative;
-    
-    transition: 
-        opacity 0.5s ease,
-        transform 0.45s ease;
-}

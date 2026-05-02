@@ -45,10 +45,6 @@ class ModalForm(forms.Form):
             raise forms.ValidationError("Тільки латиниця, цифри та '_'")
 
         user_handle = '@' + user_handle
-        
-        # if user_handle.count('@') != 1:
-        #     print('У usename має бути тільки одна @')
-        #     raise forms.ValidationError('У usename має бути тільки одна @')
             
         if User.objects.filter(user_handle=user_handle).exists():
             print("Такий username вже зайнятий")

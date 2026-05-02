@@ -18,15 +18,12 @@ def generate_code(length=6):
 def save_registration(request: HttpRequest, cleaned_data):
     try:
         code = generate_code()
-        request.session['registration_data'] = cleaned_data
+        # request.session['registration_data'] = cleaned_data
+        request.session['registration_data'] = {
+            'email': cleaned_data['email'],
+            'password': make_password(cleaned_data['password1'])
+        }
         request.session['confirm_code'] = code
-
-        # user = User.objects.create(
-        #     email = cleaned_data['email'],
-        #     password = make_password(cleaned_data['password1']),
-        #     confirm_code = make_password(code),
-        #     is_active = 0
-        # )
 
         send_email_code(cleaned_data['email'], code)
     except IntegrityError:
@@ -42,7 +39,7 @@ def confirm_email(request: HttpRequest, cleaned_data):
 
     user = User.objects.create(
         email = user_data['email'].strip(),
-        password = make_password(user_data['password1'].strip())
+        password = user_data['password']
     )
 
     return user

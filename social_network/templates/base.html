@@ -47,11 +47,6 @@
                                 <span class="nav-span">Чати</span>
                             </a>
 
-                            <!-- <button href="" class="nav-link" id="openModal">
-                                <img src="{% static 'images/icons/chat.svg' %}" alt="chat" class="nav-image-div">
-                                <span class="nav-span">Чати</span>
-                            </button> -->
-
                             <a href="{% url 'settings' %}" class="nav-link" id="settings">
                                 <img src="{% static 'images/icons/settings.svg' %}" alt="settings" class="nav-image-div svg-icon">
                                 <span class="nav-span">Налаштування</span>
@@ -63,8 +58,6 @@
                                 {% csrf_token %}
                                 <button type="submit" class='logout' id="logout">
                                     <img src="{% static 'images/buttons/loguot.svg' %}" alt="loout" class="logout-image">
-                                    <!-- <img src="{% static 'images/icons/vector.svg' %}" alt="vector" class="logout-image">
-                                    <span class="logout-span">Вихід</span> -->
                                 </button>             
                             </form>
                         {% else %}      

@@ -14,7 +14,7 @@ $(() => {
         event.preventDefault()
 
         $.ajax({
-            url: form.attr('action'),
+            url: registrationModal.attr('action'),
             method: 'POST',
             data: registrationModal.serialize(),
             success: function(response){
@@ -25,6 +25,8 @@ $(() => {
                 // errorText.classList.add('hidden');
                 // errorText.classList.remove('visible');
 
+                $('.modal-bg').removeClass('visible')
+                $('.modal-bg').addClass('hidden');
             },
             error: function(response){
                 console.log('400')

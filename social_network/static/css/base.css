@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'GT Walsheim Pro';
+    src: url('/static/fonts/GTWalsheimPro-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'GT Walsheim Pro';
+    src: url('/static/fonts/GTWalsheimPro-Medium.woff2') format('woff2');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'GT Walsheim Pro';
+    src: url('/static/fonts/GTWalsheimPro-Bold.woff2') format('woff2');
+    font-weight: 700;
+}
+
 :root {
     --white: #FFFFFF;
     --bg-body: #E9E5EE;
@@ -170,10 +188,12 @@ nav .nav-link:hover {
 }
 
 .logout {
-    width: 6rem;
+    width: 6.375rem;
     height: 2.5rem;
     border: none;
     background-color: transparent;
+    border-radius: 10rem;
+    overflow: hidden;
 
     transition: transform 0.2s ease;
 }
@@ -417,6 +437,26 @@ main {
     font-weight: 400;
     font-size: 0.875rem;
     color: var(--text-muted);
+}
+
+/*  */
+.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    
+    transition: 
+        opacity 0.5s ease,
+        transform 0.45s ease;
 }
 
 #themeToggle {
