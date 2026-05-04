@@ -39,19 +39,29 @@
 {% block main-content %}
     <div class="create-post-container scrolls-container content-border-container">   
         <div class="create-post-container-text-div">
-            <p class="create-post-container-text">Текст публікації</p>
+            <textarea name="" id="create_post_container_text" class="create-post-container-text" placeholder="Текст публікації"></textarea>
         </div>
         <div class="create-post-container-btn-div">
             <img src="{% static 'images/emoji.svg' %}" alt="emoji-button" class="emoji-button" id="emoji_button">
             <button id="open-modal-create-post" class="open-modal-create-post-btn">Перейти до оформлення</button>
         </div>
     </div>
+    {% for post in posts %} 
+        <div class="scrolls-container content-border-container">
+            <p>{{ post.title }}</p>
+            <p>{{ post.author }}</p>
+            <p>{{ post.topic }}</p>
+            <p>{{ post.tags }}</p>
+            <p>{{ post.content }}</p>
+            <p>{{ post.links }}</p>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block modals %}
     <div class="modal-bg hidden">
         <div class="modal-create-post-view">
-            <form action="{% url 'create_post' %}"  method="POST" class="modal-create-post-view-form" id="create_post_modal">
+            <form action="{% url 'create_post' %}"  method="POST" class="modal-create-post-view-form" id="create_post_modal" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-create-post-button-div">
                     <img src="{% static 'images/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
@@ -94,11 +104,13 @@
                             </div>
                         </div>
                     </div>
+
+                    {{ post_form.images }}
                 </div>
             </form>
             
             <div class="create-post-btn-div">
-                <img src="{% static 'images/add_images.svg' %}" alt="add-images-button" class="add-images-button">
+                <img src="{% static 'images/add_images.svg' %}" alt="add-images-button" class="add-images-button" id='images_field'>
                 <img src="{% static 'images/emoji.svg' %}" alt="emoji-button" class="emoji-button">
                 <button class="create-post-btn" form="create_post_modal">
                     <img src="{% static 'images/create_post_button.svg' %}" alt="create-post-btn" id="create_post" class="create-post">

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import PostForm, TagForm
-from .models import Tag
+from .models import Tag, Post
 
 
 class PostView(LoginRequiredMixin, TemplateView):
@@ -17,7 +17,8 @@ class PostView(LoginRequiredMixin, TemplateView):
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
         context['tags'] = Tag.objects.all()
-
+        context['posts'] = Post.objects.filter(author=self.request.user).all()
+        
         return context
 
 
@@ -54,16 +55,19 @@ class PostCreateView(View):
 
         return kwargs
     
-    def form_valid(self, form):
-        post = form.save(author = self.request.user)
+    def post(self, request, *args, **kwargs):
+        form = PostForm(request.POST)
 
-        return JsonResponse({
-            'success': True,
-            'message': 'Публікація успішно створена'
-        })
+        if form.is_valid():
+            post = form.save(author=self.request.user)
+
+            return JsonResponse({
+                'success': True,
+                'message': 'Публікація успішно створена'
+            })
     
-    def form_invalid(self, form):
         return JsonResponse({
             'success': False,
             'message': 'Публікація не була створена'
         })
+    

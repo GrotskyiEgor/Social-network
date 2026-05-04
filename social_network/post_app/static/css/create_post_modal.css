@@ -242,6 +242,12 @@
     justify-content: center;
     border-radius: 0.375rem;
     padding: 0.375rem;
+    cursor: pointer;
+}
+
+.selected-tag {
+    background-color: var(--text-accent);
+    color: var(--white);
 }
 
 .tag-text {

@@ -173,3 +173,8 @@
     align-self: center;
     justify-self: center;
 }
+
+.password-eye {
+    height: 1.25rem;
+    width: 1.25rem;
+}

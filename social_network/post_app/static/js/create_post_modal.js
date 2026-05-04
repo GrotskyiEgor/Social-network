@@ -2,16 +2,33 @@ $(() => {
     const createTagModel = $('#create_tag_modal');
     const createPostModel = $('#create_post_modal');
     const urlsArrayDiv = document.querySelector('#modal_create_post_urls_div');
+    const imagesField = $('#images_field')
+    const imagesFieldHidden = $('#images_field_hidden')
+    let tags = $('.tag');
+    console.log(imagesField, imagesFieldHidden)
+    imagesField.on('click', function(){
+        console.log(imagesField, imagesFieldHidden)
+        imagesFieldHidden.click();
+    })
 
+    tags.each(function(index, tag){
+        tag = $(tag)
+        tag.on('click', function(){
+            this.classList.toggle('selected-tag')
+        })
+    })
+    
     createPostModel.on('submit', function(event){
         event.preventDefault();
-
+        console.log(createPostModel.serialize())
         $.ajax({
             url: createPostModel.attr('action'),
             method: 'POST',
             data: createPostModel.serialize(),
             success: function(response){
                 console.log('200');
+
+                closeModal('modal-bg');
             },
             error: function(response){
                 console.log('400', response);
@@ -121,8 +138,16 @@ $(() => {
     });
 
     function openModal(modalClass){
+        if (modalClass == 'modal-bg'){
+            const createPostText = document.getElementById('create_post_container_text');
+            const createPostModelText = document.getElementById('create_post_modal_text');
+            createPostModelText.textContent = createPostText.value;
+        }
+
         $(`.${modalClass}`).removeClass('hidden');
         $(`.${modalClass}`).addClass('visible');
+
+        
     };
 
     function closeModal(modalClass){

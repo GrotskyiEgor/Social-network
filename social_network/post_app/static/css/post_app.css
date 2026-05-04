@@ -1,5 +1,5 @@
 .create-post-container {
-    height: 7.5rem;
+    /* height: 7.5rem; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -22,14 +22,22 @@
 
 .create-post-container-text-div {
     width: 100%;
-    height: 1.375rem;
+    min-height: 1.375rem;
 }
 
 .create-post-container-text  {
-    color: var(--text-muted);
+    width: 100%;
+    color: var(--text-main);
     font-weight: 400;
-    font-style: regular;
     font-size: 1rem;
+    resize: none;
+    border: none;
+    outline: none;
+}
+
+.create-post-container-text::placeholder {
+  color: var(--text-muted); 
+  opacity: 1; 
 }
 
 .create-post-container-btn-div {
@@ -45,4 +53,16 @@
 .emoji-button {
     height: 2.5rem;
     width: 2.5rem;
+}
+
+.add-url-btn, .minus-url-btn, .add-tag-btn{
+    cursor: pointer;
+}
+
+/* .images-field-hidden {
+    visibility: hidden;
+} */
+ 
+.add-images-button, .emoji-button {
+    cursor: pointer;
 }

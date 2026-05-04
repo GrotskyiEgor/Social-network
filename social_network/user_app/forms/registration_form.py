@@ -17,14 +17,15 @@ class RegistrationForm(UserCreationForm):
     )
     
     password1 = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'registration-input',
-                'placeholder': 'Введи пароль',
-                'autocomplete': 'current-password',
-                'name': 'password1'
-            }
-        )
+            widget=forms.PasswordInput(
+                attrs={
+                    'class': 'registration-input',
+                    'placeholder': 'Введи пароль',
+                    'autocomplete': 'current-password',
+                    'name': 'password1',
+                    'id': 'password1'
+                }
+            )
     )
 
     password2 = forms.CharField(
@@ -32,7 +33,8 @@ class RegistrationForm(UserCreationForm):
             attrs={
                 'class': 'registration-input',
                 'placeholder': 'Введи пароль',
-                'name': 'password2'
+                'name': 'password2',
+                'id': 'password2'
             }
         )
     )

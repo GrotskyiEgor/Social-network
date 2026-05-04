@@ -21,7 +21,8 @@ class LoginForm(forms.Form):
                 'class': 'registration-input',
                 'placeholder': 'Введи пароль',
                 'autocomplete': 'current-password',
-                'name': 'password'
+                'name': 'password',
+                'id': 'password3'
             }
         )
     )
