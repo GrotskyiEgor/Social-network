@@ -47,7 +47,7 @@ class TagForm(forms.ModelForm):
             print('Введить name')
             raise forms.ValidationError('Введить tag')
         
-        if not re.fullmatch(r'[a-zA-Z0-9]+', name):
+        if not re.fullmatch(r'[a-zA-Z0-9_]+', name):
             print("Тільки латиниця, цифри та '_'")
             raise forms.ValidationError("Тільки латиниця, цифри та '_'")
 
@@ -64,7 +64,6 @@ class TagForm(forms.ModelForm):
 
 class PostForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
-        label = 'Теги',
         required = False,
         queryset= Tag.objects.all(),
         widget = forms.CheckboxSelectMultiple()
@@ -108,7 +107,7 @@ class PostForm(forms.ModelForm):
         widget = MultipleFileInput(
             attrs={
                 'multiple': True, 
-                'accept': 'images/*',
+                'accept': 'image/*',
                 'class': 'images-field-hidden',
                 'id': 'images_field_hidden'
             }
@@ -124,6 +123,8 @@ class PostForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         self.fields['tags'].queryset = Tag.objects.all()
+
+        print("self.fields['tags']", self.fields['tags'])
         
         self.links_list = []
         if links is None: 
@@ -168,6 +169,7 @@ class PostForm(forms.ModelForm):
             post.save()
             post.tags.set(self.cleaned_data['tags'])
             print('self.cleaned_data', self.cleaned_data['tags'])
+
             for url in self.links_list:
                 Link.objects.create(post=post, url=url)
 
@@ -193,7 +195,8 @@ class PostForm(forms.ModelForm):
         
         while True:
             buffer = BytesIO()
-            image.save(buffer, format='JPEG', quality = quality, optimize = True)
+            image.save(buffer, format='JPEG', quality=quality, optimize=True)
+
             if buffer.tell() <= MAX_COMPRESSED_IMAGE_SIZE:
                 break
             if quality > 35:
@@ -209,5 +212,4 @@ class PostForm(forms.ModelForm):
             image.seek(0)
             compressed_image = f'compressed_{image.name.rsplit('.', 1)[0]}.jpg'
             compressed_image = ContentFile(buffer.getvalue(), name=compressed_image)
-
             return compressed_image

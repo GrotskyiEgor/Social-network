@@ -5,46 +5,21 @@ const authForm = document.querySelectorAll('.auth-form');
 const loginButton = document.getElementById('show_login');
 const registrationButton = document.getElementById('show_registration');
 
-const password1Eye = document.getElementById('password1_eye')
-const password2Eye = document.getElementById('password2_eye')
-const password3Eye = document.getElementById('password3_eye')
+document.querySelectorAll('.password-wrapper').forEach(wrapper => {
+    const input  = wrapper.querySelector('input')
+    const eye  = wrapper.querySelector('.password-eye')
 
-const password1 = document.getElementById('password1')
-const password2 = document.getElementById('password2')
-const password3 = document.getElementById('password3')
-
-password1Eye.addEventListener('click', function(){
-    if (password1.type === 'password'){
-        password1.type = 'text'
-        password1Eye.src = openEye
-    }
-    else {
-        password1.type = 'password'
-        password1Eye.src = closeEye
-    }
-})
-
-password2Eye.addEventListener('click', function(){
-    if (password2.type === 'password'){
-        password2.type = 'text'
-        password2Eye.src = openEye
-    } else {
-        password2.type = 'password'
-        password2Eye.src = closeEye
-    }
-})
-
-
-
-password3Eye.addEventListener('click', function(){
-    if (password3.type === 'password'){
-        password3.type = 'text'
-        password3Eye.src = openEye
-    }
-    else {
-        password3.type = 'password'
-        password3Eye.src = closeEye
-    }
+    eye.addEventListener('click', function(){
+        console.log('click')
+        if (input.type === 'password'){
+            input.type = 'text'
+            this.src = openEye
+        }
+        else {
+            input.type = 'password'
+            this.src = closeEye
+        }
+    })
 })
 
 if (authState){

@@ -174,7 +174,24 @@
     justify-self: center;
 }
 
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input{
+    width: 100%;
+    padding-right: 2.5rem;
+}
+
 .password-eye {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
     height: 1.25rem;
     width: 1.25rem;
+    cursor: pointer;
+    transform: translateY(-50%);
 }
+
+

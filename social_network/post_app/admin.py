@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Tag, Post, Link
+from .models import *
 
 admin.register(Tag)
 admin.register(Post)
 admin.register(Link)
-
-
-# Register your models here.
+admin.register(PostImage)
+admin.register(PostLike)
+admin.register(PostHeart)
+admin.register(PostView)

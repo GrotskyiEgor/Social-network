@@ -11,13 +11,17 @@
             </div>
             <div class="modal-registration-inputs">
                 <p class="registration-text">Пароль</p>
-                {{ registration_form.password1 }}
-                <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='password-eye' id='password1_eye'>
+                <div class="password-wrapper">
+                    {{ registration_form.password1 }}
+                    <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='password-eye' id='password1_eye'>
+                </div>
             </div>
             <div class="modal-registration-inputs">
                 <p class="registration-text">Підтверди пароль</p>
-                {{ registration_form.password2 }}
-                <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='password-eye' id='password2_eye'>
+                <div class="password-wrapper">
+                    {{ registration_form.password2 }}
+                    <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='password-eye' id='password2_eye'>
+                </div>
             </div>
         </div>
     </form>

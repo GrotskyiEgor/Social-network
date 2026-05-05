@@ -17,6 +17,9 @@ class Post(models.Model):
     topic = models.CharField(max_length=255, blank=True, null=True)
     tags = models.ManyToManyField(Tag, related_name='tags')
     content = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     
     def __str__(self):
         return self.title
@@ -37,3 +40,18 @@ class PostImage(models.Model):
     
     def __str__(self):
         return self.original.name
+
+
+class PostLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
+
+
+class PostHeart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='hearts')
+
+
+class PostView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='views')

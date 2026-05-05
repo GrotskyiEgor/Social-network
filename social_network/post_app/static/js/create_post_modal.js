@@ -39,10 +39,16 @@ $(() => {
     createTagModel.on('submit', function(event){
         event.preventDefault();
 
+        let formData = new FormData(this)
+
+        $('.selected-tag').each(function(){
+            formData.append('tags', $(this).data('id'))
+        })
+
         $.ajax({
             url: createTagModel.attr('action'),
             method: 'POST',
-            data: createTagModel.serialize(),
+            data: formData,
             success: function(response){
                 console.log('200');
                 

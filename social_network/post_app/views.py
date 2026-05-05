@@ -52,11 +52,16 @@ class PostCreateView(View):
 
         if self.request.method == "POST":
             kwargs['links'] = self.request.POST.getlist('links')
+            kwargs['images'] = self.request.FILES.getlist('images')
 
         return kwargs
     
     def post(self, request, *args, **kwargs):
-        form = PostForm(request.POST)
+        form = PostForm(
+            request.POST, 
+            request.FILES,
+            self.request.POST.getlist('links')
+        )
 
         if form.is_valid():
             post = form.save(author=self.request.user)
