@@ -42,51 +42,14 @@
             <textarea name="" id="create_post_container_text" class="create-post-container-text" placeholder="Текст публікації"></textarea>
         </div>
         <div class="create-post-container-btn-div">
-            <img src="{% static 'images/emoji.svg' %}" alt="emoji-button" class="emoji-button" id="emoji_button">
+            <img src="{% static 'images/icons/emoji.svg' %}" alt="emoji-button" class="emoji-button" id="emoji_button">
             <button id="open-modal-create-post" class="open-modal-create-post-btn">Перейти до оформлення</button>
         </div>
     </div>
-    {% for post in posts %} 
-        <div class="scrolls-container content-border-container post-conteiner">
-            <div class="post-conteiner-header">
-                <div class="avatar-label">                    
-                    <div class="user-info-container">
-                        <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
-                        <p class="username-text">{{ user.username }}</p>
-                    </div>
-                    <div class="avatar-sing">
-                        <img class="profile-user-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
-                    </div>
-                </div>
-                <div class="interaction-settings">
-                    <img class="profile-user-image" src="{% static 'images/interaction.svg' %}" alt="interaction">
-                </div>
-            </div>
-            
-            <div>
-                <p>{{ post.title }}</p>
-                <p>{{ post.author }}</p>
-                <p>{{ post.topic }}</p>
-                <p>{{ post.content }}</p>
-    
-                <hr>
-                <p>Tags list</p>
-                {% for tag in post.tags.all %}
-                    <p>{{ tag.name }}</p>
-                {% empty %}
-                    <p>Пусто Tags</p>
-                {% endfor %}
-    
-                <hr>
-                <p>Links list</p>
-                {% for link in post.links.all %}
-                    <p>{{ link.url }}</p>
-                {% empty %}
-                    <p>Пусто Links</p>
-                {% endfor %}
-            </div>
-        </div>
-    {% endfor %}
+
+    <div class="post-content-container" id="post_content">
+        {% include 'post_app/post_list.html'  %}
+    </div>
 {% endblock %}
 
 {% block modals %}
@@ -95,7 +58,7 @@
             <form action="{% url 'create_post' %}"  method="POST" class="modal-create-post-view-form" id="create_post_modal" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-create-post-button-div">
-                    <img src="{% static 'images/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
                 </div>
                 <div class="modal-create-post-text-div">
                     <p class="modal-create-post-text">Створення публікації</p>
@@ -111,14 +74,12 @@
                     </div>
 
                     <div class="tags">
-                        <!-- {{ post_form.tags }} -->
-                          
                         {% for tag in tags %}  
-                            <div class="tag" name="tags" value="{{ tag.id }}"  id="id_tags_{{ tag.id }}">{{ tag.name }}</div>          
+                            <div class="tag" name="tags" value="{{ tag.id }}" data-id="{{ tag.id }}" id="id_tags_{{ tag.id }}">{{ tag.name }}</div>          
                         {% endfor %} 
 
-                        <div class="modal-add-urls-div">
-                            <img src="{% static 'images/add_url.svg' %}" alt="add_tag" class="add-tag-btn" id='add_tag_btn'>
+                        <div class="modal-add-urls-div" id="modal_add_tag">
+                            <img src="{% static 'images/icons/add_url.svg' %}" alt="add_tag" class="add-tag-btn" id='add_tag_btn'>
                         </div>
                     </div>
 
@@ -133,20 +94,20 @@
                         <div class="modal-url">
                             <input type="url" name="links" class="create-post-input" id="create_post_input" placeholder="https://www.instagram.com/world.it.ac">                   
                             <div class="modal-add-urls-div">
-                                <img src="{% static 'images/add_url.svg' %}" alt="add_url" class="add-url-btn" id='add_url_btn'>
+                                <img src="{% static 'images/icons/add_url.svg' %}" alt="add_url" class="add-url-btn" id='add_url_btn'>
                             </div>
                         </div>
                     </div>
 
-                    {{ post_form.images }}
+                    <!-- {{ post_form.images }} -->
                 </div>
             </form>
             
             <div class="create-post-btn-div">
-                <img src="{% static 'images/add_images.svg' %}" alt="add-images-button" class="add-images-button" id='images_field'>
-                <img src="{% static 'images/emoji.svg' %}" alt="emoji-button" class="emoji-button">
+                <img src="{% static 'images/icons/add_images.svg' %}" alt="add-images-button" class="add-images-button" id='images_field'>
+                <img src="{% static 'images/icons/emoji.svg' %}" alt="emoji-button" class="emoji-button">
                 <button class="create-post-btn" form="create_post_modal">
-                    <img src="{% static 'images/create_post_button.svg' %}" alt="create-post-btn" id="create_post" class="create-post">
+                    <img src="{% static 'images/buttons/create_post_button.svg' %}" alt="create-post-btn" id="create_post" class="create-post">
                 </button>
             </div> 
         </div>  
@@ -157,7 +118,7 @@
             <form action="{% url 'create_tag' %}" method="POST" class="modal-create-tag-view-form" id="create_tag_modal">
                 {% csrf_token %}
                 <div class="modal-create-tag-button-div">
-                    <img src="{% static 'images/exit_button.svg' %}" alt="exit-button" class="create-tag-exit-button" id="exit_tag_button">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-tag-exit-button" id="exit_tag_button">
                 </div>
 
                 <div class="modal-create-tag-text-div">
@@ -187,7 +148,7 @@
 
 {% block script %}
     <script>
-        const STATIC_ADD_URL = "{% static 'images/add_url.svg' %}";
+        const STATIC_ADD_URL = "{% static 'images/icons/add_url.svg' %}";
     </script>
     <script src= "{% static 'js/create_post_modal.js' %}"></script>
 {% endblock %}

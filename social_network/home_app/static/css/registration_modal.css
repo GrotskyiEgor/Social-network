@@ -27,12 +27,8 @@
     background-color: var(--white);
     border-radius: 1.4rem;  
 
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-}
 
-.modal-bg.active, .modal-registration-view {
-    transform: scale(1);
+    transition: transform 0.3s ease;
 }
 
 .modal-registration-view-form {

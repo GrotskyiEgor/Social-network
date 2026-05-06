@@ -60,6 +60,13 @@ class TagForm(forms.ModelForm):
         print('name', name)
 
         return name
+    
+    def save(self, author, commit = True):
+        tag = super().save(commit=False)
+        tag.author = author
+        tag.save()
+        
+        return tag
 
 
 class PostForm(forms.ModelForm):

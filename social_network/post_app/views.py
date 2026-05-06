@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from django.shortcuts import render
 from django .views.generic import TemplateView, View
 from django.urls import reverse_lazy
@@ -14,27 +15,34 @@ class PostView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        user_posts = Post.objects.filter(author=self.request.user).order_by('-create_at')[:2]
+        user_tags = Tag.objects.filter(author=self.request.user).order_by('-id')[:5]
+        post_tags = Tag.objects.filter(tags__in=user_posts).distinct()
+
+        tag_list = list(Tag.objects.all()[:10]) + list(post_tags) + list(user_tags)
+
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
-        context['tags'] = Tag.objects.all()
-        context['posts'] = Post.objects.filter(author=self.request.user).all()
+
+        context['tags'] = tag_list
+        context['posts'] = Post.objects.filter(author=self.request.user).order_by('-create_at')
         
         return context
 
 
 class TagCreateView(View):
-    #success_url = ...
     login_url = reverse_lazy('register_login_page')
 
     def post(self, request, *args, **kwargs):
         form = TagForm(request.POST)
 
         if form.is_valid():
-            tag = form.save()
+            tag = form.save(author=self.request.user)
 
             return JsonResponse({
                 'success': True,
-                'message': 'Публікація успішно створена'
+                'message': 'Публікація успішно створена',
+                'tag_html': render_to_string('post_app/post_form_tag.html', context={'tag': tag})
             })
     
         return JsonResponse({
@@ -44,7 +52,6 @@ class TagCreateView(View):
 
 
 class PostCreateView(View):
-    #success_url = ...
     login_url = reverse_lazy('register_login_page')
 
     def get_form_kwargs(self):
@@ -60,7 +67,8 @@ class PostCreateView(View):
         form = PostForm(
             request.POST, 
             request.FILES,
-            self.request.POST.getlist('links')
+            links=self.request.POST.getlist('links'),
+            images=request.FILES.getlist('images')
         )
 
         if form.is_valid():
@@ -68,11 +76,19 @@ class PostCreateView(View):
 
             return JsonResponse({
                 'success': True,
-                'message': 'Публікація успішно створена'
+                'message': 'Публікація успішно створена',
+                'post_html': render_to_string('post_app/post_list.html', context={"posts": [post]})
             })
     
         return JsonResponse({
             'success': False,
             'message': 'Публікація не була створена'
         })
-    
+
+
+class PostDeleteView(View):
+    def post(self, request, post_id):
+        post = Post.objects.get(id=post_id, author=request.user)
+        post.delete()
+
+        return JsonResponse({'success': True})

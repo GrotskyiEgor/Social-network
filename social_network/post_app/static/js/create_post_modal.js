@@ -4,6 +4,7 @@ $(() => {
     const urlsArrayDiv = document.querySelector('#modal_create_post_urls_div');
     const imagesField = $('#images_field')
     const imagesFieldHidden = $('#images_field_hidden')
+
     let tags = $('.tag');
     console.log(imagesField, imagesFieldHidden)
     imagesField.on('click', function(){
@@ -11,23 +12,26 @@ $(() => {
         imagesFieldHidden.click();
     })
 
-    tags.each(function(index, tag){
-        tag = $(tag)
-        tag.on('click', function(){
-            this.classList.toggle('selected-tag')
-        })
+    $(document).on('click', '.tag', function(index, tag){
+        this.classList.toggle('selected-tag')
     })
     
     createPostModel.on('submit', function(event){
         event.preventDefault();
-        console.log(createPostModel.serialize())
+        let createPostformData = new FormData(this)
+
+        $('.selected-tag').each(function(){
+            createPostformData.append('tags', $(this).data('id'))
+        })
+
         $.ajax({
             url: createPostModel.attr('action'),
             method: 'POST',
-            data: createPostModel.serialize(),
+            data: createPostformData,
             success: function(response){
                 console.log('200');
 
+                $('#post_content').prepend(response.post_html)
                 closeModal('modal-bg');
             },
             error: function(response){
@@ -39,21 +43,17 @@ $(() => {
     createTagModel.on('submit', function(event){
         event.preventDefault();
 
-        let formData = new FormData(this)
-
-        $('.selected-tag').each(function(){
-            formData.append('tags', $(this).data('id'))
-        })
-
         $.ajax({
             url: createTagModel.attr('action'),
             method: 'POST',
-            data: formData,
+            data: createTagModel.serialize(),
             success: function(response){
                 console.log('200');
                 
                 closeModal('modal-tag-bg');
                 openModal('modal-bg');
+
+                $('#modal_add_tag').before(response.tag_html)
             },
             error: function(response){
                 console.log('400', response);
@@ -95,6 +95,42 @@ $(() => {
             createPostInput.placeholder = 'Додайте посилання';
         };
     });
+
+    $(document).on('click', '.profile-interaction-image', function(event){
+        event.stopPropagation()
+
+        const menu =  $(this).siblings('.interaction-menu')
+        $('.interaction-menu').not(menu).removeClass('visible').addClass('hidden');
+        menu.toggleClass('hidden visible');
+    })
+
+    $(document).on('click', '.delete-post-button', function(event){
+        event.preventDefault();
+
+        const button = $(this)
+        const deletePostForm = button.closest('form');
+        const post = button.closest('.post-conteiner');
+        const menu = button.closest('.interaction-menu')
+
+        $.ajax({
+            url: deletePostForm.attr('action'),
+            method: 'POST',
+            data: deletePostForm.serialize(),
+            success: function(response){
+                console.log('200');
+
+                menu.removeClass('visible').addClass('hidden')
+                post.remove()
+            },
+            error: function(response){
+                console.log('400', response);
+            }
+        });
+    })
+
+    $(document).on('click', function(){
+        $('.interaction-menu').removeClass('visible').addClass('hidden')
+    })
 
     $(document).on('click', '#minus_url_btn', function(){
         const inputDivArray = document.querySelectorAll('.modal-url-div');

@@ -23,15 +23,13 @@
 .modal-create-post-view { 
     padding: 1.5rem 2.75rem;
     width: 48.3rem;
+    min-height: 41.8125rem;
+    max-height: 59.375rem;
+
     background-color: var(--white);
     border-radius: 1.4rem;  
 
-    transform: scale(0.9);
     transition: transform 0.3s ease;
-}
-
-.modal-bg.active .modal-create-post-view {
-    transform: scale(1);
 }
 
 .modal-create-post-view-form {
@@ -111,17 +109,16 @@
 .modal-create-post-text, .modal-create-tag-text { 
     font-size: 2.125rem;
     font-weight: 500;
-    /* font-weight: bold; */
     color: var(--text-main);
 }
 
 .modal-create-post-inputs {
     width: 42.8rem;
-    height: 31.4rem;
     padding: 1.5rem 0rem ;
     gap: 1rem;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .modal-create-tag-view { 
@@ -134,7 +131,6 @@
     background-color: var(--white);
     border-radius: 1.4rem;  
 
-    transform: scale(0.9);
     transition: transform 0.3s ease;
 }
 

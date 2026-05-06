@@ -1,13 +1,13 @@
-const path = window.location.pathname;
+const pagePath = window.location.pathname;
 
-if (path === '/') {
+if (pagePath === '/') {
     clearCookie(['authState'])
 }
 
 document.querySelectorAll('.nav-link').forEach(function(link){
-    if (path.includes(link.id)){
+    if (pagePath.includes(link.id)){
         link.classList.toggle("active-link");
-    } else if (path === "/" && link.id === "house") {
+    } else if (pagePath === "/" && link.id === "house") {
         link.classList.toggle("active-link");
     };
 });
