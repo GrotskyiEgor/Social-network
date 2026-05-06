@@ -1,9 +1,0 @@
-.modal-create-tag-view { 
-    padding: 1.5rem 2.75rem;
-    width: 26.93rem;
-    height: 18.8rem;
-    background-color: var(--white);
-    border-radius: 1.4rem;  
-
-    transition: transform 0.3s ease;
-}

@@ -15,11 +15,11 @@ class PostView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        user_posts = Post.objects.filter(author=self.request.user).order_by('-create_at')[:2]
         user_tags = Tag.objects.filter(author=self.request.user).order_by('-id')[:5]
-        post_tags = Tag.objects.filter(tags__in=user_posts).distinct()
-
-        tag_list = list(Tag.objects.all()[:10]) + list(post_tags) + list(user_tags)
+        tag_list = list(Tag.objects.order_by('id')) + list(user_tags)
+        # user_posts = Post.objects.filter(author=self.request.user).order_by('-create_at')[:2]
+        # post_tags = Tag.objects.filter(posts__in=user_posts).distinct()
+        # tag_list = list(Tag.objects.all()[:10]) + list(post_tags) + list(user_tags)
 
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()

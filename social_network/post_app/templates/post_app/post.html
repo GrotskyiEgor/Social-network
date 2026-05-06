@@ -99,7 +99,10 @@
                         </div>
                     </div>
 
-                    <!-- {{ post_form.images }} -->
+                    {{ post_form.images }}
+                    <div class="images-preview-container hidden" id="image_preview_container"> 
+
+                    </div>
                 </div>
             </form>
             
@@ -148,7 +151,8 @@
 
 {% block script %}
     <script>
-        const STATIC_ADD_URL = "{% static 'images/icons/add_url.svg' %}";
+        const ADD_URL_IMG_PATH = "{% static 'images/icons/add_url.svg' %}";
+        const DELTE_IMG_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
     <script src= "{% static 'js/create_post_modal.js' %}"></script>
 {% endblock %}

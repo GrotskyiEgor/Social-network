@@ -1,3 +1,13 @@
+.modal-create-tag-view { 
+    padding: 1.5rem 2.75rem;
+    width: 26.93rem;
+    height: 18.8rem;
+    background-color: var(--white);
+    border-radius: 1.4rem;  
+
+    transition: transform 0.3s ease;
+}
+
 .post-content-container {
     display: flex;
     flex-direction: column;
@@ -24,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     border: 0rem solid var(--text-accent);
 }
 
@@ -131,11 +142,18 @@
     cursor: pointer;
 }
 
-.post-conteiner-content {
+.post-conteiner-content, .post-content {
+    width: 100%;
     padding: 1rem 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.post-content-text {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-main);
 }
 
 .post-conteiner-title, .post-conteiner-topic {
@@ -144,16 +162,12 @@
     color: var(--text-main);
 }
 
-.post-content {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--text-main);
-}
-
 .post-content-tags {
     display: flex;
     flex-direction: row;
-    gap: 0.0625rem;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.275rem;
 }
 
 .post-conteiner-tag, .post-conteiner-link {
@@ -179,7 +193,7 @@
 .post-interaction-text {
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--text-accent);
+    color: var(--text-main);
 }
 
 .interaction-menu {
@@ -216,4 +230,23 @@
 .delete-post-button:hover {
     color: var(--white);
     background-color: rgb(201, 18, 18);
+}
+
+.image-item .post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-image-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 0.625rem;
+}
+
+.post-image-item .post-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

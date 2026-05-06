@@ -462,12 +462,9 @@ main {
 
 #themeToggle {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
     border: none;
     color: var(--text-muted);
-}
-
-#themeToggle {
     cursor: pointer;
     background-color: transparent;
 }

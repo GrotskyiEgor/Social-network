@@ -1,21 +1,35 @@
 $(() => {
+    const imagesField = $('#images_field');
     const createTagModel = $('#create_tag_modal');
     const createPostModel = $('#create_post_modal');
+    const imagesFieldHidden = $('#images_field_hidden');
     const urlsArrayDiv = document.querySelector('#modal_create_post_urls_div');
-    const imagesField = $('#images_field')
-    const imagesFieldHidden = $('#images_field_hidden')
+    const previewContainer = document.getElementById('image_preview_container');
 
-    let tags = $('.tag');
-    console.log(imagesField, imagesFieldHidden)
+    let selectedFiles = [];
+
     imagesField.on('click', function(){
-        console.log(imagesField, imagesFieldHidden)
         imagesFieldHidden.click();
     })
 
     $(document).on('click', '.tag', function(index, tag){
         this.classList.toggle('selected-tag')
     })
-    
+
+    imagesFieldHidden.on('change', function(){
+        const newFiles = Array.from(this.files);
+
+        for (let file of newFiles){
+            if (!file.type.startsWith('image/')) continue;
+
+            if (!isDuplicate(file, selectedFiles)) {
+                selectedFiles.push(file);
+            }
+        }
+
+        renderImages();
+    });
+
     createPostModel.on('submit', function(event){
         event.preventDefault();
         let createPostformData = new FormData(this)
@@ -28,6 +42,8 @@ $(() => {
             url: createPostModel.attr('action'),
             method: 'POST',
             data: createPostformData,
+            processData: false,
+            contentType: false,
             success: function(response){
                 console.log('200');
 
@@ -84,7 +100,7 @@ $(() => {
 
             const modalMinusImg = document.createElement('img');
             modalMinusImg.alt = 'minus_url';
-            modalMinusImg.src = STATIC_ADD_URL;
+            modalMinusImg.src = ADD_URL_IMG_PATH;
             modalMinusImg.className = 'minus-url-btn';
             modalMinusImg.id = 'minus_url_btn';
 
@@ -95,6 +111,14 @@ $(() => {
             createPostInput.placeholder = 'Додайте посилання';
         };
     });
+
+    $(document).on('click', '.delete-preview-image', function(){
+        const imageItem = this.closest('.image-item');
+        const index = parseInt(imageItem.dataset.index);
+        selectedFiles.splice(index, 1);
+        
+        renderImages();
+    })
 
     $(document).on('click', '.profile-interaction-image', function(event){
         event.stopPropagation()
@@ -196,4 +220,40 @@ $(() => {
         $(`.${modalClass}`).addClass('hidden');
         $(`.${modalClass}`).removeClass('visible');
     };
+
+    function isDuplicate(file, filesArray) {
+        return filesArray.some(img =>img.name === file.name && img.size === file.size && img.lastModified === file.lastModified);
+    }
+
+    function renderImages(){
+        previewContainer.innerHTML = '';
+
+        previewContainer.classList.add('hidden')
+        if (selectedFiles.length > 0){
+            previewContainer.classList.remove('hidden')
+            previewContainer.classList.add('visible')
+        }
+
+        for (let index = 0; index < selectedFiles.length; index++){
+            const file = selectedFiles[index];
+            const imageURL = URL.createObjectURL(file);
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-item';
+            wrapper.dataset.index = index;
+
+            const image = document.createElement('img');
+            image.className = 'preview-image';
+            image.src = imageURL;
+            image.onload = () => URL.revokeObjectURL(imageURL);
+
+            const deleteImgage = document.createElement('img')
+            deleteImgage.className = 'delete-preview-image'
+            deleteImgage.src = DELTE_IMG_IMG_PATH;
+
+            wrapper.appendChild(deleteImgage);
+            wrapper.appendChild(image);
+            previewContainer.appendChild(wrapper);
+        }
+    }
 })
