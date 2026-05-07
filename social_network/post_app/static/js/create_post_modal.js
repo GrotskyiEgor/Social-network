@@ -6,14 +6,30 @@ $(() => {
     const urlsArrayDiv = document.querySelector('#modal_create_post_urls_div');
     const previewContainer = document.getElementById('image_preview_container');
 
-    let selectedFiles = [];
+    const createPostModelText = document.getElementById('create_post_modal_text');
+    const createPostModalTextTags = document.getElementById('create_post_modal_text_tags');
 
+    let selectedFiles = [];
+    let selectedTags = [];
+    
     imagesField.on('click', function(){
         imagesFieldHidden.click();
     })
 
-    $(document).on('click', '.tag', function(index, tag){
+    $(document).on('click', '.tag', function(index, tag){    
         this.classList.toggle('selected-tag')
+
+        if (this.classList.contains('selected-tag')){
+            selectedTags.push(this.textContent)
+        } else {
+            indexTag = selectedTags.indexOf(this.textContent)
+            selectedTags.splice(indexTag, 1)
+        }
+
+        createPostModalTextTags.innerHTML = ''
+        for (let tag of selectedTags){
+            createPostModalTextTags.innerHTML += tag
+        }
     })
 
     imagesFieldHidden.on('change', function(){
@@ -175,9 +191,9 @@ $(() => {
         openModal('modal-bg');
     });
 
-    $('#emoji_button').on('click', function(){
-        openModal('modal-bg');
-    });
+    // $('#emoji_button').on('click', function(){
+    //     openModal('modal-bg');
+    // });
 
     $('#add_tag_btn').on('click', function(){
         closeModal('modal-bg');
@@ -206,7 +222,6 @@ $(() => {
     function openModal(modalClass){
         if (modalClass == 'modal-bg'){
             const createPostText = document.getElementById('create_post_container_text');
-            const createPostModelText = document.getElementById('create_post_modal_text');
             createPostModelText.textContent = createPostText.value;
         }
 
@@ -249,7 +264,7 @@ $(() => {
 
             const deleteImgage = document.createElement('img')
             deleteImgage.className = 'delete-preview-image'
-            deleteImgage.src = DELTE_IMG_IMG_PATH;
+            deleteImgage.src = DELTE_IMG_PATH;
 
             wrapper.appendChild(deleteImgage);
             wrapper.appendChild(image);

@@ -15,8 +15,6 @@ class PostView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        user_tags = Tag.objects.filter(author=self.request.user).order_by('-id')[:5]
-        tag_list = list(Tag.objects.order_by('id')) + list(user_tags)
         # user_posts = Post.objects.filter(author=self.request.user).order_by('-create_at')[:2]
         # post_tags = Tag.objects.filter(posts__in=user_posts).distinct()
         # tag_list = list(Tag.objects.all()[:10]) + list(post_tags) + list(user_tags)
@@ -24,7 +22,7 @@ class PostView(LoginRequiredMixin, TemplateView):
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
 
-        context['tags'] = tag_list
+        context['tags'] = unionTagList(self.request.user)
         context['posts'] = Post.objects.filter(author=self.request.user).order_by('-create_at')
         
         return context
@@ -42,7 +40,7 @@ class TagCreateView(View):
             return JsonResponse({
                 'success': True,
                 'message': 'Публікація успішно створена',
-                'tag_html': render_to_string('post_app/post_form_tag.html', context={'tag': tag})
+                'tag_html': render_to_string('post_app/download_parts/post_form_tag.html', context={'tag': tag})
             })
     
         return JsonResponse({
@@ -77,7 +75,7 @@ class PostCreateView(View):
             return JsonResponse({
                 'success': True,
                 'message': 'Публікація успішно створена',
-                'post_html': render_to_string('post_app/post_list.html', context={"posts": [post]})
+                'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post]})
             })
     
         return JsonResponse({
@@ -92,3 +90,18 @@ class PostDeleteView(View):
         post.delete()
 
         return JsonResponse({'success': True})
+
+
+def unionTagList(author):
+    seen = set()
+    tag_list = []
+
+    all_tags = list(Tag.objects.order_by('id')[:10])
+    user_tags = list(Tag.objects.filter(author=author).order_by('-id')[:5])
+
+    for tag in all_tags + user_tags:
+        if tag.id not in seen:
+            seen.add(tag.id)
+            tag_list.append(tag)
+
+    return tag_list

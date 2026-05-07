@@ -5,6 +5,7 @@
 
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/registration_modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create_modal.css' %}">
 {% endblock %}
 
 {% block info-content %}
@@ -140,6 +141,8 @@
 {% endblock %}
 
 {% block main-content %}
+    {% include "post_app/particles/create_post.html" %}
+
     {% for i in "......................." %}    
         <div class="scrolls-container content-border-container">   
             <h1>Головна</h1>
@@ -148,7 +151,11 @@
 {% endblock %}
 
 {% block modals %}
-    <div class="modal-bg hidden">
+    {% include "post_app/particles/create_post_form.html" %}
+
+    {% include "post_app/particles/create_tag_form.html" %}
+
+    <div class="modal-registration-bg hidden">
         <div class="modal-registration-view">
             <form method="POST" class="modal-registration-view-form" id="registration-modal">
                 {% csrf_token %}
@@ -180,7 +187,11 @@
 {% block script %}
     <script defer>
         let first_registration = "{{ first_registration }}"
+        const ADD_URL_IMG_PATH = "{% static 'images/icons/add_url.svg' %}";
+        const DELTE_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
 
     <script src="{% static 'js/registration_modal.js' %}"></script>
+    <script src="{% static 'js/create_post_modal.js' %}"></script>
 {% endblock %}
+

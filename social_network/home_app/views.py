@@ -3,7 +3,9 @@ from django.http import HttpRequest, JsonResponse
 from django.views.generic import TemplateView
 
 from .forms import ModalForm
+from post_app.forms import PostForm, TagForm
 from user_app.models import User
+from post_app.views import unionTagList
 
 
 class HomeView(TemplateView):
@@ -25,6 +27,10 @@ class HomeView(TemplateView):
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
+        context['tag_form'] = TagForm()
+        context['post_form'] = PostForm()
+
+        context['tags'] = unionTagList(self.request.user)
         
         return context
     
