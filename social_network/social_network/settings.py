@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'profile_app',
     'post_app',
     'settings_app',
-    'user_app'
+    'user_app',
+    'chat'
 ]
 
 AUTH_USER_MODEL = 'user_app.User'
