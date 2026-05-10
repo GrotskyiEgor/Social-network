@@ -25,20 +25,17 @@ class PostView(LoginRequiredMixin, ListView):
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
         context['tags'] = unionTagList(self.request.user)
-        render_to_string
+        
         return context
     
     def render_to_response(self, context, **response_kwargs):
-        print('render_to_response', self.request.headers.get("X-Requested-With") == "XMLHttpRequest", self.request.headers.get("X-Requested-With"))
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
-            print('"X-Requested-With") == "XMLHttpRequest"')
             page_obj = context['page_obj']
-            print('page_obj', page_obj.has_next())
             
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": context['post']}      
+                    {"posts": context['posts']}      
                 ),
                 'has_next': page_obj.has_next()
             })

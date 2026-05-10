@@ -3,7 +3,6 @@ let isLoading = false;
 
 const postList = document.getElementById('post_content_main')
 const sentinel = document.getElementById('post-loader');
-console.log(postList, sentinel)
 
 const obeserve = new IntersectionObserver(async (entries)=>{
     if (entries[0].isIntersecting && isLoading === false){
@@ -11,9 +10,10 @@ const obeserve = new IntersectionObserver(async (entries)=>{
         currentPage += 1
         
         const response = await fetch (
-            `${window.location.pathname}?page=${currentPage}`,
-            headers = {
-                "X-Requested-With": "XMLHttpRequest"
+            `${window.location.pathname}?page=${currentPage}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
             }
         )
 
@@ -26,7 +26,9 @@ const obeserve = new IntersectionObserver(async (entries)=>{
         if (!objectRespone.has_next){
             obeserve.disconnect()
         }
+
+        isLoading = false
     }
-}, {rootMargin: "200px"})
+}, {rootMargin: "450px"})
 
 obeserve.observe(sentinel)
