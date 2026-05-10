@@ -294,3 +294,44 @@
     z-index: 2;
     cursor: pointer;
 }
+
+
+
+
+
+.custom-post-area {
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
+
+
+.tags-row {
+    display: flex;
+}
+
+.tag-badge {
+    background-color: #ffffff;
+    color: #555;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    user-select: none; 
+}
+
+
+.textarea-wrapper textarea {
+    border: none !important;
+    outline: none !important;
+    width: 100%;
+    resize: none;
+    padding: 0;
+    font-size: 15px;
+    line-height: 2;
+    min-height: 100px;
+}

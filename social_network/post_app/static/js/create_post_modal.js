@@ -16,21 +16,24 @@ $(() => {
         imagesFieldHidden.click();
     })
 
-    $(document).on('click', '.tag', function(index, tag){    
-        this.classList.toggle('selected-tag')
-
-        if (this.classList.contains('selected-tag')){
-            selectedTags.push(this.textContent)
+    $(document).on('click', '.tag', function() {
+        const tagText = $(this).text().trim();
+        $(this).toggleClass('selected-tag');
+        if ($(this).hasClass('selected-tag')) {
+            if (!selectedTags.includes(tagText)) {
+                selectedTags.push(tagText);
+            }
         } else {
-            indexTag = selectedTags.indexOf(this.textContent)
-            selectedTags.splice(indexTag, 1)
+            const index = selectedTags.indexOf(tagText);
+            if (index !== -1) {
+                selectedTags.splice(index, 1);
+            }
         }
-
-        createPostModalTextTags.innerHTML = ''
-        for (let tag of selectedTags){
-            createPostModalTextTags.innerHTML += tag
-        }
-    })
+        createPostModalTextTags.empty();
+        selectedTags.forEach(tag => {
+            createPostModalTextTags.append(`${tag}`);
+        });
+    });
 
     imagesFieldHidden.on('change', function(){
         const newFiles = Array.from(this.files);
