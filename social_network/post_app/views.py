@@ -1,6 +1,6 @@
 from django.template.loader import render_to_string
 from django.shortcuts import render
-from django .views.generic import TemplateView, View
+from django .views.generic import TemplateView, View, ListView
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,9 +9,12 @@ from .forms import PostForm, TagForm
 from .models import Tag, Post
 
 
-class PostView(LoginRequiredMixin, TemplateView):
+class PostView(LoginRequiredMixin, ListView):
+    model = Post
     template_name = 'post_app/post.html'
-
+    paginate_by = 5
+    context_object_name = 'posts'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -21,11 +24,34 @@ class PostView(LoginRequiredMixin, TemplateView):
 
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
-
         context['tags'] = unionTagList(self.request.user)
-        context['posts'] = Post.objects.filter(author=self.request.user).order_by('-create_at')
-        
+        render_to_string
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        print('render_to_response', self.request.headers.get("X-Requested-With") == "XMLHttpRequest", self.request.headers.get("X-Requested-With"))
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
+            print('"X-Requested-With") == "XMLHttpRequest"')
+            page_obj = context['page_obj']
+            print('page_obj', page_obj.has_next())
+            
+            return JsonResponse({
+                'posts_html': render_to_string(
+                    'post_app/download_parts/post_list.html',
+                    {"posts": context['post']}      
+                ),
+                'has_next': page_obj.has_next()
+            })
+            
+        return super().render_to_response(context, **response_kwargs)
+    
+    def get_queryset(self):   
+        return (
+            Post.objects.filter(author=self.request.user).
+            select_related('author').
+            prefetch_related('tags', 'links', 'images').
+            order_by('-id')
+        )
 
 
 class TagCreateView(View):

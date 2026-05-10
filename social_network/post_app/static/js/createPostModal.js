@@ -9,6 +9,8 @@ $(() => {
     const createPostModelText = document.getElementById('create_post_modal_text');
     const createPostModalTextTags = document.getElementById('create_post_modal_text_tags');
 
+    console.log(createPostModelText, createPostModalTextTags)
+
     let selectedFiles = [];
     let selectedTags = [];
     
@@ -19,6 +21,7 @@ $(() => {
     $(document).on('click', '.tag', function() {
         const tagText = $(this).text().trim();
         $(this).toggleClass('selected-tag');
+
         if ($(this).hasClass('selected-tag')) {
             if (!selectedTags.includes(tagText)) {
                 selectedTags.push(tagText);
@@ -29,9 +32,13 @@ $(() => {
                 selectedTags.splice(index, 1);
             }
         }
-        createPostModalTextTags.empty();
+
+        $(createPostModalTextTags).empty();
         selectedTags.forEach(tag => {
-            createPostModalTextTags.append(`${tag}`);
+            let tagBadge = document.createElement('div')
+            tagBadge.className = 'tag-badge'
+            tagBadge.textContent = tag
+            createPostModalTextTags.appendChild(tagBadge);
         });
     });
 
@@ -66,7 +73,7 @@ $(() => {
             success: function(response){
                 console.log('200');
 
-                $('#post_content').prepend(response.post_html)
+                $('#post_content_main').prepend(response.post_html)
                 closeModal('modal-bg');
             },
             error: function(response){

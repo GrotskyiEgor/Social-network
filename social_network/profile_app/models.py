@@ -5,25 +5,6 @@ from user_app.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    birth_date = models.DateField(blank=True, null=True)
-    
-    signature = models.ImageField(upload_to='',blank=True, null=True )
-    avatar = models.ImageField(upload_to='', blank=True, null=True)
-    
-    pseudonym = models.CharField(max_length=50)
-    friends = models.ManyToManyField("Profile")
-    is_image_signature = models.BooleanField(default=False)
-    is_text_signature = models.BooleanField(default=True)
-
-
-class FriendsRequest(models.Model):
-    from_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="sent_requests")
-    to_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="received_requests")
-    create_at = models.DateTimeField(auto_now_add=True)
-
-
-class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, verbose_name="Користувач")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Дата народження")
     signature = models.TextField(null=True, blank=True, verbose_name="Підпис")
@@ -35,6 +16,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Профіль: {self.user.username}"
+    
+class FriendsRequest(models.Model):
+    from_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="sent_requests")
+    to_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="received_requests")
+    create_at = models.DateTimeField(auto_now_add=True)
 
 class Album(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='albums', verbose_name="Профіль")
@@ -56,3 +42,4 @@ class AlbumImage(models.Model):
 
     def __str__(self):
         return f"Фото для альбому {self.album.name}"
+    

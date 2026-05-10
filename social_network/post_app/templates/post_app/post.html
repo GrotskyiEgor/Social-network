@@ -41,8 +41,12 @@
    {% include "post_app/particles/create_post.html" %}
 
     <div class="post-content-container" id="post_content">
-        {% include 'post_app/download_parts/post_list.html'  %}
+        <div id="post_content_main">
+            {% include 'post_app/download_parts/post_list.html'  %}
+        </div>
+        {% include 'post_app/download_parts/sentinel.html'  %}
     </div>
+
 {% endblock %}
 
 {% block modals %}
@@ -55,5 +59,6 @@
         const ADD_URL_IMG_PATH = "{% static 'images/icons/add_url.svg' %}";
         const DELTE_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
-    <script src= "{% static 'js/create_post_modal.js' %}" defer></script>
+    <script src = "{% static 'js/createPostModal.js' %}" defer></script>
+    <script src = "{% static 'js/postLoader.js' %}" defer></script>
 {% endblock %}
