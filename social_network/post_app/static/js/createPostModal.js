@@ -74,6 +74,7 @@ $(() => {
                 console.log('200');
 
                 $('#post_content_main').prepend(response.post_html)
+                clearPostForm();
                 closeModal('modal-bg');
             },
             error: function(response){
@@ -92,6 +93,7 @@ $(() => {
             success: function(response){
                 console.log('200');
                 
+                clearTagForm();
                 closeModal('modal-tag-bg');
                 openModal('modal-bg');
 
@@ -223,10 +225,17 @@ $(() => {
         closeModal('modal-bg');
     });
 
-    $('.modal-bg').on('click', function(event){
+    $('.modal-bg').on('mousedown', function(event){
         if ($(event.target).is('.modal-bg')) {
             closeModal('modal-bg');
-        };
+        }
+    });
+
+    $('.modal-tag-bg').on('mousedown', function(event){
+        if ($(event.target).is('.modal-tag-bg')) {
+            closeModal('modal-tag-bg');
+            openModal('modal-bg');
+        }
     });
 
     function openModal(modalClass){
@@ -280,5 +289,34 @@ $(() => {
             wrapper.appendChild(image);
             previewContainer.appendChild(wrapper);
         }
+    }
+
+    function clearTagForm(){
+        createTagModel[0].reset();
+    }
+
+    function clearPostForm(){
+        createPostModel[0].reset();
+
+        selectedFiles = [];
+        selectedTags = [];
+
+        previewContainer.innerHTML = '';
+
+        previewContainer.classList.remove('visible');
+        previewContainer.classList.add('hidden');
+
+        $(createPostModalTextTags).empty();
+
+        $('.selected-tag').removeClass('selected-tag');
+
+        $('.modal-url-div').remove();
+
+        $('.modal-minus-urls-div').remove();
+
+        createPostModelText.textContent = '';
+
+        const createPostInput = document.querySelector('#create_post_input');
+        createPostInput.placeholder = 'https://www.instagram.com/world.it.ac';
     }
 })

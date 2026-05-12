@@ -1,4 +1,4 @@
-.modal-bg {
+.modal-bg, .modal-registration-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
     transition: opacity 0.3s ease;
 }
 
-.modal-bg.active {
+.modal-bg.active ,.modal-registration-bg.active {
     opacity: 1;
     pointer-events: all;
 }
@@ -127,3 +127,13 @@
     cursor: pointer; 
     color: #22C55E;
 } 
+
+.modal-error-text {
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+    font-weight: 500;
+    color: var(--text-error);
+    display: flex;
+    align-self: center;
+    justify-self: center;
+}

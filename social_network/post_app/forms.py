@@ -47,7 +47,7 @@ class TagForm(forms.ModelForm):
             print('Введить name')
             raise forms.ValidationError('Введить tag')
         
-        if not re.fullmatch(r'[a-zA-Z0-9_]+', name):
+        if not re.fullmatch(r'[a-zA-Zа-яА-ЯіІїЇєЄёЁ0-9_]+', name):
             print("Тільки латиниця, цифри та '_'")
             raise forms.ValidationError("Тільки латиниця, цифри та '_'")
 

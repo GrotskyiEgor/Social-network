@@ -1,5 +1,4 @@
 $(() => {
-    console.log(first_registration, typeof(first_registration));
     const registrationModal = $('#registration-modal');
     
     if (first_registration === "True"){
@@ -20,12 +19,30 @@ $(() => {
             success: function(response){
                 console.log('200');
 
+                document.getElementById('username_text').textContent = response.username;
+                document.getElementById('pseudonym_text').textContent = response.pseudonym;
+
                 $('.modal-registration-bg').removeClass('visible')
-                $('.modal-registration-bg').addClass('hidden');
+                $('.modal-registration-bg').addClass('hidden');              
             },
             error: function(response){
                 console.log('400')
-                
+
+                const errorText = $('.modal-error-text');
+
+                if (data?.error) {
+                    const errors = data.error;
+
+                    const firstKey = Object.keys(errors)[0];
+                    const message = errors[firstKey][0];
+
+                    errorText.text(message);
+                } else {
+                    errorText.text('Помилка серверу');
+                };
+
+                errorText.removeClass('hidden');
+                errorText.addClass('visible');
             }
         })
     })

@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" data-theme="light">
     {% load static %}
     <head>
         <meta charset="UTF-8">
@@ -10,15 +10,14 @@
         <link rel="icon" href="data:,">
         {% block links %}{% endblock %}
 
-        <!-- <script>
-             data-theme="light"
+        <script>
             (function () {
                 const theme = localStorage.getItem('theme');
                 if (theme) {
                     document.documentElement.setAttribute('data-theme', theme);
                 }
             })();
-        </script> -->
+        </script>
     </head>
     <body>
         <header>

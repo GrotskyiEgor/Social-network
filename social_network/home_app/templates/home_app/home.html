@@ -4,7 +4,8 @@
 {% block title %}WorldIT Головна{% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{% static 'css/registration_modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile_modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post_app.css' %}">
     <link rel="stylesheet" href="{% static 'css/create_modal.css' %}">
 {% endblock %}
 
@@ -15,8 +16,8 @@
                 <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
             </div>
             <div class="profile-username">
-                <p class="username-text">{{ user.username }}</p>
-                <p class="email-text">{{ user.user_handle }}</p>
+                <p class="username-text" id="username_text">{{ user.username }}</p>
+                <p class="email-text" id="pseudonym_text">{{ user.profile.pseudonym }}</p>
             </div>      
         </div>
         <div class="profile-statistics-container">
@@ -46,39 +47,39 @@
             <button class="container-header-button">Дивитись всі</button>
         </div>
 
-        <!-- {% if user.friends %}
-        {% endif %} -->
-        <div class="followers-container">
-            <div class="followers-user-block">
-                <div class="followers-container-image-container">
-                    <img class="followers-image" src="{% static 'images/users/avatar1.svg' %}" alt="">
+        {% if user.is_authenticated %}
+            <div class="followers-container">
+                <div class="followers-user-block">
+                    <div class="followers-container-image-container">
+                        <img class="followers-image" src="{% static 'images/users/avatar1.svg' %}" alt="">
+                    </div>
+                    <div class="user-block-info">
+                        <p class="user-block-username">Yehor Aung</p>
+                        <p class="user-block-email">4.3к підписників</p>
+                    </div>
                 </div>
-                <div class="user-block-info">
-                    <p class="user-block-username">Yehor Aung</p>
-                    <p class="user-block-email">4.3к підписників</p>
-                </div>
-            </div>
 
-            <div class="followers-user-block">
-                <div class="followers-container-image-container">
-                    <img class="followers-image" src="{% static 'images/users/avatar2.svg' %}" alt="">
+                <div class="followers-user-block">
+                    <div class="followers-container-image-container">
+                        <img class="followers-image" src="{% static 'images/users/avatar2.svg' %}" alt="">
+                    </div>
+                    <div class="user-block-info">
+                        <p class="user-block-username">Ann Ann</p>
+                        <p class="user-block-email">1.6к підписників</p>
+                    </div>
                 </div>
-                <div class="user-block-info">
-                    <p class="user-block-username">Ann Ann</p>
-                    <p class="user-block-email">1.6к підписників</p>
-                </div>
-            </div>
 
-            <div class="followers-user-block">
-                <div class="followers-container-image-container">
-                    <img class="followers-image" src="{% static 'images/users/avatar3.svg' %}" alt="">
-                </div>
-                <div class="user-block-info">
-                    <p class="user-block-username">Yeugen Jenua</p>
-                    <p class="user-block-email">10.3к підписників</p>
+                <div class="followers-user-block">
+                    <div class="followers-container-image-container">
+                        <img class="followers-image" src="{% static 'images/users/avatar3.svg' %}" alt="">
+                    </div>
+                    <div class="user-block-info">
+                        <p class="user-block-username">Yeugen Jenua</p>
+                        <p class="user-block-email">10.3к підписників</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
     <div class="message-container content-border-container">
@@ -143,11 +144,13 @@
 {% block main-content %}
     {% include "post_app/particles/create_post.html" %}
 
-    {% for i in "......................." %}    
-        <div class="scrolls-container content-border-container">   
-            <h1>Головна</h1>
+    <div class="post-content-container" id="post_content">
+        <div class="post-content-container-main" id="post_content_main">
+            {% include 'post_app/download_parts/post_list.html'  %}
         </div>
-    {% endfor %}
+        {% include 'post_app/download_parts/sentinel.html'  %}
+    </div>
+
 {% endblock %}
 
 {% block modals %}
@@ -174,8 +177,10 @@
                             <p class="registration-small-text">Або оберіть: </p>
                             <p class="registration-small-text generete-text">Запропоновані варіанти відповідно до Ім’я та Прізвища</p>
                         </div>
+                        <p class="modal-error-text"></p>
                     </div>
                 </div>
+
                 <div class="registration-btn-div">
                     <button type="submit" class='registration-btn'>Продовжити</button>
                 </div>
@@ -191,7 +196,8 @@
         const DELTE_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
 
-    <script src="{% static 'js/registrationModal.js' %}"></script>
+    <script src="{% static 'js/postLoader.js' %}"></script>
+    <script src="{% static 'js/profileModal.js' %}"></script>
     <script src="{% static 'js/createPostModal.js' %}"></script>
 {% endblock %}
 

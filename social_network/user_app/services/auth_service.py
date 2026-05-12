@@ -26,6 +26,7 @@ def save_registration(request: HttpRequest, cleaned_data):
         request.session['confirm_code'] = code
 
         send_email_code(cleaned_data['email'], code)
+        
     except IntegrityError:
         return {
             'error': 'Користувач з таким email вже існує'

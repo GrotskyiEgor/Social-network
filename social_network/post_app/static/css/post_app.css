@@ -12,8 +12,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    /* overflow-y: auto;
-    scrollbar-width: none; */
+}
+
+.post-content-container-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .emoji-button {

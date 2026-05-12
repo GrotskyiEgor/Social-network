@@ -16,7 +16,7 @@
             </div>
             <div class="profile-username">
                 <p class="username-text">{{ user.username }}</p>
-                <p class="email-text">{{ user.user_handle }}</p>
+                <p class="email-text">{{ user.profile.pseudonym }}</p>
             </div>      
         </div>
         <div class="profile-statistics-container">
@@ -41,7 +41,7 @@
    {% include "post_app/particles/create_post.html" %}
 
     <div class="post-content-container" id="post_content">
-        <div id="post_content_main">
+        <div class="post-content-container-main" id="post_content_main">
             {% include 'post_app/download_parts/post_list.html'  %}
         </div>
         {% include 'post_app/download_parts/sentinel.html'  %}
