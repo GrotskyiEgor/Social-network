@@ -3,7 +3,9 @@
 
 {% block title %}WorldIT Друзі{% endblock %}
 
-{% block links %}{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/friends.css' %}">
+{% endblock %}
 
 {% block info-content %}
     <div class="info-navigations">
@@ -15,11 +17,9 @@
 {% endblock %}
 
 {% block main-content %}
-    {% for i in "......................." %}    
-        <div class="scrolls-container content-border-container">   
-            <h1>Профиль</h1>
-        </div>
-    {% endfor %}
+    {% include 'friends_app/particals/requests.html' %}
+    {% include 'friends_app/particals/recommendations.html' %}
+    {% include 'friends_app/particals/friends.html' %}
 {% endblock %}
 
 {% block modals %}{% endblock %}

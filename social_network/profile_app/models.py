@@ -16,11 +16,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Профіль: {self.user.username}"
-    
-class FriendsRequest(models.Model):
-    from_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="sent_requests")
-    to_profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="received_requests")
+
+class Friendship(models.Model):
+    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sent_friendships")
+    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="received_friendships")
+    status = models.CharField(max_length=20, default="pending")
     create_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("from_user", "to_user")
 
 class Album(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='albums', verbose_name="Профіль")
