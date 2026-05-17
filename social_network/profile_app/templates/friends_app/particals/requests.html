@@ -1,19 +1,19 @@
 {% load static %}
 
-<div class="friends-container scrolls-container content-border-container"> 
+<div class="friends-container scrolls-container content-border-container" data-id="requests"> 
     <div class="friends-container-header">
         <p class="friends-container-title">Запити</p>
-        <p class="get-all-text">Дивитись всі</p>
+        <p class="get-all-text" data-id="requests">Дивитись всі</p>
     </div>
-    <div class="friends-container-content">
+    <div class="friends-container-content" id="requests">
         {% for profile in requests %}
             <div class="friends-container-block content-border-container">
                 <div class="profile-user-image-container">
                     <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                 </div>
                 <div class="profile-username">
-                    <p class="username-text">{{ user.username }}</p>
-                    <p class="pseudonym-text">{{ user.profile.pseudonym }}</p>
+                    <p class="username-text">{{ profile.user.username }}</p>
+                    <p class="pseudonym-text">{{ profile.pseudonym }}</p>
                 </div> 
                 <div class="block-buttomns">
                     <img class="friends-btn" src="{% static 'images/accept_btn.svg' %}" alt="">

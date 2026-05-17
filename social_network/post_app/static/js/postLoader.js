@@ -1,8 +1,8 @@
 let currentPage = 1;
 let isLoading = false;
 
-const postList = document.getElementById('post_content_main')
 const sentinel = document.getElementById('post-loader');
+const postList = document.getElementById('post_content_main')
 
 const obeserve = new IntersectionObserver(async (entries)=>{
     if (entries[0].isIntersecting && isLoading === false){

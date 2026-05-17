@@ -1,3 +1,16 @@
+.friends-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.friends-content-container-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
 .friends-container{
     /* height: 20.6rem; */
     padding: 1rem 1.25rem;
@@ -25,13 +38,17 @@
     font-weight: 500;
     font-size: 1rem;
     color: var(--text-accent);
+
+    cursor: pointer;
 }
 
 .friends-container-content {
     width: 100%;
-    display: flex;
+    display: grid;
     flex-direction: row;
     justify-content: flex-start;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
 }
 
 .friends-container-block{

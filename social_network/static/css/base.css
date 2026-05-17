@@ -322,19 +322,19 @@ main {
     padding: 1rem 1rem;
 }
 
+.info-navigations-text {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
 .info-navigations-active-test {
     font-weight: 700;
     font-size: 1rem;
     color: var(--text-main);
     border-bottom: 0.125rem solid var(--text-accent);
     padding-bottom: 0.2rem;
-    cursor: pointer;
-}
-
-.info-navigations-text {
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--text-muted);
     cursor: pointer;
 }
 
