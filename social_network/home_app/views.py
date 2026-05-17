@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.http import HttpRequest, JsonResponse
 from django.views.generic import TemplateView, ListView
 from django.template.loader import render_to_string
@@ -8,8 +7,10 @@ from .forms import ProfileForm
 from post_app.forms import PostForm, TagForm
 from user_app.models import User
 from post_app.models import Post
+from profile_app.models import Profile, Friendship
 from post_app.views import unionTagList
-from profile_app.models import Profile
+
+from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
 
 class HomeView(ListView):
@@ -36,6 +37,9 @@ class HomeView(ListView):
         context['modal_form'] = self.form_class
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
+
+        # get_friendship_requests(self.request.user.profile)
+        context['requests'] = Friendship.objects.all()[:3]
 
         context['tags'] = unionTagList(self.request.user)
         

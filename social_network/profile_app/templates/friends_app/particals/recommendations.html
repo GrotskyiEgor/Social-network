@@ -12,8 +12,10 @@
                     <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                 </div>
                 <div class="profile-username">
-                    <p class="username-text">{{ user.username }}</p>
-                    <p class="pseudonym-text">{{ user.profile.pseudonym }}</p>
+                    <a href="{% url 'profile' user_id=user.profile.id %}" class="username-text">{{ user.username }}</a>
+                    <a href="{% url 'profile' user_id=user.profile.id %}" class="pseudonym-text">{{ user.profile.pseudonym }}</a>
+                    <!-- <p class="username-text">{{ user.username }}</p>
+                    <p class="pseudonym-text">{{ user.profile.pseudonym }}</p> -->
                 </div> 
                 <div class="block-buttomns">
                     <img class="friends-btn" src="{% static 'images/add_btn.svg' %}" alt="">

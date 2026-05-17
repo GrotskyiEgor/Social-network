@@ -3,25 +3,52 @@
 
 {% block title %}WorldIT Друзі{% endblock %}
 
-{% block links %}{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/post_app.css' %}">
+{% endblock %}
 
 {% block info-content %}
-    <div class="info-navigations">
-        <p class="info-navigations-active-test">Головна</p>
-        <p class="info-navigations-text">Запити</p>
-        <p class="info-navigations-text">Рекомендації</p>
-        <p class="info-navigations-text">Всі друзі</p>
+    <div class="profile-container content-border-container">
+        <div class="profile-user-container">
+            <div class="profile-user-image-container">
+                <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+            </div>
+            <div class="profile-username">
+                <a href="{% url 'profile' user_id=profile_user.id %}" class="username-text">{{ profile_user.user.username }}</a>
+                <a href="{% url 'profile' user_id=profile_user.id %}" class="pseudonym-text">{{ profile_user.pseudonym }}</a>
+                <!-- <p class="username-text" id="username_text">{{ profile_user.user.username }}</p>
+                <p class="pseudonym-text" id="pseudonym_text">{{ profile_user.pseudonym }}</p> -->
+            </div>      
+        </div>
+        <div class="profile-statistics-container">
+            <div class="profile-static">
+                <p class="static-text">{{ profile_user.signature|default:'0' }}</p>
+                <p class="name-static-text">Дописи</p>
+            </div>
+            <div class="profile-static profile-static-border">
+                <p class="static-text">{{ profile_user.reader|default:'0' }}</p>
+                <p class="name-static-text">Читачі</p>
+            </div>
+            <div class="profile-static">
+                <p class="static-text">{{ profile_user.friends|length|default:'0' }}</p>
+                <p class="name-static-text">Друзі</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block main-content %}
-    {% for i in "......................." %}    
-        <div class="scrolls-container content-border-container">   
-            <h1>Профиль</h1>
+    <div class="post-content-container" id="post_content">
+        <div class="post-content-container-main" id="post_content_main">
+            {% include 'post_app/download_parts/post_list.html'  %}
         </div>
-    {% endfor %}
+        {% include 'post_app/download_parts/sentinel.html'  %}
+    </div>
 {% endblock %}
 
 {% block modals %}{% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+    <script src = "{% static 'js/deletePost.js' %}" defer></script>
+    <script src = "{% static 'js/postLoader.js' %}" defer></script>
+{% endblock %}

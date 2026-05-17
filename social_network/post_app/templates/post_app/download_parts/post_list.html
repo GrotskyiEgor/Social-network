@@ -6,7 +6,8 @@
             <div class="avatar-label">                    
                 <div class="user-info-container">
                     <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
-                    <p class="username-text">{{ post.author.username }}</p>
+                    <a href="{% url 'profile' user_id=post.author.profile.id %}" class="username-text">{{ post.author.username }}</a>
+                    <!-- <p class="username-text">{{ post.author.username }}</p> -->
                 </div>
                 <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
             </div>
@@ -15,10 +16,14 @@
                 <img class="profile-interaction-image" src="{% static 'images/icons/interaction.svg' %}" alt="interaction">
                 
                 <div class="interaction-menu hidden">
-                    <form action="{% url 'delete_post' post.id%}" method="POST">
-                        {% csrf_token %}
-                        <button type="button" class="delete-post-button">Видалити</button>
-                    </form>
+                    {% if user.id == post.author.id %}   
+                        <form action="{% url 'delete_post' post.id%}" method="POST">
+                            {% csrf_token %}
+                            <button type="button" class="delete-post-button">Видалити</button>
+                        </form>
+                    {% else %}
+                        <button class="empty-button">Empty</button>
+                    {% endif %}
                 </div>     
             </div>   
         </div>

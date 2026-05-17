@@ -15,8 +15,10 @@
                 <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
             </div>
             <div class="profile-username">
-                <p class="username-text">{{ user.username }}</p>
-                <p class="email-text">{{ user.profile.pseudonym }}</p>
+                <a href="{% url 'profile' user_id=user.profile.id %}" class="username-text">{{ user.username }}</a>
+                <a href="{% url 'profile' user_id=user.profile.id %}" class="pseudonym-text">{{ user.profile.pseudonym }}</a>
+                <!-- <p class="username-text">{{ user.username }}</p>
+                <p class="pseudonym-text">{{ user.profile.pseudonym }}</p> -->
             </div>      
         </div>
         <div class="profile-statistics-container">
@@ -59,6 +61,8 @@
         const ADD_URL_IMG_PATH = "{% static 'images/icons/add_url.svg' %}";
         const DELTE_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
+
+    <script src = "{% static 'js/deletePost.js' %}" defer></script>
     <script src = "{% static 'js/createPostModal.js' %}" defer></script>
     <script src = "{% static 'js/postLoader.js' %}" defer></script>
 {% endblock %}

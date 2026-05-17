@@ -266,11 +266,20 @@ main {
 .username-text {
     font-weight: 700;
     font-size: 1.5rem;
+    color: var(--text-main);
+}
+
+.pseudonym-text {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-main);
 }
 
 .email-text {
     font-weight: 500;
     font-size: 1rem;
+    color: var(--text-main);
 }
 
 .profile-statistics-container {
@@ -411,7 +420,7 @@ main {
     height: 2.375rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    justify-content: space-between;
 }
 
 .message-block-info-header {
@@ -423,6 +432,7 @@ main {
 }
 
 .user-block-username, .message-block-username {
+    width: fit-content;
     font-weight: 500;
     font-size: 1rem;
     color: var(--text-main);
