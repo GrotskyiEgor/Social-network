@@ -1,6 +1,6 @@
 {% load static %}
 
-{% for profile in requests %}
+{% for profile in friend %}
     <div class="friends-container-block content-border-container">
         <div class="profile-user-image-container">
             <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
@@ -12,9 +12,8 @@
             <p class="pseudonym-text">{{ user.profile.pseudonym }}</p> -->
         </div> 
         <div class="block-buttomns">
-            <img class="friends-btn" src="{% static 'images/accept_btn.svg' %}" alt="">
-            <img class="friends-btn" src="{% static 'images/delete_btn.svg' %}" alt="">     
+            <img class="friends-btn" src="{% static 'images/msg_btn.svg' %}" alt="">
+            <img class="friends-btn" src="{% static 'images/delete_btn.svg' %}" alt="">           
         </div>
     </div>
 {% endfor %}
-
