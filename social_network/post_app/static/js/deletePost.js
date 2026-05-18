@@ -6,6 +6,38 @@ $(document).on('click', '.profile-interaction-image', function(event){
     menu.toggleClass('hidden visible')
 })
 
+$(document).on('click', '.interaction-img', function(event){
+    console.log(this.dataset.postId, this.dataset.action) 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').dataset.csrfToken
+
+    fetch(this.dataset.action, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка")
+            }
+
+            return response.json()
+        })
+        .then(data => {
+            console.log(data)
+
+            if (data.success) {
+                const interactCount = document.getElementById(`post_${this.dataset.postId}_${this.dataset.interact}`)
+                console.log(interactCount, interactCount.textContent, Number(interactCount.textContent) + 1)
+                interactCount.textContent = Number(interactCount.textContent) + 1
+            }
+
+        })
+        .catch(error => {
+            console.log("Ошибки", error)
+        })
+})
+
 $(document).on('click', '.delete-post-button', function(event){
     event.preventDefault();
 

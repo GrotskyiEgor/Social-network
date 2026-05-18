@@ -90,6 +90,9 @@
 .profile-interaction-image {
     width: 1.25rem;
     height: 1.25rem;
+}
+
+.interaction-img {
     cursor: pointer;
 }
 

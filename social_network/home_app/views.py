@@ -38,10 +38,11 @@ class HomeView(ListView):
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
 
-        # get_friendship_requests(self.request.user.profile)
-        context['requests'] = Friendship.objects.all()[:3]
+        context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
+        context['tags'] = unionTagList(self.request.user.profile)
 
-        context['tags'] = unionTagList(self.request.user)
+        for post in context['posts']:
+            post.addInteract('views', self.request.user.profile)
         
         return context
     
@@ -80,11 +81,15 @@ class HomeView(ListView):
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
             page_obj = context['page_obj']
+            posts = context['posts']
+
+            for post in posts:
+                post.addInteract('views', self.request.user.profile)
             
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": context['posts']}      
+                    {"posts": posts}      
                 ),
                 'has_next': page_obj.has_next()
             })

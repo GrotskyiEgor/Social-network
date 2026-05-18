@@ -73,7 +73,7 @@ class ProfileView(ListView):
     
     def get_queryset(self):   
         return (
-            Post.objects.filter(author=Profile.objects.filter(id=self.kwargs.get('user_id')).first().user).
+            Post.objects.filter(author=Profile.objects.filter(id=self.kwargs.get('user_id')).first()).
             select_related('author').
             prefetch_related('tags', 'links', 'images').
             order_by('-id')

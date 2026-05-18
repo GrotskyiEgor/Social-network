@@ -8,6 +8,19 @@ const navigationsTexts = document.querySelectorAll('.info-navigations-text')
 const friendsContainer = document.querySelectorAll('.friends-container')
 const getAllTexts = document.querySelectorAll('.get-all-text')
 
+const selectionParams = getCookie("selection")
+
+if (selectionParams){
+    clearCookie(["selection"])
+
+    const activeText = document.querySelector(`.info-navigations-text[data-id="${selectionParams}"]`)
+    if (activeText) {
+        resetText(activeText)
+    } else {
+        openSelection(selectionParams)
+    }  
+}
+
 $(document).on('click', '.info-navigations-text', async function(){
     resetText(this)
 })
@@ -23,6 +36,7 @@ $(document).on('click', '.get-all-text', async function(){
 
 async function loadSelectionPage(selection, page){
     isLoading = true;
+    console.log(selection, page)
 
     const response = await fetch(`/friends/all_friends/${selection}?page=${page}`, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -33,7 +47,6 @@ async function loadSelectionPage(selection, page){
     let selectionDiv = document.getElementById(currentSelection)
 
     if (!selectionDiv){
-        console.log("не тл")
         isLoading = false
         return
     }
@@ -46,6 +59,7 @@ async function loadSelectionPage(selection, page){
 
 async function openSelection(selection){
     currentSelection = ""
+    setCookie("selection", "all")
     currentPage = 1;
     hasNextPage = false;
 
@@ -61,15 +75,13 @@ async function openSelection(selection){
     }
 
     currentSelection = selection;
+    setCookie("selection", selection)
     
     for (let container of friendsContainer){
         if (container.dataset.id === selection){
-            // container.classList.remove('hidden')
-            // container.classList.add('visible')
             container.style.display = 'flex'
         } else{
             container.style.display = 'none'
-            // container.classList.add('hidden')
         }
     }
 

@@ -1,4 +1,9 @@
 $(() => {
+    document.getElementById('all_requests').addEventListener('click', function(){
+        setCookie("selection", "requests")
+        window.location.href = REQUEST_HTTP
+    })
+
     const registrationModal = $('#registration-modal');
     
     if (first_registration === "True"){

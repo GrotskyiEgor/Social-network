@@ -46,7 +46,7 @@
                 </div>
                 <p class="container-header-name">Запити</p>
             </div>
-            <button class="container-header-button">Дивитись всі</button>
+            <button class="container-header-button" data-id="requests" id="all_requests">Дивитись всі</button>
         </div>
 
         {% if requests %}     
@@ -209,13 +209,14 @@
 {% block script %}
     <script defer>
         let first_registration = "{{ first_registration }}"
+        const REQUEST_HTTP = "{% url 'all_friends' %}"
         const ADD_URL_IMG_PATH = "{% static 'images/icons/add_url.svg' %}";
         const DELTE_IMG_PATH = "{% static 'images/icons/delete_image.svg' %}";
     </script>
 
-    <script src="{% static 'js/postLoader.js' %}" defer></script>
+    <script src = "{% static 'js/postLoader.js' %}" defer></script>
     <script src = "{% static 'js/deletePost.js' %}" defer></script>
-    <script src="{% static 'js/profileModal.js' %}" defer></script>
-    <script src="{% static 'js/createPostModal.js' %}" defer></script>
+    <script src = "{% static 'js/profileModal.js' %}" defer></script>
+    <script src = "{% static 'js/createPostModal.js' %}" defer></script>
 {% endblock %}
 

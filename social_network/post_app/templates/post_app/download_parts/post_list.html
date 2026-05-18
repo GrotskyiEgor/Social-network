@@ -6,7 +6,7 @@
             <div class="avatar-label">                    
                 <div class="user-info-container">
                     <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
-                    <a href="{% url 'profile' user_id=post.author.profile.id %}" class="username-text">{{ post.author.username }}</a>
+                    <a href="{% url 'profile' user_id=post.author.id %}" class="username-text">{{ post.author.user.username }}</a>
                     <!-- <p class="username-text">{{ post.author.username }}</p> -->
                 </div>
                 <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
@@ -65,16 +65,24 @@
 
             <div class="post-interaction-conteiner">
                 <div class="post-interaction">
-                    <img class="profile-interaction-image" src="{% static 'images/icons/heart.svg' %}" alt="heart">
-                    <p class="post-interaction-text">{{ post.likes|length|default:'0' }} Вподобань</p>
+                    <img class="profile-interaction-image interaction-img" 
+                        src="{% static 'images/icons/heart.svg' %}" alt="heart" 
+                        data-post-id="{{ post.id }}" 
+                        data-interact="hearts"
+                        data-action="{% url 'interact_post' interact_post='hearts' post_id=post.id %}">
+                    <p class="post-interaction-text"><span id="post_{{ post.id }}_hearts">{{ post.hearts.count|default:'0' }}</span> Збережень</p>
                 </div>
                 <div class="post-interaction">
-                    <img class="profile-interaction-image" src="{% static 'images/icons/like.svg' %}" alt="like">
-                    <p class="post-interaction-text">{{ post.hearts|length|default:'0' }} Збережень</p>
+                    <img class="profile-interaction-image interaction-img" 
+                        src="{% static 'images/icons/like.svg' %}" alt="like" 
+                        data-post-id="{{ post.id }}" 
+                        data-interact="likes"
+                        data-action="{% url 'interact_post' interact_post='likes' post_id=post.id %}">
+                    <p class="post-interaction-text"><span id="post_{{ post.id }}_likes">{{ post.likes.count|default:'0' }}</span> Вподобань</p>
                 </div>
                 <div class="post-interaction">
                     <img class="profile-interaction-image" src="{% static 'images/icons/eye.svg' %}" alt="eye">
-                    <p class="post-interaction-text">{{ post.views|length|default:'0' }} Переглядів</p>
+                    <p class="post-interaction-text"><span id="post_{{ post.id }}_views">{{ post.views.count|default:'0' }}</span> Переглядів</p>
                 </div>
             </div>
         </div>

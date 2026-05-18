@@ -24,7 +24,7 @@ class PostView(LoginRequiredMixin, ListView):
 
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
-        context['tags'] = unionTagList(self.request.user)
+        context['tags'] = unionTagList(self.request.user.profile)
         
         return context
     
@@ -44,21 +44,21 @@ class PostView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):   
         return (
-            Post.objects.filter(author=self.request.user).
+            Post.objects.filter(author=self.request.user.profile).
             select_related('author').
             prefetch_related('tags', 'links', 'images').
             order_by('-id')
         )
 
 
-class TagCreateView(View):
+class TagCreateView(LoginRequiredMixin, View):
     login_url = reverse_lazy('register_login_page')
 
     def post(self, request, *args, **kwargs):
         form = TagForm(request.POST)
 
         if form.is_valid():
-            tag = form.save(author=self.request.user)
+            tag = form.save(author=self.request.user.profile)
 
             return JsonResponse({
                 'success': True,
@@ -72,7 +72,7 @@ class TagCreateView(View):
         })
 
 
-class PostCreateView(View):
+class PostCreateView(LoginRequiredMixin, View):
     login_url = reverse_lazy('register_login_page')
 
     def get_form_kwargs(self):
@@ -93,7 +93,7 @@ class PostCreateView(View):
         )
 
         if form.is_valid():
-            post = form.save(author=self.request.user)
+            post = form.save(author=self.request.user.profile)
 
             return JsonResponse({
                 'success': True,
@@ -107,9 +107,18 @@ class PostCreateView(View):
         })
 
 
-class PostDeleteView(View):
+class PostInteractView(LoginRequiredMixin, View):
+    def post(self, request, interact_post, post_id):
+        post = Post.objects.get(id=post_id, author=request.user.profile)
+
+        if post.addInteract(interact_post, request.user.profile):
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+
+class PostDeleteView(LoginRequiredMixin, View):
     def post(self, request, post_id):
-        post = Post.objects.get(id=post_id, author=request.user)
+        post = Post.objects.get(id=post_id, author=request.user.profile)
         post.delete()
 
         return JsonResponse({'success': True})
