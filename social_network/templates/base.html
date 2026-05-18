@@ -3,8 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% block meta %}{% endblock %}
+        <meta name='csrf_token' data-csrf-token='{{csrf_token}}' id="meta_csrf_token">
+        {% block meta %}
+        {% endblock %}
         <title>{% block title %}{% endblock  %}</title>
+        
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <link rel="stylesheet" href="{% static 'css/create_post.css' %}">
         <link rel="icon" href="data:,">

@@ -47,9 +47,9 @@ class ProfileView(ListView):
         
         if form.is_valid():
                 
-                return JsonResponse({
-                    'success': True,
-                })
+            return JsonResponse({
+                'success': True
+            })
             
         return JsonResponse({  
             'success': False, 
@@ -92,6 +92,14 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
         context['friend'] = get_friends(self.request.user.profile)[:6]
 
         return context
+    
+
+class FriendsAction(LoginRequiredMixin, TemplateView):
+    def post(self, request, action,*args, **kwargs):
+        print(action)
+        
+        return JsonResponse({'success': True})
+
     
 class FriendsSelectionView(LoginRequiredMixin, View):
     def get(self, request, selection, *args, **kwargs ):
