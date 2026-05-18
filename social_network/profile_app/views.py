@@ -39,6 +39,9 @@ class ProfileView(ListView):
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
         context['profile_user'] = Profile.objects.filter(id=self.kwargs.get('user_id')).first()
+
+        for post in context['posts']:
+            post.toggleInteract('views', self.request.user.profile)
         
         return context
     
@@ -47,9 +50,9 @@ class ProfileView(ListView):
         
         if form.is_valid():
                 
-                return JsonResponse({
-                    'success': True,
-                })
+            return JsonResponse({
+                'success': True
+            })
             
         return JsonResponse({  
             'success': False, 
@@ -60,11 +63,15 @@ class ProfileView(ListView):
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
             page_obj = context['page_obj']
+            posts = context['posts']
+
+            for post in posts:
+                post.toggleInteract('views', self.request.user.profile)
             
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": context['posts']}      
+                    {"posts": posts}      
                 ),
                 'has_next': page_obj.has_next()
             })
@@ -92,6 +99,33 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
         context['friend'] = get_friends(self.request.user.profile)[:6]
 
         return context
+    
+
+class FriendsAction(LoginRequiredMixin, TemplateView):
+    def post(self, request, action, from_user_id, *args, **kwargs):
+        print(action)
+        from_user = Profile.objects.get(id=from_user_id)
+        friendship = Friendship.objects.filter(from_user=from_user, to_user=request.user.profile).first()
+
+        if action == "accept":
+            friendship.status = 'accepted'
+            friendship.save()
+
+            print(friendship.status, friendship.to_user.id, friendship.from_user.id)
+        elif action == "request":
+            new_friendship = Friendship.objects.create(
+                from_user=from_user,
+                to_user=request.user.profile,
+                status='pending'
+            )
+
+            print(new_friendship.status, new_friendship.to_user.id, new_friendship.from_user.id)
+        elif action == "delete_frienship":
+            friendship.delete()
+            print('delete')
+        
+        return JsonResponse({'success': True})
+
     
 class FriendsSelectionView(LoginRequiredMixin, View):
     def get(self, request, selection, *args, **kwargs ):

@@ -43,17 +43,25 @@ class Post(models.Model):
         return self.title
     
 
-    def addInteract(self, interact, profile):
+    def toggleInteract(self, interact, profile):
         print("addHeart", interact, profile)
 
-        if self.hasInteract(interact, profile):
-            return False
+        toggle = self.hasInteract(interact, profile)
         
         if interact == 'likes':
+            if (toggle):
+                PostLike.objects.filter(user=profile, post=self).delete()
+                print('delete PostLike')
+                return False
             PostLike.objects.create(user=profile, post=self)
         elif interact == 'hearts':
+            if (toggle):
+                PostHeart.objects.filter(user=profile, post=self).delete()
+                print('delete PostHeart')
+                return False
             PostHeart.objects.create(user=profile, post=self)
         elif interact == 'views':
+            if (toggle): return False
             PostView.objects.create(user=profile, post=self)
 
         return True

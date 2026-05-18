@@ -42,7 +42,7 @@ class HomeView(ListView):
         context['tags'] = unionTagList(self.request.user.profile)
 
         for post in context['posts']:
-            post.addInteract('views', self.request.user.profile)
+            post.toggleInteract('views', self.request.user.profile)
         
         return context
     
@@ -84,7 +84,7 @@ class HomeView(ListView):
             posts = context['posts']
 
             for post in posts:
-                post.addInteract('views', self.request.user.profile)
+                post.toggleInteract('views', self.request.user.profile)
             
             return JsonResponse({
                 'posts_html': render_to_string(

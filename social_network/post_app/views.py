@@ -110,11 +110,9 @@ class PostCreateView(LoginRequiredMixin, View):
 class PostInteractView(LoginRequiredMixin, View):
     def post(self, request, interact_post, post_id):
         post = Post.objects.get(id=post_id, author=request.user.profile)
+        do = post.toggleInteract(interact_post, request.user.profile)
+        return JsonResponse({'success': True, 'do': do})
 
-        if post.addInteract(interact_post, request.user.profile):
-            return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'success': False})
 
 class PostDeleteView(LoginRequiredMixin, View):
     def post(self, request, post_id):
