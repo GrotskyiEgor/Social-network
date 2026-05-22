@@ -1,8 +1,5 @@
 from django.db import models
-from django.contrib.auth import get_user_model
-
-
-User = get_user_model()
+from user_app.models import User
 
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name='chats', verbose_name="Участники")

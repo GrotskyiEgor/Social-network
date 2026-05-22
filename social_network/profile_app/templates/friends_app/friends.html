@@ -55,6 +55,10 @@
 {% block modals %}{% endblock %}
 
 {% block script %}
+    <script defer>
+        const CHAT_URL = "{% url 'chat' %}"
+        const PROFILE_URL = "{% url 'profile' user_id=0 action='watch' %}"
+    </script>
+
     <script src="{% static 'js/friends.js' %}" defer></script>
-    <script src="{% static 'js/friendsAction.js' %}" defer></script>
 {% endblock %}

@@ -2,9 +2,15 @@ $(document).on('click', '.friends-btn', function(){
     const dataAction = this.dataset.action
     const csrf =  document.getElementById('meta_csrf_token').dataset.csrfToken
 
+    if (this.dataset.actionType === 'msg'){
+        window.location.href = CHAT_URL
+
+        return
+    }
+
     if (dataAction === undefined) return
 
-    fetch(`friends_action/${dataAction}/${this.dataset.fromUserId}`, {
+    fetch(`/friends/friends_action/${dataAction}/${this.dataset.profileId}`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': csrf 
@@ -18,6 +24,8 @@ $(document).on('click', '.friends-btn', function(){
     })
     .then(data =>{
         console.log(data)
+
+        window.location.href = ALL_FRIENDS_URL
     })
     .catch(error =>{
         console.log(error.message)

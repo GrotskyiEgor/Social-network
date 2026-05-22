@@ -6,14 +6,12 @@
             <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
         </div>
         <div class="profile-username">
-            <a href="{% url 'profile' user_id=profile.id %}" class="username-text">{{ profile.user.username }}</a>
-            <a href="{% url 'profile' user_id=profile.id %}" class="pseudonym-text">{{ profile.pseudonym }}</a>
+            <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="username-text">{{ profile.user.username }}</a>
+            <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="pseudonym-text">{{ profile.pseudonym }}</a>
             <!-- <p class="username-text">{{ user.username }}</p>
             <p class="pseudonym-text">{{ user.profile.pseudonym }}</p> -->
         </div> 
-        <div class="block-buttomns">
-            <img class="friends-btn" data-action='request' data-from-user-id="{{ profile.id }}" src="{% static 'images/add_btn.svg' %}" alt="">
-            <img class="friends-btn" src="{% static 'images/delete_btn.svg' %}" alt="">                    
-        </div>
+
+        {% include 'friends_app/particals/buttons/recommendations_btn.html' %}
     </div>
 {% endfor %}

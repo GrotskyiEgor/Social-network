@@ -1,0 +1,19 @@
+.create-group-chat {
+    /* width: 6.375rem;
+    height: 2.5rem; */
+    border: none;
+    background-color: transparent;
+    border-radius: 10rem;
+    overflow: hidden;
+
+    transition: transform 0.2s ease;
+}
+
+.create-group-chat:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.create-group-chat-image{
+    height: 100%;
+}

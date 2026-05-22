@@ -11,6 +11,7 @@ from django.core.exceptions import PermissionDenied
 from profile_app.models import Friendship, Profile
 from post_app.forms import PostForm
 from post_app.models import Post
+from .services.freind_action import *
 from .services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
 
@@ -38,7 +39,8 @@ class ProfileView(ListView):
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
-        context['profile_user'] = Profile.objects.filter(id=self.kwargs.get('user_id')).first()
+        context['profile'] = Profile.objects.filter(id=self.kwargs.get('user_id')).first()
+        context['action'] = self.kwargs.get('action')
 
         for post in context['posts']:
             post.toggleInteract('views', self.request.user.profile)
@@ -102,29 +104,28 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
     
 
 class FriendsAction(LoginRequiredMixin, TemplateView):
-    def post(self, request, action, from_user_id, *args, **kwargs):
-        print(action)
-        from_user = Profile.objects.get(id=from_user_id)
-        friendship = Friendship.objects.filter(from_user=from_user, to_user=request.user.profile).first()
+    def post(self, request, action, profile_id, *args, **kwargs):
+        other_user_profile = Profile.objects.get(id=profile_id)
 
-        if action == "accept":
-            friendship.status = 'accepted'
-            friendship.save()
+        if action == 'accept':
+            result = accept_friend_request(request.user.profile, other_user_profile)
 
-            print(friendship.status, friendship.to_user.id, friendship.from_user.id)
-        elif action == "request":
-            new_friendship = Friendship.objects.create(
-                from_user=from_user,
-                to_user=request.user.profile,
-                status='pending'
-            )
+            return JsonResponse(result)
+        elif action == 'request':
+            result = add_friend_request(request.user.profile, other_user_profile)
 
-            print(new_friendship.status, new_friendship.to_user.id, new_friendship.from_user.id)
-        elif action == "delete_frienship":
-            friendship.delete()
-            print('delete')
+            return JsonResponse(result)
+        elif action == 'delete_frienship':
+            result = delete_friendship(request.user.profile, other_user_profile)
+
+            return JsonResponse(result)
+        elif action == 'dismissed':
+            result = dismiss_recommendation(request.user.profile, other_user_profile)
+
+            return JsonResponse(result)
         
-        return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+
 
     
 class FriendsSelectionView(LoginRequiredMixin, View):

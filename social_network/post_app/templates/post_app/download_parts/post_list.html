@@ -6,7 +6,7 @@
             <div class="avatar-label">                    
                 <div class="user-info-container">
                     <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
-                    <a href="{% url 'profile' user_id=post.author.id %}" class="username-text">{{ post.author.user.username }}</a>
+                    <a href="{% url 'profile' user_id=post.author.id action='watch' %}" class="username-text">{{ post.author.user.username }}</a>
                     <!-- <p class="username-text">{{ post.author.username }}</p> -->
                 </div>
                 <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">

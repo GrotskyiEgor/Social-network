@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}WorldIT Чати{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block info-content %}
+    <div>
+        <button type="submit" class='create-group-chat'>
+            <img src="{% static 'images/create_group_chat.svg' %}" alt="create_group_chat" class="create-group-chat-image">
+        </button> 
+    </div>
+        <div class="requests-container content-border-container">
+            <div class="container-header">
+                <div class="container-header-name-container">
+                    <div class="container-image-container">
+                        <img class="container-image" src="{% static 'images/icons/people.svg' %}" alt="">
+                    </div>
+                    <p class="container-header-name">Контакти</p>
+                </div>
+            </div>
+
+            <input type="text" placeholder="Пошук">
+
+            {% if contacts %}     
+                <div class="followers-container">
+                    {% for profile in contacts %}
+                        <div class="followers-user-block">
+                            <div class="followers-container-image-container">
+                                <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                            </div>
+                            <div class="user-block-info">
+                                <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="user-block-username">{{ profile.user.username }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block main-content %}
+
+{% endblock %}
+
+{% block modals %}{% endblock %}
+
+{% block script %}
+    <!-- <script src = "{% static 'js/' %}" defer></script> -->
+{% endblock %}

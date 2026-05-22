@@ -113,3 +113,14 @@ const obeserve = new IntersectionObserver(async (entries)=>{
 }, {rootMargin: "450px"})
 
 obeserve.observe(sentinel)
+
+$(document).on('click', '.friends-btn', function(){
+    console.log(PROFILE_URL, this.dataset.action, this.dataset.profileId)
+
+    if (this.dataset.actionType === 'msg'){
+        window.location.href = CHAT_URL
+
+        return
+    }
+    window.location.href = `/friends/profile/${this.dataset.profileId}/${this.dataset.actionType}`
+})

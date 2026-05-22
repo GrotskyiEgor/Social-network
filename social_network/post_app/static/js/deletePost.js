@@ -7,7 +7,6 @@ $(document).on('click', '.profile-interaction-image', function(event){
 })
 
 $(document).on('click', '.interaction-img', function(event){
-    console.log(this.dataset.postId, this.dataset.action) 
     const csrfToken = document.getElementById('meta_csrf_token').dataset.csrfToken
 
     fetch(this.dataset.action, {

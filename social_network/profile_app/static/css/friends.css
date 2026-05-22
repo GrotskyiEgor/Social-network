@@ -67,3 +67,19 @@
     flex-direction: row;
     gap: 1rem;
 }
+
+.friends-btn {
+    width: 6.375rem;
+    height: 2.5rem;
+    border: none;
+    background-color: transparent;
+    border-radius: 10rem;
+    overflow: hidden;
+
+    transition: transform 0.2s ease;
+}
+
+.friends-btn:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}

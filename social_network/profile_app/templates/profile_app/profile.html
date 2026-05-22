@@ -4,6 +4,7 @@
 {% block title %}WorldIT Друзі{% endblock %}
 
 {% block links %}
+    <link rel="stylesheet" href="{% static 'css/friends.css' %}">
     <link rel="stylesheet" href="{% static 'css/post_app.css' %}">
 {% endblock %}
 
@@ -14,26 +15,34 @@
                 <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
             </div>
             <div class="profile-username">
-                <a href="{% url 'profile' user_id=profile_user.id %}" class="username-text">{{ profile_user.user.username }}</a>
-                <a href="{% url 'profile' user_id=profile_user.id %}" class="pseudonym-text">{{ profile_user.pseudonym }}</a>
-                <!-- <p class="username-text" id="username_text">{{ profile_user.user.username }}</p>
-                <p class="pseudonym-text" id="pseudonym_text">{{ profile_user.pseudonym }}</p> -->
+                <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="username-text">{{ profile.user.username }}</a>
+                <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="pseudonym-text">{{ profile.pseudonym }}</a>
+                <!-- <p class="username-text" id="username_text">{{ profile.user.username }}</p>
+                <p class="pseudonym-text" id="pseudonym_text">{{ profile.pseudonym }}</p> -->
             </div>      
         </div>
         <div class="profile-statistics-container">
             <div class="profile-static">
-                <p class="static-text">{{ profile_user.signature|default:'0' }}</p>
+                <p class="static-text">{{ profile.signature|default:'0' }}</p>
                 <p class="name-static-text">Дописи</p>
             </div>
             <div class="profile-static profile-static-border">
-                <p class="static-text">{{ profile_user.reader|default:'0' }}</p>
+                <p class="static-text">{{ profile.reader|default:'0' }}</p>
                 <p class="name-static-text">Читачі</p>
             </div>
             <div class="profile-static">
-                <p class="static-text">{{ profile_user.friends|length|default:'0' }}</p>
+                <p class="static-text">{{ profile.friends|length|default:'0' }}</p>
                 <p class="name-static-text">Друзі</p>
             </div>
         </div>
+
+        {% if action == 'friends' %}
+            {% include 'friends_app/particals/buttons/friend_btn.html' %}
+        {% elif action == 'recommendations' %}
+            {% include 'friends_app/particals/buttons/recommendations_btn.html' %}
+        {% elif action == 'requests' %}
+            {% include 'friends_app/particals/buttons/requests_btn.html' %}
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -49,6 +58,12 @@
 {% block modals %}{% endblock %}
 
 {% block script %}
+    <script defer>
+        const CHAT_URL = "{% url 'chat' %}"
+        const ALL_FRIENDS_URL = "{% url 'all_friends' %}"
+    </script>
+    
+    <script src="{% static 'js/friendsAction.js' %}" defer></script>
     <script src = "{% static 'js/deletePost.js' %}" defer></script>
     <script src = "{% static 'js/postLoader.js' %}" defer></script>
 {% endblock %}

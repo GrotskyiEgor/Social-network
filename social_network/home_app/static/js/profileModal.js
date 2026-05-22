@@ -1,4 +1,8 @@
 $(() => {
+    $(document).on('click', '.msg-btn', function(){
+        window.location.href = CHAT_URL
+    })
+
     document.getElementById('all_requests').addEventListener('click', function(){
         setCookie("selection", "requests")
         window.location.href = REQUEST_HTTP

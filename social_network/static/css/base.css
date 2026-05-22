@@ -225,7 +225,7 @@ main {
 
 .profile-container {
     width: 21.8rem;
-    height: 17rem;
+    /* height: 17rem; */
     justify-content: center;
     align-items: center;
     gap: 1rem;
