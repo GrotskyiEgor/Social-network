@@ -1,0 +1,9 @@
+.modal-crate-group-view { 
+    padding: 1.5rem 2.75rem;
+    width: 30.625rem;
+    height: 48.6rem;
+    background-color: var(--white);
+    border-radius: 1.4rem;  
+
+    transition: transform 0.3s ease;
+}

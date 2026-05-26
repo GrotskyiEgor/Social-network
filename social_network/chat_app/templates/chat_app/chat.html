@@ -5,15 +5,19 @@
 
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat_modal.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/profile_modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create_modal.css' %}">
 {% endblock %}
 
-{% block info-content %}
-    <div>
+{% block content %}
+    <div class="chat-users-container">
         <button type="submit" class='create-group-chat'>
             <img src="{% static 'images/create_group_chat.svg' %}" alt="create_group_chat" class="create-group-chat-image">
         </button> 
-    </div>
-        <div class="requests-container content-border-container">
+
+        <div class="contacts-block message-container content-border-container">
             <div class="container-header">
                 <div class="container-header-name-container">
                     <div class="container-image-container">
@@ -23,7 +27,10 @@
                 </div>
             </div>
 
-            <input type="text" placeholder="Пошук">
+            <div class="contacts-input-wrap">
+                <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                <input type="text" class='contacts-input' placeholder="Пошук">
+            </div>
 
             {% if contacts %}     
                 <div class="followers-container">
@@ -41,13 +48,114 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="chat-conteiner requests-container content-border-container">
+        <div class="empty-chat-conteiner">
+            <p class="empty-chat-title">Почніть нове спілкування</p>
+            <p class="empty-chat-text">Оберіть контакт зі списку ліворуч або створіть групу, щоб почати спілкування</p>
+        </div>
+    </div>
+
+    <div class="side-info-conteiner " >
+        <div class="message-container content-border-container">
+            <div class="container-header">
+                <div class="container-header-name-container">
+                    <div class="container-image-container">
+                        <img class="container-image" src="{% static 'images/icons/message.svg' %}" alt="">
+                    </div>
+                    <p class="container-header-name">Повідомлення</p>
+                </div>
+                <button class="container-header-button msg-btn">Дивитись всі</button>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="chat-message-container  message-list">
+                    {% for user_block in "0123456789" %}
+                        <div class="message-user-block">
+                            <div class="message-container-image-container">
+                                <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
+                            </div>
+                            
+                            <div class="message-block-info">
+                                <div class="message-block-info-header">
+                                    <p class="message-block-username">Mona Lisa {{ user_block }}</p>
+                                    <p class="message-block-time">09:41</p>
+                                </div>
+                                <p class="message-block-email">Привіт! Як справи ?</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="message-container content-border-container">
+            <div class="container-header">
+                <div class="container-header-name-container">
+                    <div class="container-image-container">
+                        <img class="container-image" src="{% static 'images/icons/message.svg' %}" alt="">
+                    </div>
+                    <p class="container-header-name">Групові чати</p>
+                </div>
+                <button class="container-header-button msg-btn">Дивитись всі</button>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="chat-group-container message-list">
+                    {% for user_block in "0123456789" %}
+                        <div class="message-user-block">
+                            <div class="message-container-image-container">
+                                <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="">
+                            </div>
+                            
+                            <div class="message-block-info">
+                                <div class="message-block-info-header">
+                                    <p class="message-block-username">New Group</p>
+                                    <p class="message-block-time">10:40</p>
+                                </div>
+                                <p class="message-block-email">Привіт! Як справи ?</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
-{% block main-content %}
+{% block modals %}
+    <div class="modal-chat-bg active">
+        <div class="modal-crate-group-view">
+            <form method="POST" class="modal-registration-view-form" id="registration-modal">
+                {% csrf_token %}
+                <div class="modal-registration-text-div">
+                    <p class="modal-registration-text">Нова група</p>
+                </div>
 
+                <div class="contacts-input-wrap">
+                    <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                    <input type="text" class='contacts-input' placeholder="Пошук">
+                </div>
+
+                <div class="modal-registration-inputs">
+                    <div class="modal-registration-inputs-div">
+                        <p class="registration-text">Вибрано: <span>3</span></p>
+                    </div>
+                </div>
+
+                <div class="create-post-btn-div">
+                    <button class="cansle-tag-btn" id="cansle_tag_modal">
+                        Скасувати
+                    </button>
+
+                    <button class="create-tag-btn" form="create_tag_modal">
+                        Далі
+                    </button>
+                </div> 
+            </form>
+        </div>  
+    </div>
 {% endblock %}
-
-{% block modals %}{% endblock %}
 
 {% block script %}
     <!-- <script src = "{% static 'js/' %}" defer></script> -->
