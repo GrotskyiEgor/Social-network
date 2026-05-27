@@ -8,7 +8,7 @@ $(() => {
         window.location.href = REQUEST_HTTP
     })
 
-    const registrationModal = $('#registration-modal');
+    const registrationModal = $('#registration_modal');
     
     if (first_registration === "True"){
         openModal("modal-registration-bg");

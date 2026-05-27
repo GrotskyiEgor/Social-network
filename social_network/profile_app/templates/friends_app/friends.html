@@ -5,6 +5,7 @@
 
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/friends.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filter_input.css' %}">
 {% endblock %}
 
 {% block info-content %}
@@ -24,6 +25,12 @@
                     <p class="friends-container-title">Запити</p>
                     <p class="get-all-text" data-id="requests">Дивитись всі</p>
                 </div>
+
+                <div class="contacts-input-wrap">
+                    <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                    <input type="text" class='contacts-input' placeholder="Пошук запиту" id="filter_requests">
+                </div>
+
                 <div class="friends-container-content" id="requests">
                     {% include 'friends_app/particals/requests.html' %}
                 </div>
@@ -33,6 +40,12 @@
                     <p class="friends-container-title">Рекомендації</p>
                     <p class="get-all-text" data-id="recommendations">Дивитись всі</p>
                 </div>
+
+                <div class="contacts-input-wrap">
+                    <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                    <input type="text" class='contacts-input' placeholder="Пошук рекомендацій" id="filter_recommendations">
+                </div>
+
                 <div class="friends-container-content" id="recommendations">
                     {% include 'friends_app/particals/recommendations.html' %}
                 </div>
@@ -42,6 +55,12 @@
                     <p class="friends-container-title">Всі друзі</p>
                     <p class="get-all-text" data-id="friend">Дивитись всі</p>
                 </div>
+
+                <div class="contacts-input-wrap">
+                    <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                    <input type="text" class='contacts-input' placeholder="Пошук друга" id="filter_friend">
+                </div>
+
                 <div class="friends-container-content" id="friend">
                     {% include 'friends_app/particals/friend.html' %}
                 </div>
@@ -61,4 +80,5 @@
     </script>
 
     <script src="{% static 'js/friends.js' %}" defer></script>
+    <script src="{% static 'js/filter_input.js' %}" defer></script>
 {% endblock %}

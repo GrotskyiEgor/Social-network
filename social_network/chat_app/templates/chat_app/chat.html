@@ -4,11 +4,12 @@
 {% block title %}WorldIT Чати{% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
-    <link rel="stylesheet" href="{% static 'css/chat_modal.css' %}">
-
     <link rel="stylesheet" href="{% static 'css/profile_modal.css' %}">
     <link rel="stylesheet" href="{% static 'css/create_modal.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filter_input.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat_modal.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -124,10 +125,14 @@
 {% endblock %}
 
 {% block modals %}
-    <div class="modal-chat-bg active">
-        <div class="modal-crate-group-view">
-            <form method="POST" class="modal-registration-view-form" id="registration-modal">
+    <div class="modal-add-group-bg hidden">
+        <div class="modal-add-group-view">
+            <form method="POST" class="modal-registration-view-form" id="add_group_modal">
                 {% csrf_token %}
+                <div class="modal-create-post-button-div">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                </div>
+
                 <div class="modal-registration-text-div">
                     <p class="modal-registration-text">Нова група</p>
                 </div>
@@ -137,19 +142,63 @@
                     <input type="text" class='contacts-input' placeholder="Пошук">
                 </div>
 
-                <div class="modal-registration-inputs">
-                    <div class="modal-registration-inputs-div">
-                        <p class="registration-text">Вибрано: <span>3</span></p>
+                <p class="add-group-text">Вибрано: <span>3</span></p>
+
+                <div class="checkbox-users-container">
+
+                </div>
+
+                <div class="create-post-btn-div">
+                    <button class="cansle-tag-btn" id="cansel_add_group_modal">
+                        Скасувати
+                    </button>
+
+                    <button class="create-tag-btn" form="add_group_modal">
+                        Далі
+                    </button>
+                </div> 
+            </form>
+        </div>  
+    </div>
+
+    <div class="modal-create-group-bg hidden">
+        <div class="modal-create-group-view">
+            <form method="POST" class="modal-registration-view-form" id="create_group_modal">
+                {% csrf_token %}
+                <div class="modal-create-post-button-div">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                </div>
+
+                
+                <div class="modal-registration-text-div">
+                    <p class="modal-registration-text">Нова група</p>
+                </div>
+                
+                <div class="modal-create-post-inputs-div">
+                    <p class="create-post-text">Назва группи</p>
+                    <input type="text" class='group-name-input' placeholder="Введіть назву">
+                </div>
+
+
+                <div class="group-image-container">
+
+                </div>
+
+                <div class="modal-create-post-inputs-div">
+                    <p class="create-post-text">Учасники</p>
+
+                    <div class="delete-users-container">
+
                     </div>
                 </div>
 
                 <div class="create-post-btn-div">
-                    <button class="cansle-tag-btn" id="cansle_tag_modal">
-                        Скасувати
+                    <button class="cansle-tag-btn" id="cansel_create_group_modal">
+                        Назад
                     </button>
 
-                    <button class="create-tag-btn" form="create_tag_modal">
-                        Далі
+                    <button class="create-tag-btn" form="create_group_modal">
+                        Створити групу
                     </button>
                 </div> 
             </form>

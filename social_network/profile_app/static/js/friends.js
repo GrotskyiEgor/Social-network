@@ -3,7 +3,7 @@ let currentPage = 1;
 let isLoading = false;
 let hasNextPage = false;
 
-const sentinel = document.getElementById('post-loader');
+const sentinel = document.getElementById('post-loader')
 const navigationsTexts = document.querySelectorAll('.info-navigations-text')
 const friendsContainer = document.querySelectorAll('.friends-container')
 const getAllTexts = document.querySelectorAll('.get-all-text')
