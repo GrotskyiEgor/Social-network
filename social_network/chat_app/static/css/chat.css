@@ -7,7 +7,7 @@
 }
 
 .chat-users-container {
-    height: 52.0625rem;
+    height: 50rem;
     width: 21.875rem;
     display: flex;
     flex-direction: column;
@@ -20,18 +20,18 @@
 }
 
 .chat-group-container {
-    max-height: 22rem;
+    max-height: 19.875rem;
 }
 
 .message-list{
-    width: 21.8rem;
+    width: 100%;
     display: flex;
     gap: 0;
     overflow-y: auto;
 }
 
 .message-user-block {
-    margin: 0.5rem 1rem;
+    margin: 0.5rem 0rem;
 }
 
 .side-info-conteiner  {
@@ -42,25 +42,39 @@
 }
 
 .chat-conteiner {
-    height: 52.0625rem;
+    height: 50rem;
     width: 35.25rem;
 }
 
 .info-container {
-    height: 52.125rem;
+    height: 50rem;
 }
 
 .chat-message-container {
     height: 19.375rem; 
-    
 }
 
 .contacts-block {
-    height: 49rem;
+    height: 46.875rem;
 }
 
 .followers-container {
     overflow-y: auto;
+}
+
+.user-select {
+    transition: 
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.user-select:hover {
+    background-color: var(--border-light);
+    border-radius: 0.625rem;
+    padding: 0.2rem;
+    
+    transform: scale(1.01);
+    cursor: pointer;
 }
 
 .create-group-chat {

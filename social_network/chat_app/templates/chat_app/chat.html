@@ -14,7 +14,7 @@
 
 {% block content %}
     <div class="chat-users-container">
-        <button type="submit" class='create-group-chat'>
+        <button type="submit" class='create-group-chat' id="open_add_group_modal">
             <img src="{% static 'images/create_group_chat.svg' %}" alt="create_group_chat" class="create-group-chat-image">
         </button> 
 
@@ -29,14 +29,14 @@
             </div>
 
             <div class="contacts-input-wrap">
-                <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
                 <input type="text" class='contacts-input' placeholder="Пошук">
             </div>
 
             {% if contacts %}     
                 <div class="followers-container">
                     {% for profile in contacts %}
-                        <div class="followers-user-block">
+                        <div class="followers-user-block user-select" data-user-id="{{ profile.id }}" data-chat-username="{{ profile.pseudonym }}">
                             <div class="followers-container-image-container">
                                 <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                             </div>
@@ -52,7 +52,7 @@
 
     <div class="chat-conteiner requests-container content-border-container">
         <div class="empty-chat-conteiner">
-            <p class="empty-chat-title">Почніть нове спілкування</p>
+            <p class="empty-chat-title" id="chat-title">Почніть нове спілкування</p>
             <p class="empty-chat-text">Оберіть контакт зі списку ліворуч або створіть групу, щоб почати спілкування</p>
         </div>
     </div>
@@ -69,25 +69,33 @@
                 <button class="container-header-button msg-btn">Дивитись всі</button>
             </div>
 
-            {% if user.is_authenticated %}
-                <div class="chat-message-container  message-list">
-                    {% for user_block in "0123456789" %}
-                        <div class="message-user-block">
-                            <div class="message-container-image-container">
-                                <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
-                            </div>
-                            
-                            <div class="message-block-info">
-                                <div class="message-block-info-header">
-                                    <p class="message-block-username">Mona Lisa {{ user_block }}</p>
-                                    <p class="message-block-time">09:41</p>
-                                </div>
-                                <p class="message-block-email">Привіт! Як справи ?</p>
-                            </div>
-                        </div>
+
+            <div class="chat-message-container  message-list">
+                {% for chat in personal_chats %}
+                    {% for profile in chat.users.all %}
+                        {% if profile != user.profile %}                                      
+                            <div class="message-user-block user-select" data-chat-id="{{ chat.id }}" data-username="{{ profile.user.username }}">
+                        {% endif %}
                     {% endfor %}
-                </div>
-            {% endif %}
+                        <div class="message-container-image-container">
+                            <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                        </div>
+                        
+                        <div class="message-block-info">
+                            <div class="message-block-info-header">
+                                {% for profile in chat.users.all %}
+                                    {% if profile != user.profile %}                                      
+                                        <p class="message-block-username">{{ profile.user.username }}</p>
+                                    {% endif %}
+           
+                                {% endfor %}
+                                <p class="message-block-time">09:40</p>
+                            </div>
+                            <p class="message-block-email">Привіт! Як справи ?</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="message-container content-border-container">
@@ -130,7 +138,7 @@
             <form method="POST" class="modal-registration-view-form" id="add_group_modal">
                 {% csrf_token %}
                 <div class="modal-create-post-button-div">
-                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="cansle_add_group_modal">
                 </div>
 
                 <div class="modal-registration-text-div">
@@ -138,22 +146,71 @@
                 </div>
 
                 <div class="contacts-input-wrap">
-                    <img src="{% static 'images/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
                     <input type="text" class='contacts-input' placeholder="Пошук">
                 </div>
 
                 <p class="add-group-text">Вибрано: <span>3</span></p>
 
                 <div class="checkbox-users-container">
+                    <div class="users-letter-container">
+                        <p class="create-post-text">A</p>
+                        <div class="users-letter-scrol-container">
+                            {% for profile in '012' %}     
+                                <div class="followers-user-block user-block-border">
+                                    <div class="followers-container-image-container">
+                                        <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                                    </div>
+                                    <div class="user-block-info">
+                                        <p class="user-block-username">Name</p>
+                                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
 
+                    <div class="users-letter-container">
+                        <p class="create-post-text">Б</p>
+                        <div class="users-letter-scrol-container">
+                            {% for profile in '012' %}     
+                                <div class="followers-user-block user-block-border">
+                                    <div class="followers-container-image-container">
+                                        <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                                    </div>
+                                    <div class="user-block-info">
+                                        <p class="user-block-username">Name</p>
+                                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="users-letter-container">
+                        <p class="create-post-text">В</p>
+                        <div class="users-letter-scrol-container">
+                            {% for profile in '012' %}     
+                                <div class="followers-user-block user-block-border">
+                                    <div class="followers-container-image-container">
+                                        <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                                    </div>
+                                    <div class="user-block-info">
+                                        <p class="user-block-username">Name</p>
+                                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="create-post-btn-div">
-                    <button class="cansle-tag-btn" id="cansel_add_group_modal">
+                    <button type="button" class="cansle-tag-btn" id="cansle_add_group_modal">
                         Скасувати
                     </button>
 
-                    <button class="create-tag-btn" form="add_group_modal">
+                    <button type="button" class="create-tag-btn" id="next_add_group_modal">
                         Далі
                     </button>
                 </div> 
@@ -166,7 +223,7 @@
             <form method="POST" class="modal-registration-view-form" id="create_group_modal">
                 {% csrf_token %}
                 <div class="modal-create-post-button-div">
-                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="exit_button">
+                    <img src="{% static 'images/buttons/exit_button.svg' %}" alt="exit-button" class="create-post-exit-button" id="cansle_create_group_modal">
                 </div>
 
                 
@@ -181,23 +238,44 @@
 
 
                 <div class="group-image-container">
-
+                    <img src="{% static 'images/chat_img.svg' %}" alt="chat_img" class="group-image-img">
+                    
+                    <div class="group-image-texts-container">
+                        <div class="images-text-div">
+                            <img src="{% static 'images/icons/plus.svg' %}" alt="plus" class="images-text-img">
+                            <p class="images-text">Додайте фото</p>
+                        </div>
+                        <div class="images-text-div">
+                            <img src="{% static 'images/icons/img.svg' %}" alt="exit-button" class="images-text-img">
+                            <p class="images-text">Оберіть фото</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-create-post-inputs-div">
                     <p class="create-post-text">Учасники</p>
 
                     <div class="delete-users-container">
-
+                        {% for profile in '0123456' %}     
+                            <div class="followers-user-block">
+                                <div class="followers-container-image-container">
+                                    <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                                </div>
+                                <div class="user-block-info">
+                                    <p class="user-block-username">Name</p>
+                                    <img src="{% static 'images/icons/del.svg' %}" alt="del" class="del-img">
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
 
                 <div class="create-post-btn-div">
-                    <button class="cansle-tag-btn" id="cansel_create_group_modal">
+                    <button type="button" class="cansle-tag-btn back-btn" id="cansle_create_group_modal">
                         Назад
                     </button>
 
-                    <button class="create-tag-btn" form="create_group_modal">
+                    <button type="button" class="create-tag-btn create-group-btn">
                         Створити групу
                     </button>
                 </div> 
@@ -207,5 +285,6 @@
 {% endblock %}
 
 {% block script %}
-    <!-- <script src = "{% static 'js/' %}" defer></script> -->
+    <script src = "{% static 'js/chats.js' %}" defer></script>
+    <script src = "{% static 'js/chat_modals.js' %}" defer></script>
 {% endblock %}

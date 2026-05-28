@@ -205,7 +205,7 @@ $(() => {
             openModal('modal-bg');
         }
     });
-
+    
     function openModal(modalClass){
         if (modalClass == 'modal-bg'){
             const createPostText = document.getElementById('create_post_container_text');
@@ -214,8 +214,6 @@ $(() => {
 
         $(`.${modalClass}`).removeClass('hidden');
         $(`.${modalClass}`).addClass('visible');
-
-        
     };
 
     function closeModal(modalClass){
