@@ -2,11 +2,13 @@ let currentSelection = '';
 let currentPage = 1;
 let isLoading = false;
 let hasNextPage = false;
+let filterText = ''
 
 const sentinel = document.getElementById('post-loader')
 const navigationsTexts = document.querySelectorAll('.info-navigations-text')
 const friendsContainer = document.querySelectorAll('.friends-container')
 const getAllTexts = document.querySelectorAll('.get-all-text')
+const filters = document.querySelectorAll('.contacts-input')
 
 const selectionParams = getCookie("selection")
 
@@ -19,7 +21,9 @@ if (selectionParams){
     } else {
         openSelection(selectionParams)
     }  
-}
+} else {
+    setCookie("selection", "all")
+}   
 
 $(document).on('click', '.info-navigations-text', async function(){
     resetText(this)
@@ -38,7 +42,7 @@ async function loadSelectionPage(selection, page){
     isLoading = true;
     console.log(selection, page)
 
-    const response = await fetch(`/friends/all_friends/${selection}?page=${page}`, {
+    const response = await fetch(`/friends/all_friends/${selection}?page=${page}&filter_text=${filterText}`, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
     });
 
@@ -62,6 +66,10 @@ async function openSelection(selection){
     setCookie("selection", "all")
     currentPage = 1;
     hasNextPage = false;
+
+    for (let filter of filters) {
+        filter.value = ''
+    }
 
     if (selection === 'all'){
         for (let container of friendsContainer){
@@ -106,7 +114,7 @@ function cleanDiv(id, slice){
 }
 
 const obeserve = new IntersectionObserver(async (entries)=>{
-    if (entries[0].isIntersecting && isLoading === false){
+    if (entries[0].isIntersecting && isLoading === false && hasNextPage){
         currentPage += 1
         await loadSelectionPage(currentSelection, currentPage)
     }

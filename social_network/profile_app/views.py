@@ -130,16 +130,19 @@ class FriendsAction(LoginRequiredMixin, TemplateView):
     
 class FriendsSelectionView(LoginRequiredMixin, View):
     def get(self, request, selection, *args, **kwargs ):
-        user = None 
+        limit = int(request.GET.get('limit', 0))
+        filter_input = request.GET.get('filter_text', '')
+        user = [] 
 
         if selection == 'requests':
-            user = get_friendship_requests(request.user.profile)
+            user = get_friendship_requests(request.user.profile, filter_input)
         elif selection == 'recommendations':
-            user = get_friendship_recommendation(request.user.profile)
+            user = get_friendship_recommendation(request.user.profile, filter_input)
         elif selection == 'friend':
-            user = get_friends(request.user.profile)
+            user = get_friends(request.user.profile, filter_input)
 
-        page_obj = Paginator(user, 6).get_page(request.GET.get('page', 1))
+        print(limit if limit else 6)
+        page_obj = Paginator(user, limit if limit else 6).get_page(request.GET.get('page', 1))
 
         html = render_to_string( 
             f"friends_app/particals/{selection}.html",

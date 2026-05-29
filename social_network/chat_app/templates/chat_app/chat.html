@@ -41,10 +41,12 @@
                                 <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                             </div>
                             <div class="user-block-info">
-                                <a href="{% url 'profile' user_id=profile.id action='watch' %}" class="user-block-username">{{ profile.user.username }}</a>
+                                <p class="user-block-username">{{ profile.user.username }}</p>
                             </div>
                         </div>
                     {% endfor %}
+
+                    {% include 'post_app/download_parts/sentinel.html'  %}
                 </div>
             {% endif %}
         </div>
@@ -112,7 +114,7 @@
             {% if user.is_authenticated %}
                 <div class="chat-group-container message-list">
                     {% for user_block in "0123456789" %}
-                        <div class="message-user-block">
+                        <div class="message-user-block user-select">
                             <div class="message-container-image-container">
                                 <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="">
                             </div>

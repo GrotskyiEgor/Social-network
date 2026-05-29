@@ -65,15 +65,15 @@
 .user-select {
     transition: 
         background-color 0.2s ease,
-        transform 0.2s ease;
+        padding 0.2s ease;
 }
 
 .user-select:hover {
+    overflow: visible;
     background-color: var(--border-light);
     border-radius: 0.625rem;
-    padding: 0.2rem;
+    padding: 0.0625rem 0rem 0.0625rem 0.25rem;
     
-    transform: scale(1.01);
     cursor: pointer;
 }
 
@@ -89,8 +89,9 @@
 }
 
 .create-group-chat:hover {
+    overflow: visible;
     cursor: pointer;
-    transform: scale(1.01);
+    transform: scale(1.02);
 } 
 
 .empty-chat-conteiner{

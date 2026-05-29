@@ -83,3 +83,19 @@
     cursor: pointer;
     transform: scale(1.02);
 }
+
+.one-container-min {
+    min-height: 24.375rem;
+}
+
+.one-min {
+    min-height: 16.375rem;
+}
+
+.empty-text {
+    font-size: 2rem;
+    position: relative;
+    text-align: center;
+    top: 93px;
+    left: 298px;
+}

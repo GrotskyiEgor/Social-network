@@ -1,6 +1,6 @@
 let lastFilterDiv = ''
 
-$(document).on('input', '#filter_requests, #filter_recommendations, #filter_friend', async function(){
+$(document).on('input', '#filter_friend', async function(){
     const filterDiv = this.dataset.selection
     let selectionDiv = document.getElementById(filterDiv)
     const status = getCookie('selection')
