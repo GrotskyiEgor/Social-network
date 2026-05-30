@@ -23,8 +23,6 @@ $(document).on('click', '.friends-btn', function(){
         return response.json()
     })
     .then(data =>{
-        console.log(data)
-
         window.location.href = ALL_FRIENDS_URL
     })
     .catch(error =>{

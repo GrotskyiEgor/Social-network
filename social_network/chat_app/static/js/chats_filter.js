@@ -35,7 +35,6 @@ $(document).on('input', '#filter_friends', async function(){
         }
 
     } catch (error){
-        console.log(error)
         selectionDiv.innerHTML = '<p class="empty-text">Ошибка закрузки</p>'
     }
 })

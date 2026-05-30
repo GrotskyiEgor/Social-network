@@ -133,6 +133,7 @@ class FriendsSelectionView(LoginRequiredMixin, View):
         limit = int(request.GET.get('limit', 0))
         filter_input = request.GET.get('filter_text', '')
         user = [] 
+        html = ''
 
         if selection == 'requests':
             user = get_friendship_requests(request.user.profile, filter_input)
@@ -141,13 +142,13 @@ class FriendsSelectionView(LoginRequiredMixin, View):
         elif selection == 'friend':
             user = get_friends(request.user.profile, filter_input)
 
-        print(limit if limit else 6)
         page_obj = Paginator(user, limit if limit else 6).get_page(request.GET.get('page', 1))
 
-        html = render_to_string( 
-            f"friends_app/particals/{selection}.html",
-            {selection: page_obj.object_list},
-            request=request
-        )
+        if (page_obj.number == int(request.GET.get('page', 1))):
+            html = render_to_string( 
+                f"friends_app/particals/{selection}.html",
+                {selection: page_obj.object_list},
+                request=request
+            )
         
         return JsonResponse({"html": html, "has_next_page": page_obj.has_next()})

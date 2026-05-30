@@ -40,7 +40,6 @@ $(document).on('click', '.get-all-text', async function(){
 
 async function loadSelectionPage(selection, page){
     isLoading = true;
-    console.log(selection, page)
     
     const response = await fetch(`/friends/all_friends/${selection}?page=${page}&filter_text=${filterText}`, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -63,7 +62,7 @@ async function loadSelectionPage(selection, page){
 async function openSelection(selection){
     currentSelection = ""
     setCookie("selection", "all")
-    currentPage = 1;
+    currentPage = 2;
     hasNextPage = false;
 
     for (let filter of filters) {
@@ -78,6 +77,7 @@ async function openSelection(selection){
             cleanDiv("recommendations", 6)
             cleanDiv("friend", 6)
         }
+
         return
     }
 
@@ -117,13 +117,11 @@ const obeserve = new IntersectionObserver(async (entries)=>{
         currentPage += 1
         await loadSelectionPage(currentSelection, currentPage)
     }
-}, {rootMargin: "50px"})
+}, {rootMargin: "450px"})
 
 obeserve.observe(sentinel)
 
 $(document).on('click', '.friends-btn', function(){
-    console.log(PROFILE_URL, this.dataset.action, this.dataset.profileId)
-
     if (this.dataset.actionType === 'msg'){
         window.location.href = CHAT_URL
 

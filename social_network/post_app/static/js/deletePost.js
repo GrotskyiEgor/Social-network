@@ -50,8 +50,6 @@ $(document).on('click', '.delete-post-button', function(event){
         method: 'POST',
         data: deletePostForm.serialize(),
         success: function(response){
-            console.log('200');
-
             menu.removeClass('visible').addClass('hidden')
             post.remove()
         },

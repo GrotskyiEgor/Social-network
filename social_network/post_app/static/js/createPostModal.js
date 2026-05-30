@@ -9,8 +9,6 @@ $(() => {
     const createPostModelText = document.getElementById('create_post_modal_text');
     const createPostModalTextTags = document.getElementById('create_post_modal_text_tags');
 
-    console.log(createPostModelText, createPostModalTextTags)
-
     let selectedFiles = [];
     let selectedTags = [];
     
@@ -71,8 +69,6 @@ $(() => {
             processData: false,
             contentType: false,
             success: function(response){
-                console.log('200');
-
                 $('#post_content_main').prepend(response.post_html)
                 clearPostForm();
                 closeModal('modal-bg');
@@ -90,9 +86,7 @@ $(() => {
             url: createTagModel.attr('action'),
             method: 'POST',
             data: createTagModel.serialize(),
-            success: function(response){
-                console.log('200');
-                
+            success: function(response){            
                 clearTagForm();
                 closeModal('modal-tag-bg');
                 openModal('modal-bg');

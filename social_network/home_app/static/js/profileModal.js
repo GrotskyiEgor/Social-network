@@ -26,8 +26,6 @@ $(() => {
             method: 'POST',
             data: registrationModal.serialize(),
             success: function(response){
-                console.log('200');
-
                 document.getElementById('username_text').textContent = response.username;
                 document.getElementById('pseudonym_text').textContent = response.pseudonym;
 
@@ -35,8 +33,6 @@ $(() => {
                 $('.modal-registration-bg').addClass('hidden');              
             },
             error: function(response){
-                console.log('400')
-
                 const errorText = $('.modal-error-text');
 
                 if (data?.error) {

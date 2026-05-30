@@ -16,11 +16,8 @@ $(document).on('input', '#filter_requests, #filter_recommendations, #filter_frie
         return
     }
 
-    console.log(this.id, status, 'fff', filterText)
-
     if (status === 'all') {
         let limit = filterDiv === 'requests' ? 3 : 6
-        console.log(limit)
         fetchUrl = `/friends/all_friends/${filterDiv}?page=${currentPage}&filter_text=${filterText}&limit=${limit}`
     } else {
         fetchUrl = `/friends/all_friends/${status}?page=${currentPage}&filter_text=${filterText}`

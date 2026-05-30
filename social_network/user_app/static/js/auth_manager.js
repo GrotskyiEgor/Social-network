@@ -10,7 +10,6 @@ document.querySelectorAll('.password-wrapper').forEach(wrapper => {
     const eye  = wrapper.querySelector('.password-eye')
 
     eye.addEventListener('click', function(){
-        console.log('click')
         if (input.type === 'password'){
             input.type = 'text'
             this.src = openEye
@@ -65,8 +64,6 @@ function ajaxRequests(form, form_id, code){
         method: 'POST',
         data: user_data,
         success: function(response){
-            console.log('200');
-
             const errorText = getErrorText(form);
             errorText.innerText = '';
             errorText.classList.add('hidden');
