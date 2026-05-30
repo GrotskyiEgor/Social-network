@@ -3,25 +3,19 @@ let chatSocket = null;
 const csrfToken = document.getElementById('meta_csrf_token').dataset.csrfToken
 const chatTitle = document.querySelector("#chat-title");
 
-const chatBlocks = document.querySelectorAll('.message-user-block') 
-const chatButtons = document.querySelectorAll(".followers-user-block");
-
-chatBlocks.forEach((chat) => {
-    chat.addEventListener("click", function(){
-        console.log(this.dataset.username)
-        chatTitle.textContent = `Чат з ${this.dataset.username}`;
-        // connectWebSocket(this.dataset.chatId);
-    });
+$(document).on("click", '.message-user-block', function(){
+    chatTitle.textContent = `Чат з ${this.dataset.username ? this.dataset.username : this.dataset.gropname}`;
+    document.getElementById('chat-under-title').innerHTML = ''
+    // connectWebSocket(this.dataset.chatId);
 });
 
-chatButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-        await openChatWithUser(
-            button.dataset.userId,
-            button.dataset.chatUsername,
-        );
-    });
+$(document).on("click", ".open-chat-with", async function(){
+    await openChatWithUser(
+        this.dataset.userId,
+        this.dataset.chatUsername,
+    );
 });
+
 
 async function openChatWithUser(userId, username) {
     const response = await fetch(`/chats/chat_with/${userId}/`, {
@@ -30,9 +24,15 @@ async function openChatWithUser(userId, username) {
     });
 
     const data = await response.json();
-        if (data.success) {
-            chatTitle.textContent = `Чат з ${username}`;
-            connectWebSocket(data.chat_id);
+    if (data.success) {
+
+        if (data.chats_html){
+            chatsSentinel.insertAdjacentHTML("beforebegin", data.chats_html)
+        }
+
+        chatTitle.textContent = `Чат з ${username}`;
+        document.getElementById('chat-under-title').innerHTML = ''
+        // connectWebSocket(data.chat_id);
     }
 }
 

@@ -4,7 +4,7 @@ let isLoading = false;
 let hasNextPage = false;
 let filterText = ''
 
-const sentinel = document.getElementById('post-loader')
+const sentinel = document.getElementById('post_loader')
 const navigationsTexts = document.querySelectorAll('.info-navigations-text')
 const friendsContainer = document.querySelectorAll('.friends-container')
 const getAllTexts = document.querySelectorAll('.get-all-text')
@@ -41,15 +41,14 @@ $(document).on('click', '.get-all-text', async function(){
 async function loadSelectionPage(selection, page){
     isLoading = true;
     console.log(selection, page)
-
+    
     const response = await fetch(`/friends/all_friends/${selection}?page=${page}&filter_text=${filterText}`, {
         headers: { "X-Requested-With": "XMLHttpRequest" },
     });
-
+    
     const data = await response.json();
-
+    
     let selectionDiv = document.getElementById(currentSelection)
-
     if (!selectionDiv){
         isLoading = false
         return
@@ -118,7 +117,7 @@ const obeserve = new IntersectionObserver(async (entries)=>{
         currentPage += 1
         await loadSelectionPage(currentSelection, currentPage)
     }
-}, {rootMargin: "450px"})
+}, {rootMargin: "50px"})
 
 obeserve.observe(sentinel)
 

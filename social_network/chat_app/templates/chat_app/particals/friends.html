@@ -1,0 +1,12 @@
+{% load static %}
+
+{% for profile in friends %}
+    <div class="followers-user-block user-select open-chat-with" data-user-id="{{ profile.id }}" data-chat-username="{{ profile.pseudonym }}">
+        <div class="followers-container-image-container">
+            <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+        </div>
+        <div class="user-block-info">
+            <p class="user-block-username">{{ profile.user.username }}</p>
+        </div>
+    </div>
+{% endfor %}

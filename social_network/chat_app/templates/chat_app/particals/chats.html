@@ -1,0 +1,24 @@
+{% load static %}
+
+{% for chat in chats %}
+    {% for profile in chat.users.all %}
+        {% if profile != user_profile %}     
+            {% with other_user=profile %}                                 
+                <div class="message-user-block user-select" data-chat-id="{{ chat.id }}" data-username="{{ other_user.user.username }}">
+
+                    <div class="message-container-image-container">
+                        <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                    </div>
+                    
+                    <div class="message-block-info">
+                        <div class="message-block-info-header">                                  
+                            <p class="message-block-username">{{ other_user.user.username }}</p>
+                            <p class="message-block-time">09:40</p>
+                        </div>
+                        <p class="message-block-email">Привіт! Як справи ?</p>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}

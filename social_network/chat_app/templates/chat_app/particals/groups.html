@@ -1,0 +1,17 @@
+{% load static %}
+
+{% for group in "0123456789" %}
+    <div class="message-user-block user-select" data-gropname="New Group {{ group }}">
+        <div class="message-container-image-container">
+            <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="">
+        </div>
+        
+        <div class="message-block-info">
+            <div class="message-block-info-header">
+                <p class="message-block-username">New Group {{ group }}</p>
+                <p class="message-block-time">10:40</p>
+            </div>
+            <p class="message-block-email">Привіт! Як справи ?</p>
+        </div>
+    </div>
+{% endfor %}

@@ -35,14 +35,12 @@ $(document).on('input', '#filter_requests, #filter_recommendations, #filter_frie
         
         filterData = data.html.trim()
         if (lastFilterDiv === filterData && !isEmptyText){
-            console.log('return', isEmptyText, 'f', filterText)
             return
         }
 
         selectionDiv.innerHTML = ''
         lastFilterDiv = filterData
 
-        console.log('filterData', filterData !== '',filterData)
         if (filterData !== '') {
             selectionDiv.insertAdjacentHTML("beforeend", filterData);
         } else {
