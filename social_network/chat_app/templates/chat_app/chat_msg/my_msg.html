@@ -1,0 +1,9 @@
+{% load static %}
+
+<div class="my-msg-container">
+    <div class="msg-text">{{ msg.text }}</div>
+    <div class="msg-info-date">
+        <p class="msg-date-text">{{ msg.created_at|date:"H:i" }}</p>
+        <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+    </div>
+</div>

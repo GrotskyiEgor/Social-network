@@ -37,22 +37,23 @@ class ChatView(TemplateView):
 
             page_obj = Paginator(paginator_list, 12 if selection == 'friends' else 7).get_page(self.request.GET.get('page', 1))
             
-            if selection == 'friends':
-                return JsonResponse({
-                    'friends_html': render_to_string(
-                        'chat_app/particals/friends.html',
-                        {"friends": page_obj}      
-                    ),
-                    'has_next': page_obj.has_next()
-                })
-            elif selection == 'chats':
-                return JsonResponse({
-                    'chats_html': render_to_string(
-                        'chat_app/particals/chats.html',
-                        {"chats": page_obj, 'user_profile': self.request.user.profile}      
-                    ),
-                    'has_next': page_obj.has_next()
-                })
+            if page_obj.number != 1:
+                if selection == 'friends':
+                    return JsonResponse({
+                        'friends_html': render_to_string(
+                            'chat_app/particals/friends.html',
+                            {"friends": page_obj}      
+                        ),
+                        'has_next': page_obj.has_next()
+                    })
+                elif selection == 'chats':
+                    return JsonResponse({
+                        'chats_html': render_to_string(
+                            'chat_app/particals/chats.html',
+                            {"chats": page_obj, 'user_profile': self.request.user.profile}      
+                        ),
+                        'has_next': page_obj.has_next()
+                    })
 
         return super().render_to_response(context, **response_kwargs)
 

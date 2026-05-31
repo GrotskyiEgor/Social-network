@@ -2,6 +2,21 @@ from django.db import models
 from user_app.models import User
 from profile_app.models import Profile
 
+MONTHS_UA = {
+    1: "січня",
+    2: "лютого",
+    3: "березня",
+    4: "квітня",
+    5: "травня",
+    6: "червня",
+    7: "липня",
+    8: "серпня",
+    9: "вересня",
+    10: "жовтня",
+    11: "листопада",
+    12: "грудня",
+}
+
 class Chat(models.Model):
     users = models.ManyToManyField(Profile, related_name='chats', verbose_name="Участники")
     name = models.CharField(max_length=30, blank=True, null=True, verbose_name="Назва чату")
@@ -30,6 +45,9 @@ class Message(models.Model):
     
     def __str__(self):
         return f"{self.sender.username}: {self.text[:20]}"
+    
+    def format_ua_date(self):
+        return f"{self.created_at.day} {MONTHS_UA[self.created_at.month]} {self.created_at.year}"
     
 class MessageImage(models.Model):
     image = models.ImageField(upload_to='messages_images/')

@@ -1,0 +1,16 @@
+{% load static %}
+
+<div class="msg-container">
+    <img class="message-image msg-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+
+    <div class="msg-info content-border-container">
+        <div class="msg-info-text">
+            <p class="msg-username-text">{{ msg.sender.user.username }}</p>
+            <div class="msg-text">{{ msg.text }}</div>
+        </div>
+        <div class="msg-info-date">
+            <p class="msg-date-text">{{ msg.created_at|date:"H:i" }}</p>
+            <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+        </div>
+    </div>
+</div>

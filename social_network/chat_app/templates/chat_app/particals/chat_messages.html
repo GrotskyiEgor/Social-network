@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="chat-header">
+    <div class="chat-header-div-border">
+        <div class="chat-header-div">
+            <img class="images-text-img" src="{% static 'images/icons/back.svg' %}" alt="back">
+    
+            <div class="chat-header-info">
+                <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                <div class="chat-header-text">
+                    <p class="username-text">{{ other_user.user.username }}</p>
+                    <p class="extra-info-text">{{ chat.users.all|length }} учасники</p>
+                </div>
+            </div>
+        </div>
+
+        <img class="images-text-img" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
+    </div>
+</div>
+<div class="chat-messages" id="chat_message_container">
+    {% for msg in chat_messages %}
+        {% if msg.type == 'date-block' %}
+            <div class="chat-date">
+                <p class="date-text">{{ msg.date }}</p>
+            </div>
+        {% elif msg.sender.pseudonym == user.profile.pseudonym %}
+            {% include 'chat_app/chat_msg/my_msg.html'  %}
+        {% else %}
+            {% include 'chat_app/chat_msg/other_msg.html'  %}
+        {% endif %}
+    {% endfor %}
+</div>
+<div class="chat-input">
+    <form action="" class="message-form" id="message_form">
+        <input type="text" placeholder="Повідомлення" class="contacts-input message-input" id="message_form_input">
+        <!-- <button>Відправити</button> -->
+    </form>
+
+    <img class="input-img" src="{% static 'images/inputs/emoji.svg' %}" alt="back">
+    <img class="input-img" src="{% static 'images/inputs/images.svg' %}" alt="back">
+    <img class="input-img" src="{% static 'images/inputs/send.svg' %}" alt="back" id="message_form_btn">
+</div>

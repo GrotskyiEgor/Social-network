@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/chat.css' %}">
     <link rel="stylesheet" href="{% static 'css/filter_input.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat_modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat_with.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -41,10 +42,10 @@
         </div>
     </div>
 
-    <div class="chat-conteiner requests-container content-border-container">
-        <div class="empty-chat-conteiner">
-            <p class="empty-chat-title" id="chat-title">Почніть нове спілкування</p>
-            <p class="empty-chat-text" id="chat-under-title">Оберіть контакт зі списку ліворуч або створіть групу, щоб почати спілкування</p>
+    <div class="chat-conteiner requests-container content-border-container" id="chat_container">
+        <div class="empty-chat-conteiner" id="empty_chat_conteiner">
+            <p class="empty-chat-title">Почніть нове спілкування</p>
+            <p class="empty-chat-text">Оберіть контакт зі списку ліворуч або створіть групу, щоб почати спілкування</p>
         </div>
     </div>
 
