@@ -117,7 +117,7 @@ const obeserve = new IntersectionObserver(async (entries)=>{
         currentPage += 1
         await loadSelectionPage(currentSelection, currentPage)
     }
-}, {rootMargin: "450px"})
+}, {rootMargin: "50px"})
 
 obeserve.observe(sentinel)
 

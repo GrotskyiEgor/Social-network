@@ -124,7 +124,7 @@
     color: var(--text-main);
 }
 
-#chats_loader, #friends_loader {
+#chats_loader, #friends_loader, #chats_msg_loader {
     width: 100%;
     min-height: 1px;
 }

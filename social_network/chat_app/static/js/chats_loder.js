@@ -28,23 +28,22 @@ const friendsОbeserve = new IntersectionObserver(async (entries)=>{
 
         friendsisLoading = false
     }
-}, {rootMargin: "750px"})
+}, {rootMargin: "50px"})
 
 friendsОbeserve.observe(friendsSentinel)
 
-let chatscurrentPage = 1;
+let chatsCurrentPage = 1;
 let chatsisLoading = false;
 
-const chatsContainer = document.getElementById('chats_container')
 const chatsSentinel = document.getElementById('chats_loader')
 
 const chatsObeserve = new IntersectionObserver(async (entries)=>{
     if (entries[0].isIntersecting && chatsisLoading === false){
         chatsisLoading = true
-        chatscurrentPage += 1
+        chatsCurrentPage += 1
         
         const response = await fetch (
-            `${window.location.pathname}?page=${chatscurrentPage}&selection=${chatsSentinel.dataset.selection}`, {
+            `${window.location.pathname}?page=${chatsCurrentPage}&selection=${chatsSentinel.dataset.selection}`, {
                 headers: {
                     "X-Requested-With": "XMLHttpRequest"
                 }
@@ -63,6 +62,6 @@ const chatsObeserve = new IntersectionObserver(async (entries)=>{
 
         chatsisLoading = false
     }
-}, {rootMargin: "750px"})
+}, {rootMargin: "50px"})
 
 chatsObeserve.observe(chatsSentinel)

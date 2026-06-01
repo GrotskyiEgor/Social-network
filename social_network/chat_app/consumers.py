@@ -1,10 +1,10 @@
 import json
-from django.utils.timezone import localtime
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from django.template.loader import render_to_string
 
 
+from .services.load_msg import get_msg_list
 from .models import Message, Chat
 from profile_app.models import Profile
 
@@ -21,7 +21,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         chat = await self.get_chat()
         other_user = await self.get_other_user(chat)
-        chat_messages = await self.get_chat_messages_with_date_blocks(chat, 50)
+        chat_messages = await self.get_chat_messages_with_date_blocks(chat, 20)
         chat_html = await self.chat_render_to_string(chat, other_user, chat_messages)
 
         await self.send(
@@ -113,20 +113,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         messages = chat.messages.all().order_by('-created_at')[:limit]
         messages = reversed(messages)
 
-        result = []
-        last_date = None
-
-        for msg in messages:
-            msg_date = localtime(msg.created_at).strftime('%d.%m.%Y')
-            if last_date != msg_date:
-                result.append({
-                    'type': 'date-block',
-                    'date': msg.format_ua_date()
-                })
-                last_date = msg_date
-            result.append(msg)
-
-        return result
+        return get_msg_list(messages)
         
 
         

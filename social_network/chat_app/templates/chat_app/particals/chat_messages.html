@@ -17,18 +17,10 @@
         <img class="images-text-img" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
     </div>
 </div>
+
+
 <div class="chat-messages" id="chat_message_container">
-    {% for msg in chat_messages %}
-        {% if msg.type == 'date-block' %}
-            <div class="chat-date">
-                <p class="date-text">{{ msg.date }}</p>
-            </div>
-        {% elif msg.sender.pseudonym == user.profile.pseudonym %}
-            {% include 'chat_app/chat_msg/my_msg.html'  %}
-        {% else %}
-            {% include 'chat_app/chat_msg/other_msg.html'  %}
-        {% endif %}
-    {% endfor %}
+    {% include 'chat_app/chat_msg/messages.html'  %}
 </div>
 <div class="chat-input">
     <form action="" class="message-form" id="message_form">

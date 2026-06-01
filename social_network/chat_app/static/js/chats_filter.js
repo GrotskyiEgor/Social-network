@@ -12,29 +12,30 @@ $(document).on('input', '#filter_friends', async function(){
     if (!selectionDiv){
         return
     }
+    // try {
+    const response = await fetch(`${window.location.pathname}?page=${chatsCurrentPage}&selection=${this.dataset.selection}&filter_text=${filterText}`, {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
 
-    try {
-        const response = await fetch(`${window.location.pathname}?page=${chatscurrentPage}&selection=${this.dataset.selection}&filter_text=${filterText}`, {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-        });
+    const data = await response.json();
     
-        const data = await response.json();
-        
-        filterData = data.friends_html.trim()
-        if (lastFilterDiv === filterData && !isEmptyText){
-            return
-        }
-
-        selectionDiv.innerHTML = ''
-        lastFilterDiv = filterData
-
-        if (filterData !== '') {
-            selectionDiv.insertAdjacentHTML("beforeend", filterData);
-        } else {
-            selectionDiv.innerHTML = '<p class="empty-text">Нет результату по этому запросу</p>'
-        }
-
-    } catch (error){
-        selectionDiv.innerHTML = '<p class="empty-text">Ошибка закрузки</p>'
+    console.log(data.status, 1)
+    console.log(data.success, 2)
+    filterData = data.friends_html.trim()
+    if (lastFilterDiv === filterData && !isEmptyText){
+        return
     }
+
+    selectionDiv.innerHTML = ''
+    lastFilterDiv = filterData
+
+    if (filterData !== '') {
+        selectionDiv.insertAdjacentHTML("beforeend", filterData);
+    } else {
+        selectionDiv.innerHTML = '<p class="empty-text">Нет результату по этому запросу</p>'
+    }
+
+    // } catch (error){
+    //     selectionDiv.innerHTML = '<p class="empty-text">Ошибка закрузки</p>'
+    // }
 })

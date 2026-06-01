@@ -29,6 +29,6 @@ const obeserve = new IntersectionObserver(async (entries)=>{
 
         isLoading = false
     }
-}, {rootMargin: "450px"})
+}, {rootMargin: "50px"})
 
 obeserve.observe(sentinel)
