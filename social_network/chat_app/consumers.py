@@ -73,7 +73,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def save_message(self, text):
         user = self.scope['user']
-        return Message.objects.create(chat_id=self.chat_id, sender=user.profile, text=text)
+        return Message.objects.create(chat_id=self.chat_id, sender=user, text=text)
 
     @database_sync_to_async
     def chat_render_to_string(self, chat, other_user, chat_messages):

@@ -18,8 +18,8 @@ class Profile(models.Model):
         return f"Профіль: {self.user.username}"
 
 class Friendship(models.Model):
-    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sent_friendships")
-    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="received_friendships")
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_friendships")
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_friendships")
     status = models.CharField(max_length=20, default="pending")
     create_at = models.DateTimeField(auto_now_add=True)
 
@@ -27,7 +27,7 @@ class Friendship(models.Model):
         unique_together = ("from_user", "to_user")
 
 class Album(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='albums', verbose_name="Профіль")
+    profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name='albums', verbose_name="Профіль")
     name = models.CharField(max_length=100, verbose_name="Назва альбому")
     theme = models.CharField(max_length=50, blank=True, verbose_name="Тема")
     year = models.IntegerField(null=True, blank=True, verbose_name="Рік подій")

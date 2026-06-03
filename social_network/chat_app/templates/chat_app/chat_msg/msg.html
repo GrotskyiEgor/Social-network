@@ -3,7 +3,7 @@
         <div class="chat-date">
             <p class="date-text">{{ msg.date }}</p>
         </div>
-    {% elif msg.sender.pseudonym == user.profile.pseudonym %}
+    {% elif msg.sender.profile.pseudonym == user.profile.pseudonym %}
         {% include 'chat_app/chat_msg/my_msg.html'  %}
     {% else %}
         {% include 'chat_app/chat_msg/other_msg.html'  %}

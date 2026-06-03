@@ -20,8 +20,8 @@ class ChatView(TemplateView):
         context =  super().get_context_data(**kwargs)
         
         context['user_profile'] = self.request.user.profile
-        context['friends'] = get_friends(self.request.user.profile)[:12]
-        context["chats"] = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")[:7]
+        context['friends'] = get_friends(self.request.user)[:12]
+        context["chats"] = Chat.objects.filter(users=self.request.user, is_group = False).order_by("id")[:7]
         
         return context
     
@@ -33,9 +33,9 @@ class ChatView(TemplateView):
             selection = self.request.GET.get('selection', 0)
 
             if selection == 'friends':
-                paginator_list = get_friends(self.request.user.profile, filter_text)
+                paginator_list = get_friends(self.request.user, filter_text)
             elif selection == 'chats':
-                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")
+                paginator_list = Chat.objects.filter(users=self.request.user, is_group = False).order_by("id")
 
             page_obj = Paginator(paginator_list, 12 if selection == 'friends' else 7).get_page(paginato_page)
             
@@ -51,7 +51,7 @@ class ChatView(TemplateView):
                 return JsonResponse({
                     'chats_html': render_to_string(
                         'chat_app/particals/chats.html',
-                        {"chats": page_obj, 'user_profile': self.request.user.profile}      
+                        {"chats": page_obj, 'user_profile': self.request.user}      
                     ),
                     'has_next': page_obj.has_next()
                 })               
@@ -83,24 +83,24 @@ class ChatWithView(LoginRequiredMixin, View):
         current_user = request.user
         other_user = Profile.objects.get(id = user_id)
 
-        friends = get_friends(current_user.profile)
+        friends = get_friends(current_user)
 
         if other_user not in friends:
             return JsonResponse({"success": False}, status=403)
         
-        user_chat_ids = Chat.objects.filter(users=current_user.profile, is_group=False).values_list("id", flat=True)
+        user_chat_ids = Chat.objects.filter(users=current_user, is_group=False).values_list("id", flat=True)
         chat = Chat.objects.filter(id__in = user_chat_ids, users=other_user, is_group=False).first()
 
         if chat is None:
             add_new_user = True
             chat = Chat.objects.create(is_group=False)
-            chat.users.add(current_user.profile, other_user)
+            chat.users.add(current_user, other_user)
 
         return JsonResponse({
             "success": True, 
             'chats_html': render_to_string(
                     'chat_app/particals/chats.html',
-                    {"chats": [chat if add_new_user else []], 'user_profile': self.request.user.profile}      
+                    {"chats": [chat if add_new_user else []], 'user_profile': self.request.user}      
                 ),
             "chat_id": chat.id
         })

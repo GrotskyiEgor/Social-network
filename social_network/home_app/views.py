@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from .forms import ProfileForm
 from post_app.forms import PostForm, TagForm
 from user_app.models import User
-from post_app.models import Post
+from post_app.models import Post, Tag
 from profile_app.models import Profile, Friendship
 from post_app.views import unionTagList
 
@@ -32,17 +32,20 @@ class HomeView(ListView):
         first_registration = self.request.session.get('first_registration')
         if first_registration != None and first_registration != '':
             first_registration = True
+            
+        for tag in Tag.objects.all():
+            print(tag)
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
 
-        context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
-        context['tags'] = unionTagList(self.request.user.profile)
+        context['requests'] = get_friendship_requests(self.request.user)[:3]
+        context['tags'] = unionTagList(self.request.user)
 
         for post in context['posts']:
-            post.toggleInteract('views', self.request.user.profile)
+            post.toggleInteract('views', self.request.user)
         
         return context
     
@@ -84,7 +87,7 @@ class HomeView(ListView):
             posts = context['posts']
 
             for post in posts:
-                post.toggleInteract('views', self.request.user.profile)
+                post.toggleInteract('views', self.request.user)
             
             return JsonResponse({
                 'posts_html': render_to_string(

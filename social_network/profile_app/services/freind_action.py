@@ -23,7 +23,7 @@ def accept_friend_request(current_user, other_user):
     friendship = Friendship.objects.filter(from_user=other_user, to_user=current_user).first()
     friendship.status = "accepted"
     friendship.save()
-    return {"remove": True, "friend": {'username': other_user.user.username, 'pseudonym': other_user.pseudonym, 'id': other_user.id}}
+    return {"remove": True, "friend": {'username': other_user.username, 'pseudonym': other_user.profile.pseudonym, 'id': other_user.profile.id}}
 
 
 def delete_friendship(current_user, other_user):
