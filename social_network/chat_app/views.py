@@ -10,6 +10,7 @@ from .models import Chat
 from profile_app.models import Profile
 from user_app.models import User
 from .services.load_msg import get_msg_list
+from .services.add_group_page import friends_pages, create_group
 from profile_app.services.freind_qureist import get_friends
 from profile_app.services.freind_qureist import *
 
@@ -19,9 +20,12 @@ class ChatView(TemplateView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         
+        friends_list = get_friends(self.request.user.profile)
+
         context['user_profile'] = self.request.user.profile
-        context['friends'] = get_friends(self.request.user.profile)[:12]
+        context['friends'] = friends_list[:12]
         context["chats"] = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")[:7]
+        context["all_friends"] = friends_pages(friends_list) 
         
         return context
     
@@ -76,7 +80,7 @@ class ChatView(TemplateView):
 
 
 class ChatWithView(LoginRequiredMixin, View):
-    login_url = reverse_lazy("register_login_page")
+    login_url = reverse_lazy("auth")
 
     def post(self, request, user_id, *args, **kwargs):
         add_new_user = False
@@ -104,3 +108,10 @@ class ChatWithView(LoginRequiredMixin, View):
                 ),
             "chat_id": chat.id
         })
+    
+class CreateGroupView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("auth")
+    
+    def post(self, request):
+        return create_group(request)
+        

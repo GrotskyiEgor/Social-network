@@ -20,56 +20,36 @@
             <p class="add-group-text">Вибрано: <span>3</span></p>
 
             <div class="checkbox-users-container">
-                <div class="users-letter-container">
+                {% for profile in all_friends %}   
+                    {% if profile.letter %}           
+                        <p class="create-post-text">{{ profile.letter }}</p>
+                    {% else %}
+                        <div class="followers-user-block user-block-border">
+                            <div class="followers-container-image-container">
+                                <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                            </div>
+                            <div class="user-block-info">
+                                <p class="user-block-username">{{profile.user.username}}</p>
+                                <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ profile.id }}' data-username='{{ profile.user.username }}' id="checkbox_{{ profile.id }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <!--<div class="users-letter-container">
                     <p class="create-post-text">A</p>
                     <div class="users-letter-scrol-container">
-                        {% for profile in '012' %}     
-                            <div class="followers-user-block user-block-border">
-                                <div class="followers-container-image-container">
-                                    <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                                </div>
-                                <div class="user-block-info">
-                                    <p class="user-block-username">Name</p>
-                                    <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
-                                </div>
+                        <div class="followers-user-block user-block-border">
+                            <div class="followers-container-image-container">
+                                <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="users-letter-container">
-                    <p class="create-post-text">Б</p>
-                    <div class="users-letter-scrol-container">
-                        {% for profile in '012' %}     
-                            <div class="followers-user-block user-block-border">
-                                <div class="followers-container-image-container">
-                                    <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                                </div>
-                                <div class="user-block-info">
-                                    <p class="user-block-username">Name</p>
-                                    <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
-                                </div>
+                            <div class="user-block-info">
+                                <p class="user-block-username">Name</p>
+                                <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
-                </div>
-
-                <div class="users-letter-container">
-                    <p class="create-post-text">В</p>
-                    <div class="users-letter-scrol-container">
-                        {% for profile in '012' %}     
-                            <div class="followers-user-block user-block-border">
-                                <div class="followers-container-image-container">
-                                    <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                                </div>
-                                <div class="user-block-info">
-                                    <p class="user-block-username">Name</p>
-                                    <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img">
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="create-post-btn-div">

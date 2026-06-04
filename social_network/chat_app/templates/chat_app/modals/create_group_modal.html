@@ -15,7 +15,7 @@
             
             <div class="modal-create-post-inputs-div">
                 <p class="create-post-text">Назва группи</p>
-                <input type="text" class='group-name-input' placeholder="Введіть назву">
+                <input type="text" class='group-name-input' placeholder="Введіть назву" id="group_name_input">
             </div>
 
 
@@ -37,8 +37,8 @@
             <div class="modal-create-post-inputs-div">
                 <p class="create-post-text">Учасники</p>
 
-                <div class="delete-users-container">
-                    {% for profile in '0123456' %}     
+                <div class="delete-users-container" id="delete_users_container">
+                    <!-- {% for profile in '0123456' %}     
                         <div class="followers-user-block">
                             <div class="followers-container-image-container">
                                 <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
@@ -48,7 +48,7 @@
                                 <img src="{% static 'images/icons/del.svg' %}" alt="del" class="del-img">
                             </div>
                         </div>
-                    {% endfor %}
+                    {% endfor %} -->
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                     Назад
                 </button>
 
-                <button type="button" class="create-tag-btn create-group-btn">
+                <button type="button" class="create-tag-btn create-group-btn" id='create_group_btn'>
                     Створити групу
                 </button>
             </div> 

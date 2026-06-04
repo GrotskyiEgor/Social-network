@@ -52,7 +52,7 @@ class PostView(LoginRequiredMixin, ListView):
 
 
 class TagCreateView(LoginRequiredMixin, View):
-    login_url = reverse_lazy('register_login_page')
+    login_url = reverse_lazy('auth')
 
     def post(self, request, *args, **kwargs):
         form = TagForm(request.POST)
@@ -73,7 +73,7 @@ class TagCreateView(LoginRequiredMixin, View):
 
 
 class PostCreateView(LoginRequiredMixin, View):
-    login_url = reverse_lazy('register_login_page')
+    login_url = reverse_lazy('auth')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs() 
