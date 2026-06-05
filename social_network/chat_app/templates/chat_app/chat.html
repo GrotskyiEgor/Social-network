@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/filter_input.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat_modal.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat_with.css' %}">
+    <link rel="stylesheet" href="{% static 'css/context_menu.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -90,6 +91,9 @@
 {% endblock %}
 
 {% block modals %}
+    {% include 'chat_app/modals/context_menu_admin.html'  %}
+    {% include 'chat_app/modals/context_menu_user.html'  %}
+    
     {% include 'chat_app/modals/add_group_modal.html'  %}
 
     {% include 'chat_app/modals/create_group_modal.html'  %}

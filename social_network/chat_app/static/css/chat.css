@@ -127,6 +127,10 @@
     color: var(--text-main);
 }
 
+.clear-chat, .context-menu-admin-interactive, .context-menu-interactive {
+    cursor: pointer;
+}
+
 #chats_loader, #friends_loader, #chats_msg_loader, #groups_loader {
     width: 100%;
     min-height: 1px;

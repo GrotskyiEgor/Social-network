@@ -3,7 +3,7 @@
 <div class="chat-header">
     <div class="chat-header-div-border">
         <div class="chat-header-div">
-            <img class="images-text-img" src="{% static 'images/icons/back.svg' %}" alt="back">
+            <img class="images-text-img clear-chat" src="{% static 'images/icons/back.svg' %}" alt="back">
     
             <div class="chat-header-info">
                 {% if chat.name %}
@@ -24,7 +24,11 @@
             </div>
         </div>
 
-        <img class="images-text-img" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
+        {% if chat.admin == user.profile %}
+            <img class="images-text-img context-menu-admin-interactive" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
+        {% else %}
+            <img class="images-text-img context-menu-interactive" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
+        {% endif %}
     </div>
 </div>
 
