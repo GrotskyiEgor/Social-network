@@ -49,54 +49,19 @@
             <button class="container-header-button" data-id="requests" id="all_requests">Дивитись всі</button>
         </div>
 
-        {% if requests %}     
-            <div class="followers-container">
-                {% for friendship in requests %}
-                    <div class="followers-user-block">
-                            <div class="followers-container-image-container">
-                                <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                            </div>
-                            <div class="user-block-info">
-                                <a href="{% url 'profile' user_id=friendship.id action='watch' %}" class="user-block-username">{{ friendship.user.username }}</a>
-                                <p class="user-block-email">{{ friendship.from_user.signature|default:'0' }}к підписників</p>
-                            </div>
-                        </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <!-- {% if requests %}
+        <div class="followers-container" id="requests_container">     
+            <!-- {% for friendship in requests %}
                 <div class="followers-user-block">
                     <div class="followers-container-image-container">
-                        <img class="followers-image" src="{% static 'images/users/avatar1.svg' %}" alt="">
+                        <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
                     </div>
                     <div class="user-block-info">
-                        <p class="user-block-username">Yehor Aung</p>
-                        <p class="user-block-email">4.3к підписників</p>
+                        <a href="{% url 'profile' user_id=friendship.id action='watch' %}" class="user-block-username">{{ friendship.user.username }}</a>
+                        <p class="user-block-email">{{ friendship.from_user.signature|default:'0' }}к підписників</p>
                     </div>
                 </div>
-
-                <div class="followers-user-block">
-                    <div class="followers-container-image-container">
-                        <img class="followers-image" src="{% static 'images/users/avatar2.svg' %}" alt="">
-                    </div>
-                    <div class="user-block-info">
-                        <p class="user-block-username">Ann Ann</p>
-                        <p class="user-block-email">1.6к підписників</p>
-                    </div>
-                </div>
-
-                <div class="followers-user-block">
-                    <div class="followers-container-image-container">
-                        <img class="followers-image" src="{% static 'images/users/avatar3.svg' %}" alt="">
-                    </div>
-                    <div class="user-block-info">
-                        <p class="user-block-username">Yeugen Jenua</p>
-                        <p class="user-block-email">10.3к підписників</p>
-                    </div>
-                </div>
-            </div>
-        {% endif %} -->
+            {% endfor %} -->
+        </div>
     </div>
 
     <div class="message-container content-border-container">
@@ -110,51 +75,9 @@
             <button class="container-header-button msg-btn">Дивитись всі</button>
         </div>
 
-        {% if user.is_authenticated %}
-            <div class="message-list">
-                <div class="message-user-block">
-                    <div class="message-container-image-container">
-                        <img class="message-image" src="{% static 'images/users/avatar4.svg' %}" alt="">
-                    </div>
-                    
-                    <div class="message-block-info">
-                        <div class="message-block-info-header">
-                            <p class="message-block-username">Mona Lisa</p>
-                            <p class="message-block-time">09:41</p>
-                        </div>
-                        <p class="message-block-email">Привіт! Як справи ?</p>
-                    </div>
-                </div>
+        <div class="message-list" id="chats_container">
 
-                <div class="message-user-block">  
-                    <div class="message-container-image-container">
-                        <img class="message-image" src="{% static 'images/users/avatar5.svg' %}" alt="">
-                    </div>
-                    
-                    <div class="message-block-info">
-                        <div class="message-block-info-header">
-                            <p class="message-block-username">Ann Ti</p>
-                            <p class="message-block-time">25.04.2025</p>
-                        </div>
-                        <p class="message-block-email">Привіт!</p>
-                    </div>
-                </div>
-
-                <div class="message-user-block">
-                    <div class="message-container-image-container">
-                        <img class="message-image" src="{% static 'images/users/avatar6.svg' %}" alt="">
-                    </div>
-                    
-                    <div class="message-block-info">
-                        <div class="message-block-info-header">
-                            <p class="message-block-username">Ness Ty</p>
-                            <p class="message-block-time">25.04.2025</p>
-                        </div>
-                        <p class="message-block-email">Привіт!</p>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}
 
@@ -219,5 +142,6 @@
     <script src = "{% static 'js/deletePost.js' %}" defer></script>
     <script src = "{% static 'js/profileModal.js' %}" defer></script>
     <script src = "{% static 'js/createPostModal.js' %}" defer></script>
+    <script src = "{% static 'js/homeLoader.js' %}" defer></script>
 {% endblock %}
 

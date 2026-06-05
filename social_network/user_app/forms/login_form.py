@@ -29,7 +29,7 @@ class LoginForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-
+        
         email = cleaned_data.get('email').strip()
         password = cleaned_data.get('password')
         user = authenticate(email=email, password=password)

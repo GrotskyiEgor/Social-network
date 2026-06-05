@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Prefetch
 from django.template.loader import render_to_string
 
 from .forms import ProfileForm
 from post_app.forms import PostForm, TagForm
 from user_app.models import User
 from post_app.models import Post
+from chat_app.models import Chat, Message
 from profile_app.models import Profile, Friendship
 from post_app.views import unionTagList
 
@@ -38,7 +41,7 @@ class HomeView(ListView):
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
 
-        context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
+        # context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
         context['tags'] = unionTagList(self.request.user.profile)
 
         for post in context['posts']:
@@ -102,3 +105,27 @@ class HomeView(ListView):
             prefetch_related('tags', 'links', 'images').
             order_by('-id')
         )
+    
+class HomeLoaderView(LoginRequiredMixin, View):
+    def get(self, context, **response_kwargs):
+        selection = self.request.GET.get('selection', 0)
+
+        if selection == 'requests':
+            return JsonResponse({
+                'chats_html': render_to_string(
+                    'home_app/particals/requests.html',
+                    {"requests": get_friendship_requests(self.request.user.profile)[:3], 'user_profile': self.request.user.profile}      
+                )
+            })
+        elif selection == 'chats':
+            messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
+            chats = Chat.objects.filter(users=self.request.user.profile, is_group = False).prefetch_related(messages_prefetch).order_by("id")[:3]
+            print('chats', chats)
+            return JsonResponse({
+                'chats_html': render_to_string(
+                    'home_app/particals/chats.html',
+                    {"chats": chats, 'user_profile': self.request.user.profile}      
+                )
+            })
+    
+        return super().render_to_response(context, **response_kwargs)

@@ -5,6 +5,11 @@ const csrfToken = document.getElementById('meta_csrf_token').dataset.csrfToken
 let chatsMessagesSentinel
 const chatContainer = document.getElementById('chat_container')
 const emptyChatContainer = document.getElementById("empty_chat_conteiner")
+let selectChatId = getCookie('chatId')
+
+if (selectChatId){
+    connectWebSocket(selectChatId)
+}
 
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
@@ -62,12 +67,16 @@ async function openChatWithUser(userId, username) {
     }
 }
 
+let messagesLoading = false
+let messagesCurrentPage = 0
+
 function connectWebSocket(chatId) {
     if (chatSocket) {
         chatSocket.close();
     }
 
     chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`);
+    setCookie("chatId", chatId)
 
     chatSocket.onmessage = function (event) {
         let data = JSON.parse(event.data);
@@ -82,8 +91,8 @@ function connectWebSocket(chatId) {
                 top: chatDiv.scrollHeight
             });
 
-            let messagesLoading = false
-            let messagesCurrentPage = 1
+            messagesLoading = false
+            messagesCurrentPage = 1
             initMessagesObserver()
         } else if (data.type === 'chat_message'){
             let chatDiv = document.getElementById('chat_message_container')
@@ -96,9 +105,6 @@ function connectWebSocket(chatId) {
         }
     };
 }
-
-let messagesLoading = false
-let messagesCurrentPage = 1
 
 const messagesObeserve = new IntersectionObserver(async (entries)=>{
     if (entries[0].isIntersecting && messagesLoading === false){
@@ -115,6 +121,7 @@ const messagesObeserve = new IntersectionObserver(async (entries)=>{
 
         const objectRespone = await response.json()
 
+        console.log(0)
         if (objectRespone.messages_html){
             const chatDiv = document.getElementById('chat_message_container');
             const oldHeight = chatDiv.scrollHeight;

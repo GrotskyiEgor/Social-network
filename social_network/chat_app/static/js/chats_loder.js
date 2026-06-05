@@ -1,4 +1,4 @@
-let friendscurrentPage = 1;
+let friendscurrentPage = 0;
 let friendsisLoading = false;
 
 const friendsSentinel = document.getElementById('friends_loader')
@@ -32,7 +32,7 @@ const friendsОbeserve = new IntersectionObserver(async (entries)=>{
 
 friendsОbeserve.observe(friendsSentinel)
 
-let chatsCurrentPage = 1;
+let chatsCurrentPage = 0;
 let chatsisLoading = false;
 
 const chatsSentinel = document.getElementById('chats_loader')
@@ -65,3 +65,39 @@ const chatsObeserve = new IntersectionObserver(async (entries)=>{
 }, {rootMargin: "50px"})
 
 chatsObeserve.observe(chatsSentinel)
+
+
+let groupsCurrentPage = 0;
+let groupsLoading = false;
+
+const groupsSentinel = document.getElementById('groups_loader')
+
+const groupsObeserve = new IntersectionObserver(async (entries)=>{
+    if (entries[0].isIntersecting && groupsLoading === false){
+        groupsLoading = true
+        groupsCurrentPage += 1
+        
+        const response = await fetch (
+            `${window.location.pathname}?page=${groupsCurrentPage}&selection=${groupsSentinel.dataset.selection}`, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }
+        )
+
+        const objectRespone = await response.json()
+
+        if (objectRespone.groups_html){
+            groupsSentinel.insertAdjacentHTML("beforebegin", objectRespone.groups_html)
+        }
+
+        if (!objectRespone.has_next){
+            chatsObeserve.disconnect()
+        }
+
+        groupsLoading = false
+    }
+}, {rootMargin: "50px"})
+
+groupsObeserve.observe(groupsSentinel)
+

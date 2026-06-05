@@ -62,8 +62,8 @@
             </div>
 
 
-            <div class="chat-message-container  message-list" id="chats_container">
-                {% include 'chat_app/particals/chats.html'  %}
+            <div class="chat-message-container message-list" id="chats_container">
+                {% include 'chat_app/particals/chats.html' %}
 
                 <div id="chats_loader" data-selection="chats"></div>
             </div>
@@ -81,7 +81,9 @@
             </div>
 
             <div class="chat-group-container message-list">
-                {% include 'chat_app/particals/groups.html'  %}
+                {% include 'chat_app/particals/groups.html' %}
+
+                <div id="groups_loader" data-selection="groups"></div>
             </div>
         </div>
     </div>

@@ -4,9 +4,10 @@ from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.db.models import Prefetch
 
 
-from .models import Chat
+from .models import Chat, Message
 from profile_app.models import Profile
 from user_app.models import User
 from .services.load_msg import get_msg_list
@@ -23,23 +24,27 @@ class ChatView(TemplateView):
         friends_list = get_friends(self.request.user.profile)
 
         context['user_profile'] = self.request.user.profile
-        context['friends'] = friends_list[:12]
-        context["chats"] = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")[:7]
         context["all_friends"] = friends_pages(friends_list) 
+        # context['friends'] = friends_list[:12]
+        # context["chats"] = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")[:7]
+        # context['groups'] = Chat.objects.filter(users=self.request.user.profile, is_group = True).order_by("id")
         
         return context
     
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
             paginator_list = []
-            paginato_page = self.request.GET.get('page', 1)
+            paginato_page = int(self.request.GET.get('page', 1))
             filter_text = self.request.GET.get('filter_text', '')
             selection = self.request.GET.get('selection', 0)
 
+            messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
             if selection == 'friends':
                 paginator_list = get_friends(self.request.user.profile, filter_text)
             elif selection == 'chats':
-                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")
+                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = False).prefetch_related(messages_prefetch).order_by("id")
+            elif selection == 'groups':
+                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = True).prefetch_related(messages_prefetch).order_by("id")
 
             page_obj = Paginator(paginator_list, 12 if selection == 'friends' else 7).get_page(paginato_page)
             
@@ -58,23 +63,33 @@ class ChatView(TemplateView):
                         {"chats": page_obj, 'user_profile': self.request.user.profile}      
                     ),
                     'has_next': page_obj.has_next()
-                })               
+                })
+            elif selection == 'groups':
+                return JsonResponse({
+                    'groups_html': render_to_string(
+                        'chat_app/particals/groups.html',
+                        {"groups": page_obj, 'user_profile': self.request.user.profile}      
+                    ),
+                    'has_next': page_obj.has_next()
+                })         
             elif selection == 'messages':
                 chat = Chat.objects.get(id=int(self.request.GET.get('chat_id', None)))
 
                 if chat:
                     messages_list = chat.messages.order_by('-created_at')
                     page_obj = Paginator(messages_list, 20).get_page(paginato_page)
-                    messages = reversed(page_obj.object_list)
-                    messages_with_dates = get_msg_list(messages)
 
-                    return JsonResponse({
-                        'messages_html': render_to_string(
-                            'chat_app/chat_msg/msg.html',
-                            {'chat_messages': messages_with_dates, 'user': self.request.user}
-                        ),
-                        'has_next': page_obj.has_next()
-                    })
+                    if int(page_obj.number) == paginato_page:
+                        messages = reversed(page_obj.object_list)
+                        messages_with_dates = get_msg_list(messages)
+
+                        return JsonResponse({
+                            'messages_html': render_to_string(
+                                'chat_app/chat_msg/msg.html',
+                                {'chat_messages': messages_with_dates, 'user': self.request.user}
+                            ),
+                            'has_next': page_obj.has_next()
+                        })
 
         return super().render_to_response(context, **response_kwargs)
 

@@ -6,9 +6,19 @@
             <img class="images-text-img" src="{% static 'images/icons/back.svg' %}" alt="back">
     
             <div class="chat-header-info">
-                <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                {% if chat.name %}
+                    <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="indicator">
+                {% else %}
+                    <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                {% endif %}
                 <div class="chat-header-text">
-                    <p class="username-text">{{ other_user.user.username }}</p>
+                    <p class="username-text">
+                        {% if chat.name %}
+                            {{ chat.name }}
+                        {% else %}
+                            {{ other_user.user.username }}
+                        {% endif %}
+                    </p>
                     <p class="extra-info-text">{{ chat.users.all|length }} учасники</p>
                 </div>
             </div>

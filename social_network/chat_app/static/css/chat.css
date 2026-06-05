@@ -20,6 +20,7 @@
 }
 
 .chat-group-container {
+    min-height: 19.875rem; 
     max-height: 19.875rem;
 }
 
@@ -38,6 +39,7 @@
 .side-info-conteiner  {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     gap: 0.5rem;
     overflow: hidden;
 }
@@ -52,7 +54,8 @@
 }
 
 .chat-message-container {
-    height: 19.375rem; 
+    min-height: 19.375rem; 
+    max-height: 19.375rem;
 }
 
 .contacts-block {
@@ -124,7 +127,7 @@
     color: var(--text-main);
 }
 
-#chats_loader, #friends_loader, #chats_msg_loader {
+#chats_loader, #friends_loader, #chats_msg_loader, #groups_loader {
     width: 100%;
     min-height: 1px;
 }
