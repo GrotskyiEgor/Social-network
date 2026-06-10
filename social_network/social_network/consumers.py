@@ -29,13 +29,13 @@ class ActiveConsumer(AsyncWebsocketConsumer):
             )
         )
 
-        self.set_profile_is_active(value=True)
+        await self.set_profile_is_active(value=True)
         print('======================================')
         print(f"Підключення до {self.room_name} було успішно встановлено, is_active становиться True {self.profile_id}")
         print('======================================')
         
     async def disconnect(self, code):
-        self.set_profile_is_active(value=False)
+        await self.set_profile_is_active(value=False)
         print('======================================')
         print(f' is_active становиться False {self.profile_id}"')
         print('======================================')

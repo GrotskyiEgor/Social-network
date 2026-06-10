@@ -19,7 +19,15 @@ def clear_profile_is_active():
     for profile in Profile.objects.all():
         profile.is_active = False
         profile.save()
-    
+
+def del_chat():
+    chats_list = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+
+    for chat_id in chats_list:
+        chat = Chat.objects.get(id=chat_id)
+        if chat:
+            chat.delete()
+
 class HomeView(ListView):
     model = Post
     paginate_by = 5
@@ -52,6 +60,7 @@ class HomeView(ListView):
             post.toggleInteract('views', self.request.user.profile)
 
         # clear_profile_is_active()
+        # del_chat()
         
         return context
     

@@ -65,13 +65,17 @@ class ChatView(TemplateView):
                     'has_next': page_obj.has_next()
                 })
             elif selection == 'groups':
-                return JsonResponse({
-                    'groups_html': render_to_string(
-                        'chat_app/particals/groups.html',
-                        {"groups": page_obj, 'user_profile': self.request.user.profile}      
-                    ),
-                    'has_next': page_obj.has_next()
-                })         
+                print('=================================')
+                print('paginato_page', paginato_page, 'page_obj number', page_obj.number)
+
+                if int(paginato_page) == page_obj.number:
+                    return JsonResponse({
+                        'groups_html': render_to_string(
+                            'chat_app/particals/groups.html',
+                            {"groups": page_obj, 'user_profile': self.request.user.profile}      
+                        ),
+                        'has_next': page_obj.has_next()
+                    })         
             elif selection == 'messages':
                 chat = Chat.objects.get(id=int(self.request.GET.get('chat_id', None)))
 

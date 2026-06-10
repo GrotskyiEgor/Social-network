@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from ..models import Chat
 from profile_app.models import Profile
@@ -34,4 +35,7 @@ def create_group(request):
     chat.users.add(request.user.profile)
     chat.users.add(*Profile.objects.filter(id__in=friend_ids))
 
-    return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name})
+    return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'chat_html':  render_to_string(
+                        'chat_app/particals/groups.html',
+                        {"groups": [chat]}      
+                    ),})

@@ -4,15 +4,15 @@ function connectWebSocket(profileId) {
     if (activeWebSocket) {
         activeWebSocket.close();
     }
-
-    if (isAuthenticated){
+    
+    if (isAuthenticated === "True"){
 
         activeWebSocket = new WebSocket(`ws://${window.location.host}/is_active/${profileId}/`);
 
         activeWebSocket.onmessage = function (event) {
             let data = JSON.parse(event.data);
             
-            console.log('WEBSOCKET -', data.type, data.message)
+            console.log('WEBSOCKET IS ACTIVE-', data.type, data.message)
         };
     }
 }

@@ -117,5 +117,10 @@ async function createGroup() {
     });
 
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
+
+    closeModal('modal-add-group-bg')
+    closeModal('modal-create-group-bg')
+
+    document.getElementById('groups_loader').insertAdjacentHTML("beforeend", data.chat_html);
 }
