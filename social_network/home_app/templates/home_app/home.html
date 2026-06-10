@@ -13,7 +13,7 @@
     <div class="profile-container content-border-container">
         <div class="profile-user-container">
             <div class="profile-user-image-container">
-                <img class="profile-user-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                <img class="profile-user-image" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator">
             </div>
             <div class="profile-username">
                 <a href="{% url 'profile' user_id=user.profile.id action='watch' %}" class="username-text" id="username_text">{{ user.username }}</a>

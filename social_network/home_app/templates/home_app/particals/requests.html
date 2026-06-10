@@ -3,7 +3,11 @@
 {% for friendship in requests %}
     <div class="followers-user-block">
         <div class="followers-container-image-container">
-            <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+            {% if friendship.user.profile.is_active %}  
+                <img class="message-image" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator">
+            {% else %}
+                <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+            {% endif %}
         </div>
         <div class="user-block-info">
             <a href="{% url 'profile' user_id=friendship.id action='watch' %}" class="user-block-username">{{ friendship.user.username }}</a>

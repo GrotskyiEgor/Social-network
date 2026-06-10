@@ -14,6 +14,8 @@ class Profile(models.Model):
     is_image_signature = models.BooleanField(default=False, verbose_name="Підпис зображенням")
     is_text_signature = models.BooleanField(default=False, verbose_name="Підпис текстом")
 
+    is_active = models.BooleanField(default=True)
+
     def __str__(self):
         return f"Профіль: {self.user.username}"
 

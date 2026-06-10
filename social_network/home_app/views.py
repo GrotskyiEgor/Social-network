@@ -15,7 +15,11 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
-
+def clear_profile_is_active():
+    for profile in Profile.objects.all():
+        profile.is_active = False
+        profile.save()
+    
 class HomeView(ListView):
     model = Post
     paginate_by = 5
@@ -46,6 +50,8 @@ class HomeView(ListView):
 
         for post in context['posts']:
             post.toggleInteract('views', self.request.user.profile)
+
+        # clear_profile_is_active()
         
         return context
     

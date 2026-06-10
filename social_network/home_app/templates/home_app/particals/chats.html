@@ -7,7 +7,12 @@
                 <div class="message-user-block user-select" data-chat-id="{{ chat.id }}" data-username="{{ other_user.user.username }}">
 
                     <div class="message-container-image-container">
-                        <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                        <p>{{ other_user.is_active }}, {{ other_user.pseudonym }}</p>
+                        {% if other_user.is_active %}  
+                            <img class="message-image" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator">
+                        {% else %}
+                            <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                        {% endif %}
                     </div>
                     
                     {% with last_message=chat.messages.first %}
