@@ -90,6 +90,16 @@ function closeModal(modalClass){
     $(`.${modalClass}`).removeClass('visible');
 };
 
+function openModalId(modalClass){
+    $(`#${modalClass}`).removeClass('hidden');
+    $(`#${modalClass}`).addClass('visible');
+};
+
+function closeModalId(modalClass){
+    $(`#${modalClass}`).addClass('hidden');
+    $(`#${modalClass}`).removeClass('visible');
+};
+
 async function createGroup() {
     const formData = new FormData();
     console.log('document.getElementById().value', document.getElementById('group_name_input').value)

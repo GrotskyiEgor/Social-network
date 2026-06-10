@@ -11,47 +11,6 @@ if (selectChatId){
     connectWebSocket(selectChatId)
 }
 
-$(document).on('click', '.clear-chat', clearChat)
-
-let openContextMenu = false
-
-$(document).on('click', function(event) {
-    if (openContextMenu){
-        if (!$(event.target).closest('.context-menu-admin').length) {
-            const contextMenu = $(document.getElementById('context_menu_admin'))
-            console.log('contextMenu closeAdmin', contextMenu)
-            contextMenu.removeClass('active')
-            contextMenu.addClass('hidden')
-        }
-
-        if (!$(event.target).closest('.context-menu-гыук').length) {
-            const contextMenu = $(document.getElementById('context_menu_user'))
-            console.log('contextMenu cl0ose', contextMenu)
-            contextMenu.removeClass('active')
-            contextMenu.addClass('hidden')
-        }
-
-        openContextMenu = false
-    }
-});
-
-$(document).on('click', '.context-menu-admin-interactive', function(){
-    const contextMenu = $(document.getElementById('context_menu_admin'))
-    console.log('contextMenu openAdmin', contextMenu)
-    contextMenu.removeClass('hidden')
-    contextMenu.addClass('active')
-    openContextMenu = true
-})
-
-$(document).on('click', '.context-menu-interactive ', function(){
-    const contextMenu = $(document.getElementById('context_menu_user'))
-    console.log('contextMenu open ', contextMenu)
-    contextMenu.removeClass('hidden')
-    contextMenu.addClass('active')
-    openContextMenu = true
-})
-
-
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
     connectWebSocket(this.dataset.chatId);
@@ -190,13 +149,4 @@ function initMessagesObserver(){
     if (chatsMessagesSentinel){
         messagesObeserve.observe(chatsMessagesSentinel)
     }
-}
-
-function clearChat(){
-    document.getElementById('chat_container').innerHTML = `
-        <div class="empty-chat-conteiner" id="empty_chat_conteiner">
-            <p class="empty-chat-title">Почніть нове спілкування</p>
-            <p class="empty-chat-text">Оберіть контакт зі списку ліворуч або створіть групу, щоб почати спілкування</p>
-        </div>
-    `
 }

@@ -35,7 +35,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         print(f"Підключення до чату {self.room_group_name} було успішно встановлено")
-    
+     
     
     async def receive(self, text_data):
         dict_data = json.loads(text_data)

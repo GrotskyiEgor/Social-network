@@ -1,4 +1,9 @@
 .context-menu {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
     width: 21.45rem;
     display: flex;
     flex-direction: column;
