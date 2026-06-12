@@ -5,15 +5,20 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.db.models import Prefetch
+from django.http import HttpRequest
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.utils import timezone
 
 
-from .models import Chat, Message
+from .models import Chat, Message, MessageImage
 from profile_app.models import Profile
 from user_app.models import User
 from .services.load_msg import get_msg_list
 from .services.add_group_page import friends_pages, create_group
 from profile_app.services.freind_qureist import get_friends
 from profile_app.services.freind_qureist import *
+
 
 class ChatView(TemplateView):
     template_name = 'chat_app/chat.html'
@@ -65,9 +70,6 @@ class ChatView(TemplateView):
                     'has_next': page_obj.has_next()
                 })
             elif selection == 'groups':
-                print('=================================')
-                print('paginato_page', paginato_page, 'page_obj number', page_obj.number)
-
                 if int(paginato_page) == page_obj.number:
                     return JsonResponse({
                         'groups_html': render_to_string(
@@ -128,9 +130,48 @@ class ChatWithView(LoginRequiredMixin, View):
             "chat_id": chat.id
         })
     
+
 class CreateGroupView(LoginRequiredMixin, View):
     login_url = reverse_lazy("auth")
     
     def post(self, request):
         return create_group(request)
+    
+
+class ChatMessageWithImages(LoginRequiredMixin, View):
+    login_url = reverse_lazy('auth')
+    
+    def post(self, request: HttpRequest, chat_id):
+        if not Chat.objects.filter(id=chat_id, users=request.user.profile).exists():
+            return JsonResponse({"success": False}, status=403)
         
+        text = request.POST.get("text", "").strip()
+        images = request.FILES.getlist("images")
+
+        if not text and not images:
+            return JsonResponse({"success": False}, status=400)
+        
+        message = Message.objects.create(chat_id=chat_id, sender=request.user.profile, text=text)
+        
+        for image in images:
+           MessageImage.objects.create(message=message, image=image)
+
+        channel_layer = get_channel_layer()
+
+        async_to_sync(channel_layer.group_send)(
+            f'chat{chat_id}',
+            {
+                'type': 'send_chat_message',
+                'sender': request.user.username,
+                'my_msg_html': render_to_string(
+                    'chat_app/chat_msg/my_msg.html',
+                    {'msg': message, 'user': request.user.username}      
+                ),
+                'other_msg_html': render_to_string(
+                    'chat_app/chat_msg/other_msg.html',
+                    {'msg': message, 'user': request.user.username}      
+                )
+            }
+        )
+
+        return JsonResponse({'success': True})

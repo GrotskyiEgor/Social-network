@@ -30,29 +30,21 @@ class ActiveConsumer(AsyncWebsocketConsumer):
         )
 
         await self.set_profile_is_active(value=True)
-        print('======================================')
-        print(f"Підключення до {self.room_name} було успішно встановлено, is_active становиться True {self.profile_id}")
-        print('======================================')
+
         
     async def disconnect(self, code):
         await self.set_profile_is_active(value=False)
-        print('======================================')
-        print(f' is_active становиться False {self.profile_id}"')
-        print('======================================')
+
 
     @database_sync_to_async
     def check_profile_is_active(self):        
         profile = Profile.objects.filter(id = int(self.profile_id)).first()
         return profile.is_active
     
+    
     @database_sync_to_async
     def set_profile_is_active(self, value):
         profile = Profile.objects.filter(id = int(self.profile_id)).first()
-        print('======================================')
-        print('set_profile_is_active')
-        print(profile.is_active, value)
         profile.is_active = value
-        print(profile.is_active)
-        print('======================================')
         profile.save()
         

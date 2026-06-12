@@ -43,7 +43,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         if message_text:
             message = await self.save_message(message_text)
-
+            print(1)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -63,6 +63,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else: 
             msg_html = event['other_msg_html']
 
+        print(2)
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'sender': event['sender'],

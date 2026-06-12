@@ -1,5 +1,10 @@
 {% load static %}
 
+<!-- HomeWork -->
+{% for image_obj in msg.images.all %}
+    <img class="send-message-image-other" src="{{ image_obj.image.url }}" alt="img">
+{% endfor %}
+
 <div class="msg-container">
     <img class="message-image msg-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
 

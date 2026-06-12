@@ -22,25 +22,65 @@ $(document).on("click", ".open-chat-with", async function(){
         this.dataset.chatUsername,
     );
 });
-$
+
 $(document).on('click', '#message_form_btn', function(){
     send_message()
 })
 
 $(document).on("submit", "#message_form", function(event){
     event.preventDefault()
-
     send_message()
 })
 
-function send_message(){
+$(document).on('click', ".message-image-triger", function(){
+    const messageImagesInput = document.getElementById('message_images_input')
+    messageImagesInput.click()
+})
+
+function getSelectImages() {
+    const messageImagesInput = document.getElementById('message_images_input')
+    return Array.from(messageImagesInput.files);
+}
+
+async function send_message(){
     const formIntput = document.getElementById('message_form_input')
+    const messageImagesInput = document.getElementById('message_images_input')
     inputMessage = formIntput.value.trim()
-    
-    if (inputMessage){
+    hasImages = getSelectImages().length > 0
+
+    if (!inputMessage && !hasImages) return;
+
+    if (hasImages) {
+        const data = await sendMessageWithImages(inputMessage);
+        
+        if (!data.success) return;
+        formIntput.value = '';
+        messageImagesInput.value = ""; 
+    }
+
+
+    if (!hasImages){
         chatSocket.send(JSON.stringify({ messageText: inputMessage }));
         formIntput.value = ''
     }
+}
+
+async function sendMessageWithImages(text) {
+    const selectChatId = getCookie('chatId')
+    const formData = new FormData();
+    formData.append("text", text);
+    
+    getSelectImages().forEach((image) => {
+        formData.append("images", image);
+    });
+
+    const response = await fetch(`/chats/upload_images/${selectChatId}/`, {
+        method: "POST",
+        headers: { "X-CSRFToken": csrfToken },
+        body: formData,
+    });
+
+    return response.json();
 }
 
 async function openChatWithUser(userId, username) {
@@ -51,8 +91,7 @@ async function openChatWithUser(userId, username) {
 
     const data = await response.json();
     if (data.success) {
-
-        if (data.chats_html){
+        if (data.chats_html.trim() !== ''){
             chatsSentinel.insertAdjacentHTML("beforebegin", data.chats_html)
             let chatsContainer = document.getElementById('chats_container')
 
@@ -75,6 +114,7 @@ function connectWebSocket(chatId) {
         chatSocket.close();
     }
 
+    console.log(`ws://${window.location.host}/chat_chanel/${chatId}/`)
     chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`);
     setCookie("chatId", chatId)
 
@@ -98,6 +138,7 @@ function connectWebSocket(chatId) {
             let chatDiv = document.getElementById('chat_message_container')
             chatDiv.innerHTML += data.msg_html
 
+            // HomeWork
             chatDiv.scrollTo({
                 top: chatDiv.scrollHeight,
                 behavior: 'smooth'
@@ -121,7 +162,6 @@ const messagesObeserve = new IntersectionObserver(async (entries)=>{
 
         const objectRespone = await response.json()
 
-        console.log(0)
         if (objectRespone.messages_html){
             const chatDiv = document.getElementById('chat_message_container');
             const oldHeight = chatDiv.scrollHeight;

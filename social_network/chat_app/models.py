@@ -44,7 +44,7 @@ class Message(models.Model):
     readers = models.ManyToManyField(Profile, related_name='read_messages', blank=True)
     
     def __str__(self):
-        return f"{self.sender.username}: {self.text[:20]}"
+        return f"{self.sender.user.username}: {self.text[:20]}"
     
     def format_ua_date(self):
         return f"{self.created_at.day} {MONTHS_UA[self.created_at.month]} {self.created_at.year}"

@@ -40,9 +40,10 @@
     <form action="" class="message-form" id="message_form">
         <input type="text" placeholder="Повідомлення" class="contacts-input message-input" id="message_form_input">
         <!-- <button>Відправити</button> -->
+        <input type="file" accept="image/*" multiple hidden id="message_images_input">
     </form>
 
     <img class="input-img" src="{% static 'images/inputs/emoji.svg' %}" alt="back">
-    <img class="input-img" src="{% static 'images/inputs/images.svg' %}" alt="back">
+    <img class="input-img message-image-triger" src="{% static 'images/inputs/images.svg' %}" alt="back">
     <img class="input-img" src="{% static 'images/inputs/send.svg' %}" alt="back" id="message_form_btn">
 </div>

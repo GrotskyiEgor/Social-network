@@ -1,5 +1,10 @@
 {% load static %}
 
+<!-- HomeWork -->
+{% for image_obj in msg.images.all %}
+    <img class="send-message-image-my" src="{{ image_obj.image.url }}" alt="img">
+{% endfor %}
+
 <div class="my-msg-container">
     <div class="msg-text">{{ msg.text }}</div>
     <div class="msg-info-date">

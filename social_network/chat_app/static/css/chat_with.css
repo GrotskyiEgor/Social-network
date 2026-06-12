@@ -192,3 +192,21 @@
     height: 2.5rem;
     width: 2.5rem;
 }
+
+.send-message-image-my{
+    height: auto;
+    width: 80%;
+    border-radius: 0.625rem;
+    display: flex;
+    align-self: flex-end;
+    border: 0.0625rem solid var(--border-light);
+}
+
+.send-message-image-other{
+    height: auto;
+    width: 80%;
+    border-radius: 0.625rem;
+    display: flex;
+    align-self: flex-start;
+    border: 0.0625rem solid var(--border-light);
+}

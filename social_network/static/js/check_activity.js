@@ -1,6 +1,6 @@
 let activeWebSocket = null
 
-function connectWebSocket(profileId) {
+function connectWebSocketActive(profileId) {
     if (activeWebSocket) {
         activeWebSocket.close();
     }
@@ -18,5 +18,5 @@ function connectWebSocket(profileId) {
 }
 
 setTimeout(() => {
-    connectWebSocket(profileId)
+    connectWebSocketActive(profileId)
 }, 3000);
