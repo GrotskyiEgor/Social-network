@@ -15,11 +15,6 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
-def clear_profile_is_active():
-    for profile in Profile.objects.all():
-        profile.is_active = False
-        profile.save()
-
 def del_chat():
     chats_list = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
 
@@ -59,7 +54,6 @@ class HomeView(ListView):
         for post in context['posts']:
             post.toggleInteract('views', self.request.user.profile)
 
-        # clear_profile_is_active()
         # del_chat()
         
         return context

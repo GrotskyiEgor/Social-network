@@ -7,7 +7,7 @@ function connectWebSocketActive(profileId) {
     
     if (isAuthenticated === "True"){
 
-        activeWebSocket = new WebSocket(`ws://${window.location.host}/is_active/${profileId}/`);
+        activeWebSocket = new WebSocket(`ws://${window.location.host}/is_active/`);
 
         activeWebSocket.onmessage = function (event) {
             let data = JSON.parse(event.data);

@@ -97,8 +97,6 @@
         {% endblock %}
         <script defer>
             let isAuthenticated = "{{ request.user.is_authenticated }}"
-            let profileId = "{{ request.user.profile.id }}"
-            console.log(isAuthenticated, profileId)
         </script>
         
         <script src="{% static 'js/jquery-4.0.0.min.js' %}" defer></script>
