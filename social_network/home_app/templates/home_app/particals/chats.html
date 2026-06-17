@@ -4,7 +4,7 @@
     {% for profile in chat.users.all %}
         {% if profile != user_profile %}
             {% with other_user=profile %}
-                <div class="message-user-block user-select" data-chat-id="{{ chat.id }}" data-username="{{ other_user.user.username }}">
+                <div class="message-user-block open-chat-with" data-chat-id="{{ chat.id }}" data-username="{{ other_user.user.username }}">
 
                     <div class="message-container-image-container">
                         {% if other_user.is_active %} 

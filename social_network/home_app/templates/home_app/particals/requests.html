@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for friendship in requests %}
-    <div class="followers-user-block">
+    <div class="followers-user-block user-profile-request" data-profile-id="{{ friendship.user.profile.id }}">
         <div class="followers-container-image-container">
             {% if friendship.user.profile.is_active %}  
                 <img class="message-image" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator">
@@ -10,7 +10,7 @@
             {% endif %}
         </div>
         <div class="user-block-info">
-            <a href="{% url 'profile' user_id=friendship.id action='watch' %}" class="user-block-username">{{ friendship.user.username }}</a>
+            <p class="user-block-username">{{ friendship.user.username }}</p>
             <p class="user-block-email">{{ friendship.from_user.signature|default:'0' }}к підписників</p>
         </div>
     </div>

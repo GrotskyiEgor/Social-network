@@ -190,3 +190,26 @@ function initMessagesObserver(){
         messagesObeserve.observe(chatsMessagesSentinel)
     }
 }
+
+document.addEventListener('load', function(event) {
+    if (event.target.tagName === 'IMG' && event.target.classList.contains('load-message-image')) {
+        let chatDiv = document.getElementById('chat_message_container')
+
+        chatDiv.scrollTo({
+            top: chatDiv.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+}, true);
+
+document.addEventListener('load', function(event) {
+    if (event.target.tagName === 'IMG' && event.target.classList.contains('load-message-image')) {
+        let chatDiv = document.getElementById('chat_message_container')
+        this.alt = 'loading error'
+
+        chatDiv.scrollTo({
+            top: chatDiv.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+}, true);

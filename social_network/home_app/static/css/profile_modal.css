@@ -136,3 +136,22 @@
     align-self: center;
     justify-self: center;
 }
+
+.user-profile-request, .open-chat-with {
+    cursor: pointer;
+    
+    transition: 
+        background-color 0.2s ease
+}
+.user-profile-request:hover{
+    background-color: var(--bg-body);
+}
+
+.open-chat-with:hover {
+    background-color: var(--bg-body);
+}
+
+.open-chat-with:hover {
+    background-color: var(--bg-body);
+    cursor: pointer;
+}

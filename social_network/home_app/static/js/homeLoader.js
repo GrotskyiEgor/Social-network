@@ -36,3 +36,12 @@ async function loadRequests() {
 
 loadRequests()
 loadChats()
+
+$(document).on('click', '.user-profile-request', function(){
+    window.location.href = `/friends/profile/${this.dataset.profileId}/requests`
+})
+
+$(document).on('click', '.open-chat-with', function(){
+    setCookie("chatId", this.dataset.chatId)
+    window.location.href = `/chats/chat`
+})
