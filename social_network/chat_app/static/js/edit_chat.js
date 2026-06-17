@@ -1,20 +1,19 @@
 $(document).on('click', '.clear-chat', clearChat)
 
-let openContextMenu = false
+$(document).on('click', '.close-context-menu', ()=>{
+    closeModalId('context_menu_admin')
+    closeModalId('context_menu_user')
+})
 
 $(document).on('click', function(event) {
-    if (openContextMenu){
-        if (!$(event.target).closest('.context-menu-admin').length) {
-            closeModalId('context_menu_admin')
-        }
-
-        if (!$(event.target).closest('.context-menu-гыук').length) {
-            closeModalId('context_menu_user')
-        }
-
-        openContextMenu = false
+    if (!$(event.target).closest('.context-menu-admin').length) {
+        closeModalId('context_menu_admin')
     }
-});
+
+    if (!$(event.target).closest('.context-menu-user').length) {
+        closeModalId('context_menu_user')
+    } 
+})
 
 $(document).on('click', '.context-menu-admin-interactive', function(event){
     event.stopPropagation();
@@ -25,8 +24,7 @@ $(document).on('click', '.context-menu-admin-interactive', function(event){
     contextMenu.css({
         top: event.pageY + 20 + 'px',
         left: event.pageX - ( contextMenu.width() / 2 ) + 'px'
-    });
-    openContextMenu = true
+    })
 })
 
 $(document).on('click', '.context-menu-interactive ', function(event){
@@ -38,8 +36,7 @@ $(document).on('click', '.context-menu-interactive ', function(event){
     contextMenu.css({
         top: event.pageY + 20 + 'px',
         left: event.pageX - ( contextMenu.width() / 2 ) + 'px'
-    });
-    openContextMenu = true
+    })
 })
 
 function clearChat(){

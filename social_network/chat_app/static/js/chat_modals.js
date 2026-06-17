@@ -75,30 +75,15 @@ $(document).on('click', '#open_add_group_modal', function(){
     openModal('modal-add-group-bg')
 })
 
+$(document).on('click', '#edit_group_btn', function(){
+    closeModalId('context_menu_admin')
+    openModal('modal-add-group-bg')
+})
+
 $(document).on('click', '#cansle_add_group_modal', function(){
     clearCheckbox()
     closeModal('modal-add-group-bg')
 })
-
-function openModal(modalClass){
-    $(`.${modalClass}`).removeClass('hidden');
-    $(`.${modalClass}`).addClass('visible');
-};
-
-function closeModal(modalClass){
-    $(`.${modalClass}`).addClass('hidden');
-    $(`.${modalClass}`).removeClass('visible');
-};
-
-function openModalId(modalClass){
-    $(`#${modalClass}`).removeClass('hidden');
-    $(`#${modalClass}`).addClass('visible');
-};
-
-function closeModalId(modalClass){
-    $(`#${modalClass}`).addClass('hidden');
-    $(`#${modalClass}`).removeClass('visible');
-};
 
 async function createGroup() {
     const formData = new FormData();
