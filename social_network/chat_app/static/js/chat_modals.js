@@ -1,11 +1,21 @@
+let selectedUsers = []
+
 $(document).on('click', '.checkbox', function(){
     let status = this.dataset.checkbox
+    let id = String(this.dataset.profileId)
+
     if (status === 'false'){
         this.dataset.checkbox = 'true'
         this.src = trueCheckbox
+
+        if (!selectedUsers.includes(id)) {
+            selectedUsers.push(id)
+        }
     } else if (status === 'true'){
         this.dataset.checkbox = 'false'
         this.src = falseCheckbox
+
+        selectedUsers = selectedUsers.filter(checkbox => checkbox !== id);
     }
 })
 
@@ -15,6 +25,8 @@ $(document).on('click', '.del-user', function(){
 })
 
 function clearCheckbox(){
+    selectedUsers = []
+
     document.querySelectorAll('.checkbox').forEach(checkbox =>{
         checkbox.dataset.checkbox = 'false'
         checkbox.src = falseCheckbox
@@ -22,7 +34,7 @@ function clearCheckbox(){
 }
 
 function activeCheckBox(){
-    activeCheckBoxArray = []
+    let activeCheckBoxArray = []
     document.querySelectorAll('.checkbox').forEach(checkbox =>{
         if (checkbox.dataset.checkbox === 'true') {
             activeCheckBoxArray.push(checkbox)
@@ -45,11 +57,12 @@ $(document).on('click', '#next_add_group_modal', function(event){
 
     
     deleteUsersContainer = document.getElementById('delete_users_container')
+    deleteUsersContainer.innerHTML = ''
     activeCheckBox().forEach(checkbox => {
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
-                    <img class="followers-image" src=${indicatorImg} alt="">
+                    <img class="followers-image online-img-${checkbox.dataset.profileId}" src=${indicatorImg} alt="">
                 </div>
                 <div class="user-block-info">
                     <p class="user-block-username">${checkbox.dataset.username}</p>
@@ -75,39 +88,22 @@ $(document).on('click', '#open_add_group_modal', function(){
     openModal('modal-add-group-bg')
 })
 
+$(document).on('click', '#edit_group_btn', function(){
+    closeModalId('context_menu_admin')
+    openModal('modal-add-group-bg')
+})
+
 $(document).on('click', '#cansle_add_group_modal', function(){
     clearCheckbox()
     closeModal('modal-add-group-bg')
 })
 
-function openModal(modalClass){
-    $(`.${modalClass}`).removeClass('hidden');
-    $(`.${modalClass}`).addClass('visible');
-};
-
-function closeModal(modalClass){
-    $(`.${modalClass}`).addClass('hidden');
-    $(`.${modalClass}`).removeClass('visible');
-};
-
-function openModalId(modalClass){
-    $(`#${modalClass}`).removeClass('hidden');
-    $(`#${modalClass}`).addClass('visible');
-};
-
-function closeModalId(modalClass){
-    $(`#${modalClass}`).addClass('hidden');
-    $(`#${modalClass}`).removeClass('visible');
-};
-
 async function createGroup() {
     const formData = new FormData();
     console.log('document.getElementById().value', document.getElementById('group_name_input').value)
     formData.append("name", document.getElementById('group_name_input').value);
-    document.querySelectorAll('.checkbox').forEach((checkbox) => {
-        if (checkbox.dataset.checkbox === 'true') {
-            formData.append("users", checkbox.dataset.profileId);
-        }
+    selectedUsers.forEach((id) => {
+        formData.append("users", id);
     });
 
     const response = await fetch("/chats/create_group/", {
@@ -118,6 +114,7 @@ async function createGroup() {
 
     const data = await response.json();
     // console.log(data)
+    clearCheckbox()
 
     closeModal('modal-add-group-bg')
     closeModal('modal-create-group-bg')

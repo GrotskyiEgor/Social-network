@@ -3,7 +3,7 @@ from .models import *
 
 admin.register(Tag)
 admin.register(Post)
-admin.register(Link)
+admin.register(PostLink)
 admin.register(PostImage)
 admin.register(PostLike)
 admin.register(PostHeart)

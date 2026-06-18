@@ -24,7 +24,7 @@ class PostView(LoginRequiredMixin, ListView):
 
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
-        context['tags'] = unionTagList(self.request.user.profile)
+        context['tags'] = unionTagList()
         
         return context
     
@@ -44,7 +44,7 @@ class PostView(LoginRequiredMixin, ListView):
     
     def get_queryset(self):   
         return (
-            Post.objects.filter(author=self.request.user.profile).
+            Post.objects.filter(author=self.request.user).
             select_related('author').
             prefetch_related('tags', 'links', 'images').
             order_by('-id')
@@ -58,7 +58,7 @@ class TagCreateView(LoginRequiredMixin, View):
         form = TagForm(request.POST)
 
         if form.is_valid():
-            tag = form.save(author=self.request.user.profile)
+            tag = form.save()
 
             return JsonResponse({
                 'success': True,
@@ -92,14 +92,18 @@ class PostCreateView(LoginRequiredMixin, View):
             images=request.FILES.getlist('images')
         )
 
+        print('form.is_valid()', form.is_valid())
         if form.is_valid():
-            post = form.save(author=self.request.user.profile)
+            post = form.save(author=self.request.user)
 
             return JsonResponse({
                 'success': True,
                 'message': 'Публікація успішно створена',
                 'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post]})
             })
+        
+        print(form.errors)
+        print(form.non_field_errors())
     
         return JsonResponse({
             'success': False,
@@ -109,29 +113,18 @@ class PostCreateView(LoginRequiredMixin, View):
 
 class PostInteractView(LoginRequiredMixin, View):
     def post(self, request, interact_post, post_id):
-        post = Post.objects.get(id=post_id, author=request.user.profile)
-        do = post.toggleInteract(interact_post, request.user.profile)
+        post = Post.objects.get(id=post_id, author=request.user)
+        do = post.toggleInteract(interact_post, request.user)
         return JsonResponse({'success': True, 'do': do})
 
 
 class PostDeleteView(LoginRequiredMixin, View):
     def post(self, request, post_id):
-        post = Post.objects.get(id=post_id, author=request.user.profile)
+        post = Post.objects.get(id=post_id, author=request.user)
         post.delete()
 
         return JsonResponse({'success': True})
 
 
-def unionTagList(author):
-    seen = set()
-    tag_list = []
-
-    all_tags = list(Tag.objects.order_by('id')[:10])
-    user_tags = list(Tag.objects.filter(author=author).order_by('-id')[:5])
-
-    for tag in all_tags + user_tags:
-        if tag.id not in seen:
-            seen.add(tag.id)
-            tag_list.append(tag)
-
-    return tag_list
+def unionTagList():
+    return list(Tag.objects.order_by('id')[:10])

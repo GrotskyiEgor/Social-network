@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.core.exceptions import PermissionDenied
 
 
+from user_app.models import User
 from profile_app.models import Friendship, Profile
 from post_app.forms import PostForm
 from post_app.models import Post
@@ -25,7 +26,7 @@ class ProfileView(ListView):
         if not request.user.is_authenticated:
             return redirect('auth')
         
-        if not Profile.objects.filter(id=self.kwargs.get('user_id')).exists():
+        if not User.objects.filter(id=self.kwargs.get('user_id')).exists():
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
@@ -39,11 +40,11 @@ class ProfileView(ListView):
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
-        context['profile'] = Profile.objects.filter(id=self.kwargs.get('user_id')).first()
+        context['select_user'] = User.objects.filter(id=self.kwargs.get('user_id')).first()
         context['action'] = self.kwargs.get('action')
 
         for post in context['posts']:
-            post.toggleInteract('views', self.request.user.profile)
+            post.toggleInteract('views', self.request.user)
         
         return context
     
@@ -68,7 +69,7 @@ class ProfileView(ListView):
             posts = context['posts']
 
             for post in posts:
-                post.toggleInteract('views', self.request.user.profile)
+                post.toggleInteract('views', self.request.user)
             
             return JsonResponse({
                 'posts_html': render_to_string(
@@ -82,7 +83,7 @@ class ProfileView(ListView):
     
     def get_queryset(self):   
         return (
-            Post.objects.filter(author=Profile.objects.filter(id=self.kwargs.get('user_id')).first()).
+            Post.objects.filter(author=User.objects.filter(id=self.kwargs.get('user_id')).first()).
             select_related('author').
             prefetch_related('tags', 'links', 'images').
             order_by('-id')
@@ -96,31 +97,31 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
-        context['recommendations'] = get_friendship_recommendation(self.request.user.profile)[:6]
-        context['friend'] = get_friends(self.request.user.profile)[:6]
+        context['requests'] = get_friendship_requests(self.request.user)[:3]
+        context['recommendations'] = get_friendship_recommendation(self.request.user)[:6]
+        context['friend'] = get_friends(self.request.user)[:6]
 
         return context
     
 
 class FriendsAction(LoginRequiredMixin, TemplateView):
     def post(self, request, action, profile_id, *args, **kwargs):
-        other_user_profile = Profile.objects.get(id=profile_id)
+        other_user_profile = User.objects.get(id=profile_id)
 
         if action == 'accept':
-            result = accept_friend_request(request.user.profile, other_user_profile)
+            result = accept_friend_request(request.user, other_user_profile)
 
             return JsonResponse(result)
         elif action == 'request':
-            result = add_friend_request(request.user.profile, other_user_profile)
+            result = add_friend_request(request.user, other_user_profile)
 
             return JsonResponse(result)
         elif action == 'delete_frienship':
-            result = delete_friendship(request.user.profile, other_user_profile)
+            result = delete_friendship(request.user, other_user_profile)
 
             return JsonResponse(result)
         elif action == 'dismissed':
-            result = dismiss_recommendation(request.user.profile, other_user_profile)
+            result = dismiss_recommendation(request.user, other_user_profile)
 
             return JsonResponse(result)
         
@@ -136,11 +137,11 @@ class FriendsSelectionView(LoginRequiredMixin, View):
         html = ''
 
         if selection == 'requests':
-            user = get_friendship_requests(request.user.profile, filter_input)
+            user = get_friendship_requests(request.user, filter_input)
         elif selection == 'recommendations':
-            user = get_friendship_recommendation(request.user.profile, filter_input)
+            user = get_friendship_recommendation(request.user, filter_input)
         elif selection == 'friend':
-            user = get_friends(request.user.profile, filter_input)
+            user = get_friends(request.user, filter_input)
 
         page_obj = Paginator(user, limit if limit else 6).get_page(request.GET.get('page', 1))
 

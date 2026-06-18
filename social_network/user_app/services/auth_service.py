@@ -19,6 +19,7 @@ def save_registration(request: HttpRequest, cleaned_data):
     try:
         code = generate_code()
         # request.session['registration_data'] = cleaned_data
+        
         request.session['registration_data'] = {
             'email': cleaned_data['email'],
             'password': make_password(cleaned_data['password1'])

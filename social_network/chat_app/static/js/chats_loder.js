@@ -92,7 +92,7 @@ const groupsObeserve = new IntersectionObserver(async (entries)=>{
         }
 
         if (!objectRespone.has_next){
-            chatsObeserve.disconnect()
+            groupsObeserve.disconnect()
         }
 
         groupsLoading = false

@@ -16,23 +16,28 @@
                 <img class="profile-user-image" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator">
             </div>
             <div class="profile-username">
-                <a href="{% url 'profile' user_id=user.profile.id action='watch' %}" class="username-text" id="username_text">{{ user.username }}</a>
-                <a href="{% url 'profile' user_id=user.profile.id action='watch' %}" class="pseudonym-text" id="pseudonym_text">{{ user.profile.pseudonym }}</a>
+                {% if user.profile %}
+                    <a href="{% url 'profile' user_id=user.profile.id action='watch' %}" class="username-text" id="username_text">{{ user.profile.pseudonym }}</a>
+                    <a href="{% url 'profile' user_id=user.profile.id action='watch' %}" class="pseudonym-text" id="pseudonym_text">{{ user.username }}</a>
+                {% else %}
+                    <a class="username-text" id="username_text">Enter pseudonym</a>
+                    <a class="pseudonym-text" id="pseudonym_text">Enter username</a>
+                {% endif %}
                 <!-- <p class="username-text" id="username_text">{{ user.username }}</p>
                 <p class="pseudonym-text" id="pseudonym_text">{{ user.profile.pseudonym }}</p> -->
             </div>      
         </div>
         <div class="profile-statistics-container">
             <div class="profile-static">
-                <p class="static-text">{{ user.signature|default:'0' }}</p>
+                <p class="static-text">{{ user.posts.count|default:'0' }}</p>
                 <p class="name-static-text">Дописи</p>
             </div>
             <div class="profile-static profile-static-border">
-                <p class="static-text">{{ user.reader|default:'0' }}</p>
+                <p class="static-text">{{ friends_count|default:'0' }}</p>
                 <p class="name-static-text">Читачі</p>
             </div>
             <div class="profile-static">
-                <p class="static-text">{{ user.friends|length|default:'0' }}</p>
+                <p class="static-text">{{ friends_count|default:'0' }}</p>
                 <p class="name-static-text">Друзі</p>
             </div>
         </div>
@@ -49,19 +54,7 @@
             <button class="container-header-button" data-id="requests" id="all_requests">Дивитись всі</button>
         </div>
 
-        <div class="followers-container" id="requests_container">     
-            <!-- {% for friendship in requests %}
-                <div class="followers-user-block">
-                    <div class="followers-container-image-container">
-                        <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                    </div>
-                    <div class="user-block-info">
-                        <a href="{% url 'profile' user_id=friendship.id action='watch' %}" class="user-block-username">{{ friendship.user.username }}</a>
-                        <p class="user-block-email">{{ friendship.from_user.signature|default:'0' }}к підписників</p>
-                    </div>
-                </div>
-            {% endfor %} -->
-        </div>
+        <div class="followers-container" id="requests_container"></div>
     </div>
 
     <div class="message-container content-border-container">

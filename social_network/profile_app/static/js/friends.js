@@ -127,5 +127,6 @@ $(document).on('click', '.friends-btn', function(){
 
         return
     }
-    window.location.href = `/friends/profile/${this.dataset.profileId}/${this.dataset.actionType}`
+
+    window.location.href = `/friends/profile/${this.dataset.userId}/${this.dataset.actionType}`
 })

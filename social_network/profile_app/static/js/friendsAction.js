@@ -10,7 +10,7 @@ $(document).on('click', '.friends-btn', function(){
 
     if (dataAction === undefined) return
 
-    fetch(`/friends/friends_action/${dataAction}/${this.dataset.profileId}`, {
+    fetch(`/friends/friends_action/${dataAction}/${this.dataset.userId}`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': csrf 

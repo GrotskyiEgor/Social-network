@@ -24,7 +24,7 @@
 .context-menu-header {
     width: 100%;
     height: 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -35,9 +35,11 @@
 }
 
 .context-menu-block {
-    height: 20rem;
+    height: 3rem;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding-left: 0.5rem;
     gap: 0.625rem;
     border-radius: 0.625rem;
 }
@@ -50,7 +52,7 @@
 .context-menu-hr {
     width: 100%;
     height: 1px;
-    margin: 15px 0px;
+    margin: 0.5rem 0px;
     background-color: var(--border-light);
 }
 
@@ -58,4 +60,8 @@
     font-weight: 500;
     font-size: 1rem;
     color: var(--text-main);
+}
+
+.close-context-menu {
+    cursor: pointer;
 }

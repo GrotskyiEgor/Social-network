@@ -1,22 +1,32 @@
-let activeWebSocket = null
+const onlineCache = new Map()
+const onlineSocket = new WebSocket(`ws://${window.location.host}/chat/online/`);
 
-function connectWebSocketActive(profileId) {
-    if (activeWebSocket) {
-        activeWebSocket.close();
-    }
-    
-    if (isAuthenticated === "True"){
+onlineSocket.onmessage = function (event) {
+    const data = JSON.parse(event.data)
+    onlineCache.set(data.user_id, data.status)
 
-        activeWebSocket = new WebSocket(`ws://${window.location.host}/is_active/`);
-
-        activeWebSocket.onmessage = function (event) {
-            let data = JSON.parse(event.data);
-            
-            console.log('WEBSOCKET IS ACTIVE-', data.type, data.message)
-        };
-    }
+    setUserOnline(data.user_id, data.status)
 }
 
-setTimeout(() => {
-    connectWebSocketActive(profileId)
-}, 3000);
+function setUserOnline(userId, status) {
+    document.querySelectorAll(`.online-img-${userId}`).forEach((avatar) => {
+        if (status === "offline") {
+            avatar.src = offlineImg
+        } else if (status === "online") {
+            avatar.src = onlineImg
+        }
+    })
+}
+
+const observer = new MutationObserver(() => {
+    requestAnimationFrame(() => {
+        onlineCache.forEach((status, userId) => {
+            setUserOnline(userId, status)
+        })
+    })
+})
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+})

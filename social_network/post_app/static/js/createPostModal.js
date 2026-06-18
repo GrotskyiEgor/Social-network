@@ -56,7 +56,20 @@ $(() => {
 
     createPostModel.on('submit', function(event){
         event.preventDefault();
-        let createPostformData = new FormData(this)
+        let createPostformData = new FormData()
+
+        createPostformData.append('title', $('#id_title').val())
+        createPostformData.append('topic', $('#id_topic').val())
+        createPostformData.append('content', $('#create_post_modal_text').val())
+        createPostformData.append('text', $('#create_post_input').val())
+
+        selectedFiles.forEach(file => {
+            createPostformData.append('images', file)
+        })
+
+        $('.href-post-input').each(function(){
+            createPostformData.append('links', $(this).val())
+        })
 
         $('.selected-tag').each(function(){
             createPostformData.append('tags', $(this).data('id'))
@@ -65,6 +78,9 @@ $(() => {
         $.ajax({
             url: createPostModel.attr('action'),
             method: 'POST',
+            headers: {
+                'X-CSRFToken': document.getElementById('meta_csrf_token').dataset.csrfToken
+            },
             data: createPostformData,
             processData: false,
             contentType: false,
@@ -107,7 +123,7 @@ $(() => {
             inputDiv.className = 'modal-url-div';
             
             const input = document.createElement('input');
-            input.className = 'create-post-input';
+            input.className = 'create-post-input href-post-input';
             input.type = 'url';
             input.name = 'links';
             input.placeholder = 'https://www.instagram.com/world.it.ac';

@@ -20,22 +20,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         chat = await self.get_chat()
-        other_user = await self.get_other_user(chat)
-        chat_messages = await self.get_chat_messages_with_date_blocks(chat, 20)
-        chat_html = await self.chat_render_to_string(chat, other_user, chat_messages)
 
-        await self.send(
-            text_data=json.dumps(
-                {
-                    'type': 'connection_confirmation',
-                    'chat_messages_html': chat_html,
-                    'message': 'Підключення до чату було успішно встановлено'
-                }
+        if chat:
+            other_user = await self.get_other_user(chat)
+            chat_messages = await self.get_chat_messages_with_date_blocks(chat, 20)
+            chat_html = await self.chat_render_to_string(chat, other_user, chat_messages)
+
+            await self.send(
+                text_data=json.dumps(
+                    {
+                        'type': 'connection_confirmation',
+                        'chat_messages_html': chat_html,
+                        'message': 'Підключення до чату було успішно встановлено'
+                    }
+                )
             )
-        )
 
-        print(f"Підключення до чату {self.room_group_name} було успішно встановлено")
-     
+            print(f"Підключення до чату {self.room_group_name} було успішно встановлено")
+        else:
+            print(f"Чата не существует")
     
     async def receive(self, text_data):
         dict_data = json.loads(text_data)
@@ -74,7 +77,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def save_message(self, text):
         user = self.scope['user']
-        return Message.objects.create(chat_id=self.chat_id, sender=user.profile, text=text)
+        return Message.objects.create(chat_id=self.chat_id, sender=user, text=text)
 
     @database_sync_to_async
     def chat_render_to_string(self, chat, other_user, chat_messages):
@@ -99,7 +102,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_chat(self):
-        return Chat.objects.get(id=self.chat_id)
+        if Chat.objects.filter(id=1).exists():
+            return Chat.objects.get(id=self.chat_id)
+        
+        return None
 
     @database_sync_to_async
     def get_all_messages(self, chat):

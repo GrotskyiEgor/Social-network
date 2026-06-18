@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
+import dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,7 +45,10 @@ INSTALLED_APPS = [
     'post_app',
     'settings_app',
     'user_app',
-    'chat_app'
+    'chat_app',
+
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 ASGI_APPLICATION = 'social_network.asgi.application'
@@ -151,3 +155,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 TIME_ZONE = 'Europe/Kyiv'
 USE_TZ = True
+
+dotenv.load_dotenv()
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+#     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+#     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+# }
+
+# STORAGES = {
+#     'default': {
+#         'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#     },
+#     'staticfiles': {
+#         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+#     }
+# }

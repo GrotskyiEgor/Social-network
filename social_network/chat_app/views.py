@@ -26,13 +26,13 @@ class ChatView(TemplateView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         
-        friends_list = get_friends(self.request.user.profile)
-
-        context['user_profile'] = self.request.user.profile
+        friends_list = get_friends(self.request.user)
         context["all_friends"] = friends_pages(friends_list) 
+
+        # context['user_profile'] = self.request.user.profile
         # context['friends'] = friends_list[:12]
-        # context["chats"] = Chat.objects.filter(users=self.request.user.profile, is_group = False).order_by("id")[:7]
-        # context['groups'] = Chat.objects.filter(users=self.request.user.profile, is_group = True).order_by("id")
+        # context["chats"] = Chat.objects.filter(users=self.request.user, is_group = False).order_by("id")[:7]
+        # context['groups'] = Chat.objects.filter(users=self.request.user, is_group = True).order_by("id")
         
         return context
     
@@ -45,11 +45,11 @@ class ChatView(TemplateView):
 
             messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
             if selection == 'friends':
-                paginator_list = get_friends(self.request.user.profile, filter_text)
+                paginator_list = get_friends(self.request.user, filter_text)
             elif selection == 'chats':
-                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = False).prefetch_related(messages_prefetch).order_by("id")
+                paginator_list = Chat.objects.filter(users=self.request.user, is_group = False).prefetch_related(messages_prefetch).order_by("id")
             elif selection == 'groups':
-                paginator_list = Chat.objects.filter(users=self.request.user.profile, is_group = True).prefetch_related(messages_prefetch).order_by("id")
+                paginator_list = Chat.objects.filter(users=self.request.user, is_group = True).prefetch_related(messages_prefetch).order_by("id")
 
             page_obj = Paginator(paginator_list, 12 if selection == 'friends' else 7).get_page(paginato_page)
             
@@ -65,7 +65,7 @@ class ChatView(TemplateView):
                 return JsonResponse({
                     'chats_html': render_to_string(
                         'chat_app/particals/chats.html',
-                        {"chats": page_obj, 'user_profile': self.request.user.profile}      
+                        {"chats": page_obj, 'user': self.request.user}      
                     ),
                     'has_next': page_obj.has_next()
                 })
@@ -74,7 +74,7 @@ class ChatView(TemplateView):
                     return JsonResponse({
                         'groups_html': render_to_string(
                             'chat_app/particals/groups.html',
-                            {"groups": page_obj, 'user_profile': self.request.user.profile}      
+                            {"groups": page_obj, 'user_profile': self.request.user}      
                         ),
                         'has_next': page_obj.has_next()
                     })         
@@ -106,26 +106,26 @@ class ChatWithView(LoginRequiredMixin, View):
     def post(self, request, user_id, *args, **kwargs):
         add_new_user = False
         current_user = request.user
-        other_user = Profile.objects.get(id = user_id)
+        other_user = User.objects.get(id = user_id)
 
-        friends = get_friends(current_user.profile)
+        friends = get_friends(current_user)
 
         if other_user not in friends:
             return JsonResponse({"success": False}, status=403)
         
-        user_chat_ids = Chat.objects.filter(users=current_user.profile, is_group=False).values_list("id", flat=True)
+        user_chat_ids = Chat.objects.filter(users=current_user, is_group=False).values_list("id", flat=True)
         chat = Chat.objects.filter(id__in = user_chat_ids, users=other_user, is_group=False).first()
 
         if chat is None:
             add_new_user = True
             chat = Chat.objects.create(is_group=False)
-            chat.users.add(current_user.profile, other_user)
+            chat.users.add(current_user, other_user)
 
         return JsonResponse({
             "success": True, 
             'chats_html': render_to_string(
                     'chat_app/particals/chats.html',
-                    {"chats": [chat if add_new_user else []], 'user_profile': self.request.user.profile}      
+                    {"chats": [chat if add_new_user else []], 'user': self.request.user}      
                 ),
             "chat_id": chat.id
         })
@@ -142,7 +142,7 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
     login_url = reverse_lazy('auth')
     
     def post(self, request: HttpRequest, chat_id):
-        if not Chat.objects.filter(id=chat_id, users=request.user.profile).exists():
+        if not Chat.objects.filter(id=chat_id, users=request.user).exists():
             return JsonResponse({"success": False}, status=403)
         
         text = request.POST.get("text", "").strip()
@@ -151,7 +151,7 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
         if not text and not images:
             return JsonResponse({"success": False}, status=400)
         
-        message = Message.objects.create(chat_id=chat_id, sender=request.user.profile, text=text)
+        message = Message.objects.create(chat_id=chat_id, sender=request.user, text=text)
         
         for image in images:
            MessageImage.objects.create(message=message, image=image)

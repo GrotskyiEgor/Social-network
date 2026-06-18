@@ -96,6 +96,8 @@
         
         {% endblock %}
         <script defer>
+            let onlineImg = "{% static 'images/icons/indicator_active.svg' %}"
+            let offlineImg = "{% static 'images/icons/indicator.svg' %}"
             let isAuthenticated = "{{ request.user.is_authenticated }}"
         </script>
         

@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -5,44 +6,45 @@ from user_app.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, verbose_name="Користувач")
-    birth_date = models.DateField(null=True, blank=True, verbose_name="Дата народження")
-    signature = models.TextField(null=True, blank=True, verbose_name="Підпис")
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, verbose_name="Аватарка")
-    pseudonym = models.CharField(max_length=50, blank=True, verbose_name="Псевдонім")
-    friends = models.ManyToManyField('self', blank=True, verbose_name="Друзі")
-    is_image_signature = models.BooleanField(default=False, verbose_name="Підпис зображенням")
-    is_text_signature = models.BooleanField(default=False, verbose_name="Підпис текстом")
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, null=True)
+    birth_date = models.DateField(null=True, blank=True)
+    signature = models.ImageField(upload_to='profiles/signatures', null=True, blank=True)
+    avatar = models.ImageField(upload_to='profiles/avatarars', null=True, blank=True)
+    pseudonym = models.CharField(max_length=50, null=True, blank=True)
+    is_image_signature = models.BooleanField(default=False)
+    is_text_signature = models.BooleanField(default=False)
+
+    # friends = models.ManyToManyField('self', blank=True, verbose_name="Друзі")
 
     def __str__(self):
         return f"Профіль: {self.user.username}"
 
 class Friendship(models.Model):
-    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sent_friendships")
-    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="received_friendships")
-    status = models.CharField(max_length=20, default="pending")
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_friendships")
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_friendships")
+    status = models.CharField(max_length=10, default="pending")
     create_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("from_user", "to_user")
 
 class Album(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='albums', verbose_name="Профіль")
-    name = models.CharField(max_length=100, verbose_name="Назва альбому")
-    theme = models.CharField(max_length=50, blank=True, verbose_name="Тема")
-    year = models.IntegerField(null=True, blank=True, verbose_name="Рік подій")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата створення")
-    is_shown = models.BooleanField(default=True, verbose_name="Чи відображається")
-    is_default = models.BooleanField(default=False, verbose_name="Стандартний")
+    name = models.CharField(max_length=100)
+    theme = models.CharField(max_length=50, null=True, blank=True)
+    year = models.IntegerField(null=True, blank=True)
+    profile = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name='albums')
+    is_shown = models.BooleanField(default=True)
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
-
+    
 class AlbumImage(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='images', verbose_name="Альбом")
-    image = models.ImageField(upload_to='albums/', verbose_name="Зображення")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата створення")
-    is_shown = models.BooleanField(default=True, verbose_name="Чи відображається")
+    image = models.ImageField(upload_to='profiles/albums')
+    album = models.ForeignKey(to=Album, on_delete=models.CASCADE, related_name='images')
+    is_shown = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Фото для альбому {self.album.name}"

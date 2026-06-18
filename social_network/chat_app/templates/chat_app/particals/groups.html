@@ -10,9 +10,9 @@
             <div class="message-block-info">
                 <div class="message-block-info-header">
                     <p class="message-block-username">{{ group.name }}</p>
-                    <p class="message-block-time">{{ last_message.created_at|date:"H:i" }}</p>
+                    <p class="message-block-time">{% if last_message.created_at %} {{ last_message.created_at|date:"H:i" }} {% else %} 00:00 {% endif %}</p>
                 </div>
-                <p class="message-block-email">{{ last_message.text }}</p>
+                <p class="message-block-email">{% if last_message.text %} {{ last_message.text }} {% else %} Без публікацій {% endif %}</p>
             </div>
         {% endwith %}
     </div>

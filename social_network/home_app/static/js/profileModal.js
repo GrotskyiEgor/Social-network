@@ -51,9 +51,4 @@ $(() => {
             }
         })
     })
-
-    function openModal(modalClass){
-        $(`.${modalClass}`).removeClass('hidden');
-        $(`.${modalClass}`).addClass('visible');
-    };
 })

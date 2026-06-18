@@ -61,9 +61,8 @@ class TagForm(forms.ModelForm):
 
         return name
     
-    def save(self, author, commit = True):
+    def save(self, commit = True):
         tag = super().save(commit=False)
-        tag.author = author
         tag.save()
         
         return tag
@@ -178,15 +177,16 @@ class PostForm(forms.ModelForm):
             print('self.cleaned_data', self.cleaned_data['tags'])
 
             for url in self.links_list:
-                Link.objects.create(post=post, url=url)
+                PostLink.objects.create(post=post, url=url)
 
             for image in self.images_list:
-                print(type(image))
-                print(image)
+                if not image:
+                    continue
+                
                 PostImage.objects.create(
                     post=post,
-                    original=image,
-                    compressed=self.compress_image(image)
+                    original_image=image,
+                    compressed_image=self.compress_image(image)
                 )
 
         return post
@@ -198,10 +198,13 @@ class PostForm(forms.ModelForm):
         
         image = Image.open(upload_image)
         image = image.convert('RGB')
+
         quality = 85
         width, height = image.size
         
         MAX_COMPRESSED_IMAGE_SIZE = 5 * 1024 * 1024
+
+        buffer = BytesIO()
         
         while True:
             buffer = BytesIO()
@@ -209,6 +212,7 @@ class PostForm(forms.ModelForm):
 
             if buffer.tell() <= MAX_COMPRESSED_IMAGE_SIZE:
                 break
+
             if quality > 35:
                 quality -= 10
             else:
@@ -218,6 +222,8 @@ class PostForm(forms.ModelForm):
                 width = int(width * 0.9)
                 height = int(height * 0.9)
                 image = image.resize((width, height), Image.Resampling.LANCZOS)
+        
+        buffer.seek(0)
 
         file_name = origin_name.rsplit('.', 1)[0]
         compressed_name = f'compressed_{file_name}.jpg'

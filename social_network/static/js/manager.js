@@ -18,3 +18,23 @@ function clearCookie(nameList){
         document.cookie= `${encodeURIComponent(name)}=; max-age=0; path=/`
     });
 }
+
+function openModal(modalClass){
+    $(`.${modalClass}`).removeClass('hidden');
+    $(`.${modalClass}`).addClass('visible');
+};
+
+function closeModal(modalClass){
+    $(`.${modalClass}`).addClass('hidden');
+    $(`.${modalClass}`).removeClass('visible');
+};
+
+function openModalId(modalClass){
+    $(`#${modalClass}`).removeClass('hidden');
+    $(`#${modalClass}`).addClass('visible');
+};
+
+function closeModalId(modalClass){
+    $(`#${modalClass}`).addClass('hidden');
+    $(`#${modalClass}`).removeClass('visible');
+};

@@ -6,6 +6,7 @@
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/friends.css' %}">
     <link rel="stylesheet" href="{% static 'css/filter_input.css' %}">
+    <link rel="stylesheet" href="{% static 'css/friends_filter.css' %}">
 {% endblock %}
 
 {% block info-content %}
@@ -26,8 +27,8 @@
                     <p class="get-all-text" data-id="requests">Дивитись всі</p>
                 </div>
 
-                <div class="contacts-input-wrap">
-                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                <div class="contacts-input-wrap contacts-input-wrap-start">
+                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img contacts-input-img-start'>
                     <input type="text" class='contacts-input' placeholder="Пошук запиту" id="filter_requests" data-selection="requests">
                 </div>
 
@@ -41,8 +42,8 @@
                     <p class="get-all-text" data-id="recommendations">Дивитись всі</p>
                 </div>
 
-                <div class="contacts-input-wrap">
-                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                <div class="contacts-input-wrap contacts-input-wrap-start">
+                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img contacts-input-img-start'>
                     <input type="text" class='contacts-input' placeholder="Пошук рекомендацій" id="filter_recommendations" data-selection="recommendations">
                 </div>
 
@@ -56,8 +57,8 @@
                     <p class="get-all-text" data-id="friend">Дивитись всі</p>
                 </div>
 
-                <div class="contacts-input-wrap">
-                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
+                <div class="contacts-input-wrap contacts-input-wrap-start">
+                    <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img contacts-input-img-start'>
                     <input type="text" class='contacts-input' placeholder="Пошук друга" id="filter_friend" data-selection="friend">
                 </div>
 

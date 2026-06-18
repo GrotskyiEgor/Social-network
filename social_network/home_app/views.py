@@ -15,8 +15,9 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
+
 def del_chat():
-    chats_list = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+    chats_list = []
 
     for chat_id in chats_list:
         chat = Chat.objects.get(id=chat_id)
@@ -45,17 +46,18 @@ class HomeView(ListView):
 
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
+        context['friends_count'] = Friendship.objects.filter(to_user=self.request.user, status="accepted").count()
         context['tag_form'] = TagForm()
         context['post_form'] = PostForm()
 
-        # context['requests'] = get_friendship_requests(self.request.user.profile)[:3]
-        context['tags'] = unionTagList(self.request.user.profile)
+        try:
+            context['tags'] = unionTagList()
+        except Profile.DoesNotExist:
+            print('Profile does not exist')
 
         for post in context['posts']:
-            post.toggleInteract('views', self.request.user.profile)
+            post.toggleInteract('views', self.request.user)
 
-        # del_chat()
-        
         return context
     
     def post(self, request: HttpRequest, *args, **kwargs):
@@ -66,12 +68,13 @@ class HomeView(ListView):
             user = User.objects.filter(email=request.session.get('first_registration')).first()
             
             if user:    
-                user.username = user_data['username']
+                print(1, user_data['user_handle'], user_data['username'])
+                user.username = user_data['user_handle']
                 user.save()
 
                 profile = Profile.objects.create(
                     user = user,
-                    pseudonym = user_data['user_handle']  
+                    pseudonym = user_data['username']
                 )
                 
                 request.session.pop('first_registration', None)
@@ -80,8 +83,8 @@ class HomeView(ListView):
 
                 return JsonResponse({
                     'success': True,
-                    'username': user.username,
-                    'pseudonym': profile.pseudonym,
+                    'username': profile.pseudonym,
+                    'pseudonym': user.username, 
                 })
             
         return JsonResponse({  
@@ -96,7 +99,7 @@ class HomeView(ListView):
             posts = context['posts']
 
             for post in posts:
-                post.toggleInteract('views', self.request.user.profile)
+                post.toggleInteract('views', self.request.user)
             
             return JsonResponse({
                 'posts_html': render_to_string(
@@ -120,20 +123,26 @@ class HomeLoaderView(LoginRequiredMixin, View):
         selection = self.request.GET.get('selection', 0)
 
         if selection == 'requests':
+            friends_count_list = []
+            requests = get_friendship_requests(self.request.user)[:3]
+
+            for user in requests:
+                friends_count_list.append(Friendship.objects.filter(to_user=user, status="accepted").count())
+                
             return JsonResponse({
                 'chats_html': render_to_string(
                     'home_app/particals/requests.html',
-                    {"requests": get_friendship_requests(self.request.user.profile)[:3], 'user_profile': self.request.user.profile}      
+                    {"requests": get_friendship_requests(self.request.user)[:3], 'user_profile': self.request.user.profile, 'friends_count_list': friends_count_list}      
                 )
             })
         elif selection == 'chats':
             messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
-            chats = Chat.objects.filter(users=self.request.user.profile, is_group = False).prefetch_related(messages_prefetch).order_by("id")[:3]
+            chats = Chat.objects.filter(users=self.request.user, is_group = False).prefetch_related(messages_prefetch).order_by("id")[:3]
             print('chats', chats)
             return JsonResponse({
                 'chats_html': render_to_string(
                     'home_app/particals/chats.html',
-                    {"chats": chats, 'user_profile': self.request.user.profile}      
+                    {"chats": chats, 'user': self.request.user}      
                 )
             })
     

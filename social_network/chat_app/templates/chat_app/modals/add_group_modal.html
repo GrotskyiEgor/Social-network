@@ -12,25 +12,25 @@
                 <p class="modal-registration-text">Нова група</p>
             </div>
 
-            <div class="contacts-input-wrap">
-                <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img'>
+            <div class="contacts-input-wrap contacts-input-wrap-start">
+                <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img contacts-input-img-start'>
                 <input type="text" class='contacts-input' placeholder="Пошук">
             </div>
 
             <p class="add-group-text">Вибрано: <span>3</span></p>
 
             <div class="checkbox-users-container">
-                {% for profile in all_friends %}   
-                    {% if profile.letter %}           
-                        <p class="create-post-text">{{ profile.letter }}</p>
+                {% for select_user in all_friends %}   
+                    {% if select_user.letter %}           
+                        <p class="create-post-text">{{ select_user.letter }}</p>
                     {% else %}
                         <div class="followers-user-block user-block-border">
                             <div class="followers-container-image-container">
-                                <img class="followers-image" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                                <img class="followers-image online-img-{{select_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="">
                             </div>
                             <div class="user-block-info">
-                                <p class="user-block-username">{{profile.user.username}}</p>
-                                <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ profile.id }}' data-username='{{ profile.user.username }}' id="checkbox_{{ profile.id }}">
+                                <p class="user-block-username">{{ select_user.profile.pseudonym}}</p>
+                                <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
                             </div>
                         </div>
                     {% endif %}

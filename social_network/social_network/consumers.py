@@ -5,97 +5,95 @@ from channels.db import database_sync_to_async
 
 from profile_app.models import Profile
 
-# class ActiveConsumer(AsyncWebsocketConsumer):
-#     async def connect(self):
-#         self.user = self.scope['user']
-#         self.room_name = f'is_active_{self.user.profile.id}'
-
-#         if not self.user.is_authenticated:
-#             await self.close()
-#             return
-        
-#         await self.channel_layer.group_add(self.room_name, self.channel_name)
-
-#         await self.accept()
-
-#         await self.send(
-#             text_data=json.dumps(
-#                 {
-#                     'type': 'connection_confirmation',
-#                     'message': 'Підключення до чату було успішно встановлено is_active'
-#                 }
-#             )
-#         )
-
-#         await self.set_profile_is_active(value=True)
-
-        
-#     async def disconnect(self, code):
-#         await self.set_profile_is_active(value=False)
-
-
-#     @database_sync_to_async
-#     def check_profile_is_active(self):        
-#         profile = self.user.profile
-#         return profile.is_active
-    
-    
-#     @database_sync_to_async
-#     def set_profile_is_active(self, value):
-#         profile = self.user.profile
-
-#         if profile:
-#             profile.is_active = value
-#             profile.save(update_fields=['is_active'])
-        
 
 class OnlineStatusConsumer(AsyncWebsocketConsumer):
-    online_users = set()
+    online_users = {}
 
     async def connect(self):
+        self.user_id = None
         self.user = self.scope["user"]
+         
+        if not self.user.is_authenticated:
+            await self.close()
+            return
+        
         self.user_id = str(self.user.id)
 
         self.group_name = "online_users"
         await self.channel_layer.group_add(self.group_name, self.channel_name)
 
         await self.accept()
-        self.online_users.add(self.user_id)
-        # Поточний користувач отримує іфнормацію про статуси інших користувачів
-        for user_id in self.online_users:
-            await self.send_status(user_id, "online")
 
-        # Поточний користувач надсилає іфнормацію про свій статус іншим користувачам
-        await self.channel_layer.group_send(
-            self.group_name,
-            {
-                "type": "online_status",
-                "user_id": self.user_id,
-                "status": "online"
-            }
+        OnlineStatusConsumer.online_users[self.user_id] = (
+            OnlineStatusConsumer.online_users.get(self.user_id, 0) + 1
         )
+
+        if OnlineStatusConsumer.online_users[self.user_id] == 1:
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "online_status",
+                    "user_id": self.user_id,
+                    "status": "online",
+                    "it_is_me": int(self.user_id) == int(self.user.id)
+                }
+            )
+
+        for uid, count in OnlineStatusConsumer.online_users.items():
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "sync_online",
+                    "online_users": list(OnlineStatusConsumer.online_users.keys())
+                }
+            )
+
+        print('self.user', self.user, self.user.id, OnlineStatusConsumer.online_users)
     
 
     async def disconnect(self, code):
-        self.online_users.discard(self.user_id)
-        await self.channel_layer.group_send(
-            self.group_name,
-            {
-                "type": "online_status",
-                "user_id": self.user_id,
-                "status": "offline"
-            }
-        )
+        count = OnlineStatusConsumer.online_users.get(self.user_id, 0)
+
+        if count <= 1:
+            OnlineStatusConsumer.online_users.pop(self.user_id, None)
+
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "online_status",
+                    "user_id": self.user_id,
+                    "status": "offline"
+                }
+            )
+        else:
+            OnlineStatusConsumer.online_users[self.user_id] = count - 1
+
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "online_status",
+                    "user_id": self.user_id,
+                    "status": "online"
+                }
+            )
 
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+        print('disconnect self.user', self.user, self.user.id, OnlineStatusConsumer.online_users)
 
 
     async def online_status(self, event):
         await self.send_status(event["user_id"], event["status"])
+
     
+    async def sync_online(self, event):
+        for uid in event["online_users"]:
+            await self.send_status(uid, "online")
+
 
     async def send_status(self, user_id, status):
         await self.send(text_data=json.dumps({
             "user_id": user_id,
-            "status": status
+            "status": status,
+            "it_is_me": int(user_id) == int(self.user.id)
         }))

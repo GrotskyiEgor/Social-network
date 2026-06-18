@@ -45,7 +45,8 @@
 }
 
 .followers-user-block {
-    height: 3.875rem;
+    width: 100%;
+    padding-left: 0.8125rem;
 }
 
 .user-block-border {

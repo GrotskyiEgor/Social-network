@@ -1,14 +1,15 @@
 {% load static %}
 
-<!-- HomeWork -->
-{% for image_obj in msg.images.all %}
-    <img class="send-message-image-my" src="{{ image_obj.image.url }}" alt="img">
-{% endfor %}
-
-<div class="my-msg-container">
-    <div class="msg-text">{{ msg.text }}</div>
-    <div class="msg-info-date">
-        <p class="msg-date-text">{{ msg.created_at|date:"H:i" }}</p>
-        <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+{% if msg.text %} 
+    <div class="my-msg-container">
+        <div class="msg-text">{{ msg.text }}</div>
+        <div class="msg-info-date">
+            <p class="msg-date-text">{{ msg.created_at|date:"H:i" }}</p>
+            <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+        </div>
     </div>
-</div>
+{% endif %}
+
+{% for image_obj in msg.images.all %}
+    <img class="send-message-image-my load-message-image" src="{{ image_obj.image.url }}" alt="img">
+{% endfor %}

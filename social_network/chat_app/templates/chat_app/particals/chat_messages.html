@@ -9,14 +9,15 @@
                 {% if chat.name %}
                     <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="indicator">
                 {% else %}
-                    <img class="message-image" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                    <img class="message-image online-img-{{other_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
                 {% endif %}
+
                 <div class="chat-header-text">
                     <p class="username-text">
                         {% if chat.name %}
                             {{ chat.name }}
                         {% else %}
-                            {{ other_user.user.username }}
+                            {{ other_user.profile.pseudonym }}
                         {% endif %}
                     </p>
                     <p class="extra-info-text">{{ chat.users.all|length }} учасники</p>
@@ -24,7 +25,7 @@
             </div>
         </div>
 
-        {% if chat.admin == user.profile %}
+        {% if chat.admin == user %}
             <img class="images-text-img context-menu-admin-interactive" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">
         {% else %}
             <img class="images-text-img context-menu-interactive" src="{% static 'images/icons/interactive.svg' %}" alt="interactive">

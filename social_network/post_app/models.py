@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -6,42 +7,25 @@ from profile_app.models import Profile
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-
+    name = models.CharField(max_length=100)
+    # author = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)=
 
     def __str__(self):
         return self.name
     
 
-class PostLike(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name='likes')
-
-
-class PostHeart(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name='hearts')
-
-
-class PostView(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name='views')
-
-
 class Post(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=255)
-    topic = models.CharField(max_length=255, blank=True, null=True)
+    topic = models.CharField(max_length=255, null=True)
     tags = models.ManyToManyField(Tag, related_name='posts')
     content = models.TextField()
-    create_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=None, blank=True, null=True)
 
     
     def __str__(self):
         return self.title
-    
 
     def toggleInteract(self, interact, profile):
         print("addHeart", interact, profile)
@@ -70,23 +54,54 @@ class Post(models.Model):
     def hasInteract(self, interact, profile):
         print("hasInteract", interact, profile)
         return getattr(self, interact).filter(user=profile).exists()
+    
 
+class PostLike(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='liked_posts')
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='likes')
 
-class Link(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='links')
-    url = models.URLField(max_length=2000)
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'post'],
+                name='unique_post_like'
+            )
+        ]
 
+class PostHeart(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='hearted_posts')
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='hearts')
 
-    def __str__(self):
-        return self.url
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'post'],
+                name='unique_post_hearts'
+            )
+        ]
+
+class PostView(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='viewed_posts')
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='views')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'post'],
+                name='unique_post_view'
+            )
+        ]
+
+class PostLink(models.Model):
+    url = models.URLField()
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='links')
 
 
 class PostImage(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
-    original = models.ImageField(upload_to="post_images/originals/")
-    compressed = models.ImageField(upload_to="post_images/compressed/")
-    
+    original_image = models.ImageField(blank=True)
+    compressed_image = models.ImageField(blank=True)
+    post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
-        return self.original.name
+        return self.original_image.name
 
