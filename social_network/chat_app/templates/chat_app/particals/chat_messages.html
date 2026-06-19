@@ -13,14 +13,19 @@
                 {% endif %}
 
                 <div class="chat-header-text">
-                    <p class="username-text">
+                    <p class="username-text" id="group_name">
                         {% if chat.name %}
                             {{ chat.name }}
                         {% else %}
                             {{ other_user.profile.pseudonym }}
                         {% endif %}
                     </p>
+
                     <p class="extra-info-text">{{ chat.users.all|length }} учасники</p>
+
+                    {% for user in chat_users %}
+                        <p class="get-group-id" data-get-id='{{user.id}}' hiden></p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -35,7 +40,7 @@
 
 
 <div class="chat-messages" id="chat_message_container">
-    {% include 'chat_app/chat_msg/messages.html'  %}
+    {% include 'chat_app/chat_msg/messages.html' %}
 </div>
 <div class="chat-input">
     <form action="" class="message-form" id="message_form">

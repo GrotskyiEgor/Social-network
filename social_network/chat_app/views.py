@@ -15,7 +15,7 @@ from .models import Chat, Message, MessageImage
 from profile_app.models import Profile
 from user_app.models import User
 from .services.load_msg import get_msg_list
-from .services.add_group_page import friends_pages, create_group
+from .services.add_group_page import friends_pages, create_group, edit_create_group
 from profile_app.services.freind_qureist import get_friends
 from profile_app.services.freind_qureist import *
 
@@ -136,6 +136,13 @@ class CreateGroupView(LoginRequiredMixin, View):
     
     def post(self, request):
         return create_group(request)
+    
+class EditGroupView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("auth")
+    
+    def post(self, request, chat_id):
+        return edit_create_group(request, chat_id)
+    
     
 
 class ChatMessageWithImages(LoginRequiredMixin, View):

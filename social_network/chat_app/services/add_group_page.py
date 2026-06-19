@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
+from .load_msg import get_msg_list
 from ..models import Chat
 from user_app.models import User
 from profile_app.models import Profile
@@ -43,3 +44,37 @@ def create_group(request):
                         'chat_app/particals/groups.html',
                         {"groups": [chat]}      
                     ),})
+    
+
+def edit_create_group(request, chat_id):
+    name = request.POST.get("name", "").strip()
+    user_ids = request.POST.getlist("users")
+
+    if not name:
+        return JsonResponse({'success': False, "error": "name_required"}, status=400)
+    
+    if len(user_ids) <= 1:
+        return JsonResponse({'success': False, "error": "add_users"}, status=400)
+    
+    friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
+    chat = Chat.objects.get(id=chat_id)
+
+    if chat:
+        chat.name = name
+        chat.users.clear()
+        chat.users.add(request.user)
+        chat.users.add(*User.objects.filter(id__in=friend_ids))
+
+        chat.save()
+
+        other_user = chat.users.exclude(id=request.user.id).first()
+        messages = chat.messages.all().order_by('-created_at')[:20]
+        messages = reversed(messages)
+        chat_messages = get_msg_list(messages)
+            
+        return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
+            'chat_app/particals/chat_messages.html',
+            {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
+        })
+    
+    return JsonResponse({'success': False})

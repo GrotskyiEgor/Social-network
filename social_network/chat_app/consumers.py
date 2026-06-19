@@ -67,7 +67,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         else: 
             msg_html = event['other_msg_html']
 
-        print(2)
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'sender': event['sender'],
@@ -84,7 +83,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def chat_render_to_string(self, chat, other_user, chat_messages):
         return render_to_string(
             'chat_app/particals/chat_messages.html',
-            {'chat': chat, 'other_user': other_user, 'chat_messages': chat_messages, 'user': self.scope['user']}      
+            {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': self.scope['user']}      
         )
     
     @database_sync_to_async

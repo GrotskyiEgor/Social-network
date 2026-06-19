@@ -1,4 +1,4 @@
-.modal-create-group-bg, .modal-add-group-bg {
+.modal-create-group-bg, .modal-add-group-bg, .modal-edit-create-group-bg, .modal-edit-add-group-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,9 +14,6 @@
     
     transition: opacity 0.3s ease;
 }
-
-
-
 
 .modal-add-group-view { 
     width: 30.625rem;
