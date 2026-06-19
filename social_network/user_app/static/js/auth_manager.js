@@ -42,64 +42,89 @@ registrationButton.addEventListener('click', function(){
 authForm.forEach(auth => {
     const form = $(auth).find('.form');
 
-    form.on('submit', function(event){
+    form.on('submit', async function(event){
         event.preventDefault();
 
         const code = getEmailCode();
         const button = $(document.activeElement);
 
-        ajaxRequests(form, button.attr('form'), code);
+        await ajaxRequests(form, button.attr('form'), code);
     });
 });
 
-function ajaxRequests(form, form_id, code){
-    user_data = form.serialize();
-
+async function ajaxRequests(get_form, form_id, code){
+    const form = document.querySelector('#login_form');
+    let user_data = new FormData(form)
+    
+    user_data = Object.fromEntries(user_data.entries())
+    
     if (code){
         user_data += `&confirm_code=${code}`;
     };
 
-    $.ajax({
-        url: form.attr('action'),
-        method: 'POST',
-        data: user_data,
-        success: function(response){
-            const errorText = getErrorText(form);
-            errorText.innerText = '';
-            errorText.classList.add('hidden');
-            errorText.classList.remove('visible');
-
-            if (form_id === 'registration_form') {
-                showForm('confirm_email_form');
-            }; 
-
-            if (form_id === 'confirm_email_form') {
-                showForm('login_form');
-            }; 
-
-            if (form_id === 'login_form') {
-                window.location = '/';
-            }; 
+        let response = await fetch("http://192.168.0.125:8081/users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
         },
-        error: function(response){
-            let data = response.responseJSON;
-            const errorText = getErrorText(form);
+        body: JSON.stringify(
+            user_data
+        )
+    });
 
-            if (data?.error) {
-                const errors = data.error;
+    response = await response.json()
 
-                const firstKey = Object.keys(errors)[0];
-                const message = errors[firstKey][0];
-
-                errorText.innerText = message;
-            } else {
-                errorText.innerText = 'Помилка серверу';
-            };
-
-            errorText.classList.remove('hidden');
-            errorText.classList.add('visible');
-        }
-    })
+    if (response.status === 'error'){
+        console.log('error')
+        return
+    }
+    
+    localStorage.setItem('authToken', response.token)    
+    let user_data_serialize = get_form.serialize();
+    
+    if (response.token){   
+        $.ajax({
+            url: get_form.attr('action'),
+            method: 'POST',
+            data: user_data,
+            success: function(response){
+                const errorText = getErrorText(form);
+                errorText.innerText = '';
+                errorText.classList.add('hidden');
+                errorText.classList.remove('visible');
+    
+                if (form_id === 'registration_form') {
+                    showForm('confirm_email_form');
+                }; 
+    
+                if (form_id === 'confirm_email_form') {
+                    showForm('login_form');
+                }; 
+    
+                if (form_id === 'login_form') {
+                    window.location = '/';
+                }; 
+            },
+            error: function(response){
+                let data = response.responseJSON;
+                const errorText = getErrorText(form);
+    
+                if (data?.error) {
+                    const errors = data.error;
+    
+                    const firstKey = Object.keys(errors)[0];
+                    const message = errors[firstKey][0];
+    
+                    errorText.innerText = message;
+                } else {
+                    errorText.innerText = 'Помилка серверу';
+                };
+    
+                errorText.classList.remove('hidden');
+                errorText.classList.add('visible');
+            }
+        })
+    }
 }
 
 function showForm(id_form){

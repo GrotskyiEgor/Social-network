@@ -8,8 +8,8 @@ from django.template.loader import render_to_string
 from django.core.exceptions import PermissionDenied
 
 
-from user_app.models import User
-from profile_app.models import Friendship, Profile
+from user_app.models import User, Friendship
+from profile_app.models import Profile
 from post_app.forms import PostForm
 from post_app.models import Post
 from .services.freind_action import *

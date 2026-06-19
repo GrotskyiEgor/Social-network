@@ -1,5 +1,8 @@
+import bcrypt
+
 from django import forms
 from django.contrib.auth import authenticate
+from ..models import User
 
 
 class LoginForm(forms.Form):
@@ -32,10 +35,24 @@ class LoginForm(forms.Form):
         
         email = cleaned_data.get('email').strip()
         password = cleaned_data.get('password')
-        user = authenticate(email=email, password=password)
+        user = User.objects.filter(email=email).first()
 
         if not user:
-            raise forms.ValidationError("Неверный email или пароль")
+            return False
         
-        self.user = user
+        password_bytes = password.encode('utf-8')
+        hash_bytes = user.password.encode('utf-8')
+
+        print('password_bytes',password_bytes, hash_bytes, bcrypt.checkpw(password_bytes, hash_bytes))
+
+        if bcrypt.checkpw(password_bytes, hash_bytes):
+            self.user = user
+        else:
+            user = authenticate(email=email, password=password)
+
+            if not user:
+                raise forms.ValidationError("Неверный email или пароль")
+            
+            self.user = user
+
         return cleaned_data

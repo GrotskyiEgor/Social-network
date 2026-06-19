@@ -19,15 +19,6 @@ class Profile(models.Model):
     def __str__(self):
         return f"Профіль: {self.user.username}"
 
-class Friendship(models.Model):
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_friendships")
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_friendships")
-    status = models.CharField(max_length=10, default="pending")
-    create_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ("from_user", "to_user")
-
 class Album(models.Model):
     name = models.CharField(max_length=100)
     theme = models.CharField(max_length=50, null=True, blank=True)

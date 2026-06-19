@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView, LogoutView
 
+from ..models import User
 from ..forms.login_form import LoginForm
 
 
@@ -13,6 +14,7 @@ class LoginPageView(LoginView):
         form = self.form_class(request.POST)
 
         if form.is_valid():
+            print('form', form, form.user)
             login(request, form.user)
             return JsonResponse({'success': True})
         

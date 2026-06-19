@@ -9,11 +9,13 @@ let selectChatId = getCookie('chatId')
 
 if (selectChatId){
     connectWebSocket(selectChatId)
+    joinToChat(selectChatId)
 }
 
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
     connectWebSocket(this.dataset.chatId);
+    joinToChat(this.dataset.chatId)
 });
 
 $(document).on("click", ".open-chat-with", async function(){
@@ -54,6 +56,8 @@ async function send_message(){
         const data = await sendMessageWithImages(inputMessage);
         
         if (!data.success) return;
+        
+        socket.emit('sendMessage', {text: inputMessage, commit: 0})
         formIntput.value = '';
         messageImagesInput.value = ""; 
     }
@@ -61,7 +65,9 @@ async function send_message(){
 
     if (!hasImages){
         chatSocket.send(JSON.stringify({ messageText: inputMessage }));
+        socket.emit('sendMessage', {text: inputMessage, commit: 0})
         formIntput.value = ''
+
     }
 }
 

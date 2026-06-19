@@ -1,6 +1,7 @@
 import json
 import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
 
 from profile_app.models import Profile
@@ -12,6 +13,7 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user_id = None
         self.user = self.scope["user"]
+        self.group_name = "online_users"
          
         if not self.user.is_authenticated:
             await self.close()
@@ -19,7 +21,6 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
         
         self.user_id = str(self.user.id)
 
-        self.group_name = "online_users"
         await self.channel_layer.group_add(self.group_name, self.channel_name)
 
         await self.accept()
@@ -97,3 +98,29 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
             "status": status,
             "it_is_me": int(user_id) == int(self.user.id)
         }))
+
+
+from datetime import datetime, timedelta
+
+import jwt
+from django.views import View
+from django.conf import settings
+from django.http import HttpRequest, JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class SocketTokenView(LoginRequiredMixin, View):
+    def get(self, request: HttpRequest):
+        token = jwt.encode(
+            {
+                "id": request.user.id,
+                "iat": datetime.now(),
+                "exp": datetime.now() + timedelta(days=7),
+            },
+            settings.JWT_SECRET,
+            algorithm="HS256"
+        )
+
+        return JsonResponse({
+            "token": token
+        })

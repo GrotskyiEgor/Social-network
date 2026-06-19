@@ -101,10 +101,13 @@
             let isAuthenticated = "{{ request.user.is_authenticated }}"
         </script>
         
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
         <script src="{% static 'js/jquery-4.0.0.min.js' %}" defer></script>
         <script src="{% static 'js/check_activity.js' %}" defer></script>
         <script src="{% static 'js/manager.js' %}" defer></script>
         <script src="{% static 'js/open_page.js' %}" defer></script>
+
+        <script src = "{% static 'js/web_socket.js' %}" defer></script>
         {% block script %}{% endblock %}
     </body>
 </html>

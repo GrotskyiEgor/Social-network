@@ -2,7 +2,7 @@
 <p class="under-auth-navigation-text">Приєднуйся до World IT</p>
 
 <div class="auth-form">
-    <form action="{% url 'registration' %}" method="POST" id="registration_form" class="form">
+    <form action="{% url 'registration' %}" method="POST" id="registration_form" class="form" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-registration-inputs-div">
             <div class="modal-registration-inputs">

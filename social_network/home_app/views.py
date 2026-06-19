@@ -7,10 +7,10 @@ from django.template.loader import render_to_string
 
 from .forms import ProfileForm
 from post_app.forms import PostForm, TagForm
-from user_app.models import User
+from user_app.models import User, Friendship
 from post_app.models import Post
 from chat_app.models import Chat, Message
-from profile_app.models import Profile, Friendship
+from profile_app.models import Profile
 from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests

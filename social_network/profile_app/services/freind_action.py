@@ -1,4 +1,4 @@
-from profile_app.models import Friendship
+from user_app.models import Friendship
 
 def add_friend_request(current_user, other_user):
     Friendship.objects.get_or_create(

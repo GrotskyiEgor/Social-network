@@ -1,4 +1,5 @@
 import json
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from django.template.loader import render_to_string
@@ -102,10 +103,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_chat(self):
-        if Chat.objects.filter(id=1).exists():
+        try:
             return Chat.objects.get(id=self.chat_id)
-        
-        return None
+        except Chat.DoesNotExist:
+            return None
 
     @database_sync_to_async
     def get_all_messages(self, chat):

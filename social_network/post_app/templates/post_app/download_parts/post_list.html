@@ -56,7 +56,7 @@
                 <div class="post-images-preview-container">
                     {% for image in post.images.all %}
                         <div class="post-image-item">
-                            <img src="{{ image.compressed_image.url }}" alt="img" class="post-image">
+                            <img src="http://192.168.0.125:8081/media/thumb/{{ image.compressed_image }}" alt="img" class="post-image">
                             <!-- <img src="{{ image.original.url }}" alt="img"> -->
                         </div>
                     {% endfor %}
