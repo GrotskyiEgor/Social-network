@@ -45,9 +45,22 @@ function activeCheckBox(){
 }
 
 function deactiveteCheckBox(id){
-    checkbox = document.getElementById('checkbox_' + id)
-    checkbox.dataset.checkbox = 'false'
-    checkbox.src = falseCheckbox
+    let checkbox = document.getElementById('checkbox_' + id)
+
+    if (checkbox) {
+        checkbox.dataset.checkbox = 'false'
+        checkbox.src = falseCheckbox
+
+        return
+    } else {
+        checkbox = document.getElementById('edit_checkbox_' + id)
+
+        checkbox.dataset.checkbox = 'false'
+        checkbox.src = falseCheckbox
+
+        return
+    }
+
 }
 
 $(document).on('click', '#next_add_group_modal', function(event){
@@ -81,15 +94,10 @@ $(document).on('click', '#cansle_create_group_modal', function(){
 })
 
 $(document).on('click', '#create_group_btn', async function(){
-    createGroup()
+    createGroup(edit=false)
 })
 
 $(document).on('click', '#open_add_group_modal', function(){
-    openModal('modal-add-group-bg')
-})
-
-$(document).on('click', '#edit_group_btn', function(){
-    closeModalId('context_menu_admin')
     openModal('modal-add-group-bg')
 })
 
@@ -98,15 +106,15 @@ $(document).on('click', '#cansle_add_group_modal', function(){
     closeModal('modal-add-group-bg')
 })
 
-async function createGroup() {
+async function createGroup(edit) {
     const formData = new FormData();
-    console.log('document.getElementById().value', document.getElementById('group_name_input').value)
-    formData.append("name", document.getElementById('group_name_input').value);
+    formData.append("name", document.getElementById('edit_group_name_input').value);
+
     selectedUsers.forEach((id) => {
         formData.append("users", id);
     });
 
-    const response = await fetch("/chats/create_group/", {
+    const response = await fetch(edit ? `/chats/edit_group/${selectChatId}/`: `/chats/create_group/`, {
         method: "POST",
         headers: { "X-CSRFToken": csrfToken },
         body: formData,
@@ -119,5 +127,22 @@ async function createGroup() {
     closeModal('modal-add-group-bg')
     closeModal('modal-create-group-bg')
 
-    document.getElementById('groups_loader').insertAdjacentHTML("beforeend", data.chat_html);
+    closeModal('modal-edit-add-group-bg')
+    closeModal('modal-edit-create-group-bg')
+
+    if (data.chat_html){
+        document.getElementById('groups_loader').insertAdjacentHTML("beforeend", data.chat_html);
+    } else if (data.group_html) {
+        chatContainer.innerHTML = ''
+        chatContainer.insertAdjacentHTML("afterbegin", data.group_html) 
+        let chatDiv = document.getElementById('chat_message_container')
+
+        chatDiv.scrollTo({
+            top: chatDiv.scrollHeight
+        });
+
+        messagesLoading = false
+        messagesCurrentPage = 1
+        initMessagesObserver()
+    }
 }
