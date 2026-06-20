@@ -18,5 +18,5 @@
 {% endif %}
 
 {% for image_obj in msg.images.all %}
-    <img class="send-message-image-other load-message-image" src="http://192.168.0.125:8081/media/thumb/{{ image_obj.image }}" alt="img">
+    <img class="send-message-image-other load-message-image" src="http://192.168.0.125:8020/media/{{ image_obj.image }}" alt="img">
 {% endfor %}

@@ -10,12 +10,14 @@ let selectChatId = getCookie('chatId')
 if (selectChatId){
     connectWebSocket(selectChatId)
     joinToChat(selectChatId)
+    startListeningMessages();
 }
 
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
     connectWebSocket(this.dataset.chatId);
     joinToChat(this.dataset.chatId)
+    startListeningMessages();
 });
 
 $(document).on("click", ".open-chat-with", async function(){
@@ -56,8 +58,7 @@ async function send_message(){
         const data = await sendMessageWithImages(inputMessage);
         
         if (!data.success) return;
-        
-        socket.emit('sendMessage', {text: inputMessage, commit: 0})
+
         formIntput.value = '';
         messageImagesInput.value = ""; 
     }
@@ -65,9 +66,7 @@ async function send_message(){
 
     if (!hasImages){
         chatSocket.send(JSON.stringify({ messageText: inputMessage }));
-        socket.emit('sendMessage', {text: inputMessage, commit: 0})
         formIntput.value = ''
-
     }
 }
 
@@ -142,6 +141,11 @@ function connectWebSocket(chatId) {
             initMessagesObserver()
         } else if (data.type === 'chat_message'){
             let chatDiv = document.getElementById('chat_message_container')
+            console.log(data, data.input_message, data.message_id)
+
+            // if (data.input_message) {}
+            console.log(data.message_images)
+            socket.emit('sendMessage', {chatId: selectChatId, text: data.input_message, commit: false, messageId: data.message_id, messageImages: data.message_images})
             chatDiv.innerHTML += data.msg_html
 
             chatDiv.scrollTo({

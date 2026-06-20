@@ -43,4 +43,10 @@ class Message(models.Model):
     
 class MessageImage(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to="chats/images")
+    image = models.ImageField(upload_to="chat_app/message_images")
+
+    def get_json(self):
+        return {
+            'id': self.id,
+            'image': self.image.url
+        }

@@ -142,8 +142,7 @@ class EditGroupView(LoginRequiredMixin, View):
     
     def post(self, request, chat_id):
         return edit_create_group(request, chat_id)
-    
-    
+
 
 class ChatMessageWithImages(LoginRequiredMixin, View):
     login_url = reverse_lazy('auth')
@@ -158,10 +157,13 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
         if not text and not images:
             return JsonResponse({"success": False}, status=400)
         
+        message_list = []
         message = Message.objects.create(chat_id=chat_id, sender=request.user, text=text)
         
         for image in images:
-           MessageImage.objects.create(message=message, image=image)
+           msg = MessageImage.objects.create(message=message, image=image)
+           print(msg.image.url) 
+           message_list.append(msg.get_json())
 
         channel_layer = get_channel_layer()
 
@@ -169,6 +171,9 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
             f'chat{chat_id}',
             {
                 'type': 'send_chat_message',
+                'message_id': message.id,
+                'input_message': message.text,
+                'message_images': message_list,
                 'sender': request.user.username,
                 'my_msg_html': render_to_string(
                     'chat_app/chat_msg/my_msg.html',

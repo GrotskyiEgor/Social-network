@@ -11,7 +11,6 @@ from profile_app.models import Profile
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
-    
     async def connect(self):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
         self.room_group_name = f'chat{self.chat_id}'
@@ -47,11 +46,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         if message_text:
             message = await self.save_message(message_text)
-            print(1)
+
+            print(1, message.id, message.text)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'send_chat_message',
+                    'message_id': message.id,
+                    'input_message': message.text,
+                    'message_images': await self.get_images_list(message),
                     'sender': self.scope['user'].username,
                     'my_msg_html': await self.my_msg_to_string(message),
                     'other_msg_html': await self.other_msg_to_string(message),
@@ -69,6 +72,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
+            'message_id': event['message_id'],
+            'input_message': event['input_message'],
+            'message_images': event['message_images'],
             'sender': event['sender'],
             'msg_html': msg_html
         }))
@@ -121,6 +127,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         messages = reversed(messages)
 
         return get_msg_list(messages)
-        
+    
+    @database_sync_to_async
+    def get_images_list(self, message):
+        images_list = []
+
+        for image in message.images.all():
+            images_list.append(image.get_json())
+
+        return images_list 
 
         
