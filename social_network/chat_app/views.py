@@ -23,12 +23,12 @@ from profile_app.services.freind_qureist import *
 class ChatView(TemplateView):
     template_name = 'chat_app/chat.html'
 
+
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         
-        friends_list = get_friends(self.request.user)
-        context["all_friends"] = friends_pages(friends_list) 
-
+        # friends_list = get_friends(self.request.user)
+        # context["all_friends"] = friends_pages(friends_list) 
         # context['user_profile'] = self.request.user.profile
         # context['friends'] = friends_list[:12]
         # context["chats"] = Chat.objects.filter(users=self.request.user, is_group = False).order_by("id")[:7]
@@ -36,6 +36,7 @@ class ChatView(TemplateView):
         
         return context
     
+
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
             paginator_list = []
@@ -98,10 +99,31 @@ class ChatView(TemplateView):
                         })
 
         return super().render_to_response(context, **response_kwargs)
+    
+class ChatModalView(View):    
+    def get(self, context, **response_kwargs):
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
+            paginato_page = int(self.request.GET.get('page', 1))
+            filter_text = self.request.GET.get('filter_text', '')
+            edit_modal = str(self.request.GET.get('edit_modal', 'false')) == 'true'
+            friends_list = get_friends(self.request.user, filter_text)
+            all_friends = friends_pages(friends_list) 
 
+            page_obj = Paginator(all_friends, 20).get_page(paginato_page)
+
+            return JsonResponse({
+                'html': render_to_string(
+                    'chat_app/modals/user_array.html',
+                    {'all_friends': page_obj, 'user': self.request.user, 'edit_modal': edit_modal}
+                ),
+                'has_next': page_obj.has_next()
+            })
+
+        return JsonResponse({"error": "Bad request"}, status=400)
 
 class ChatWithView(LoginRequiredMixin, View):
     login_url = reverse_lazy("auth")
+
 
     def post(self, request, user_id, *args, **kwargs):
         add_new_user = False
@@ -120,7 +142,7 @@ class ChatWithView(LoginRequiredMixin, View):
             add_new_user = True
             chat = Chat.objects.create(is_group=False)
             chat.users.add(current_user, other_user)
-
+        
         return JsonResponse({
             "success": True, 
             'chats_html': render_to_string(
@@ -134,20 +156,22 @@ class ChatWithView(LoginRequiredMixin, View):
 class CreateGroupView(LoginRequiredMixin, View):
     login_url = reverse_lazy("auth")
     
+
     def post(self, request):
         return create_group(request)
     
 class EditGroupView(LoginRequiredMixin, View):
     login_url = reverse_lazy("auth")
     
+
     def post(self, request, chat_id):
         return edit_create_group(request, chat_id)
-    
-    
+     
 
 class ChatMessageWithImages(LoginRequiredMixin, View):
     login_url = reverse_lazy('auth')
     
+
     def post(self, request: HttpRequest, chat_id):
         if not Chat.objects.filter(id=chat_id, users=request.user).exists():
             return JsonResponse({"success": False}, status=403)

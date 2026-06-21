@@ -100,4 +100,3 @@ const groupsObeserve = new IntersectionObserver(async (entries)=>{
 }, {rootMargin: "50px"})
 
 groupsObeserve.observe(groupsSentinel)
-

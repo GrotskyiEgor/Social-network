@@ -97,11 +97,24 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['requests'] = get_friendship_requests(self.request.user)[:3]
-        context['recommendations'] = get_friendship_recommendation(self.request.user)[:6]
-        context['friend'] = get_friends(self.request.user)[:6]
+        # context['requests'] = get_friendship_requests(self.request.user)[:3]
+        # context['recommendations'] = get_friendship_recommendation(self.request.user)[:6]
+        # context['friend'] = get_friends(self.request.user)[:6]
 
         return context
+    
+    # def post(self, request, type, *args, **kwargs):
+    #     friends_list = []
+
+    #     if type == 'requests':
+    #         friends_list = get_friendship_requests(self.request.user)[:3]
+    #     elif type == 'recommendations':
+    #         friends_list = get_friendship_recommendation(self.request.user)[:6]
+    #     elif type == 'friend':
+    #         friends_list = get_friends(self.request.user)[:6]
+
+    #     return JsonResponse(friends_list)
+
     
 
 class FriendsAction(LoginRequiredMixin, TemplateView):

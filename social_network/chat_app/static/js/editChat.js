@@ -53,6 +53,7 @@ $(document).on('click', '#edit_group_btn', function(){
 
         if (id != ""){
             let checkbox = document.getElementById(`edit_checkbox_${id}`)
+            console.log(checkbox, id)
 
             if (checkbox) {
                 checkbox.dataset.checkbox = 'true'

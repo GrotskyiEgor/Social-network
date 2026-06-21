@@ -27,6 +27,7 @@
 
 .checkbox-users-container{
     width: 100%;
+    min-height: 27rem;
     max-height: 27rem;
     display: flex;
     flex-direction: column;
