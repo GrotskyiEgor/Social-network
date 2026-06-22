@@ -1,3 +1,4 @@
+const csrfToken = document.getElementById('meta_csrf_token').dataset.csrfToken
 const authState = getCookie('authState');
 
 const authFormContainer = $('.auth-form-container')
@@ -62,69 +63,69 @@ async function ajaxRequests(get_form, form_id, code){
         user_data += `&confirm_code=${code}`;
     };
 
-        let response = await fetch("http://192.168.0.125:8020/users/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(
-            user_data
-        )
-    });
+    // CONNECT
+    // let response = await fetch("http://192.168.0.125:8020/users/login", {
+    // method: "POST",
+    // headers: {
+    //     "Content-Type": "application/json"
+    // },
+    // body: JSON.stringify(
+    //     user_data
+    // )
 
-    response = await response.json()
+    // response = await response.json()
 
-    if (response.status === 'error'){
-        console.log('error')
-        return
-    }
+    // if (response.status === 'error'){
+    //     console.log('error')
+    //     return
+    // }
     
-    localStorage.setItem('authToken', response.token)    
+    // localStorage.setItem('authToken', response.token)    
     let user_data_serialize = get_form.serialize();
     
-    if (response.token){   
-        $.ajax({
-            url: get_form.attr('action'),
-            method: 'POST',
-            data: user_data,
-            success: function(response){
-                const errorText = getErrorText(form);
-                errorText.innerText = '';
-                errorText.classList.add('hidden');
-                errorText.classList.remove('visible');
+    // if (response.token){   
+    $.ajax({
+        url: get_form.attr('action'),
+        method: 'POST',
+        data: user_data,
+        success: function(response){
+            const errorText = getErrorText(form);
+            errorText.innerText = '';
+            errorText.classList.add('hidden');
+            errorText.classList.remove('visible');
+
+            if (form_id === 'registration_form') {
+                showForm('confirm_email_form');
+            }; 
+
+            if (form_id === 'confirm_email_form') {
+                showForm('login_form');
+            }; 
+
+            if (form_id === 'login_form') {
+                window.location = '/';
+            }; 
+        },
+        error: function(response){
+            let data = response.responseJSON;
+            const errorText = getErrorText(form);
+
+            if (data?.error) {
+                const errors = data.error;
+
+                const firstKey = Object.keys(errors)[0];
+                const message = errors[firstKey][0];
+
+                errorText.innerText = message;
+            } else {
+                errorText.innerText = 'Помилка серверу';
+            };
+
+            errorText.classList.remove('hidden');
+            errorText.classList.add('visible');
+        }
+    })
     
-                if (form_id === 'registration_form') {
-                    showForm('confirm_email_form');
-                }; 
-    
-                if (form_id === 'confirm_email_form') {
-                    showForm('login_form');
-                }; 
-    
-                if (form_id === 'login_form') {
-                    window.location = '/';
-                }; 
-            },
-            error: function(response){
-                let data = response.responseJSON;
-                const errorText = getErrorText(form);
-    
-                if (data?.error) {
-                    const errors = data.error;
-    
-                    const firstKey = Object.keys(errors)[0];
-                    const message = errors[firstKey][0];
-    
-                    errorText.innerText = message;
-                } else {
-                    errorText.innerText = 'Помилка серверу';
-                };
-    
-                errorText.classList.remove('hidden');
-                errorText.classList.add('visible');
-            }
-        })
-    }
 }
 
 function showForm(id_form){

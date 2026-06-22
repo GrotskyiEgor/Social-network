@@ -26,7 +26,10 @@ $(document).on('click', '#edit_next_add_group_modal', function(event){
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
-                    <img class="followers-image online-img-${checkbox.dataset.profileId}" src=${indicatorImg} alt="">
+                    <div class="status-wrapper">
+                        <img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">
+                        <img class="status-small-img" src=${offlineImg} alt="off">
+                    </div>
                 </div>
                 <div class="user-block-info">
                     <p class="user-block-username">${checkbox.dataset.username}</p>
@@ -53,6 +56,7 @@ $(document).on('click', '#edit_group_btn', function(){
 
         if (id != ""){
             let checkbox = document.getElementById(`edit_checkbox_${id}`)
+            console.log(checkbox, id)
 
             if (checkbox) {
                 checkbox.dataset.checkbox = 'true'

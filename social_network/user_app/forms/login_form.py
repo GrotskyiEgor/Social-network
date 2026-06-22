@@ -41,18 +41,26 @@ class LoginForm(forms.Form):
             return False
         
         password_bytes = password.encode('utf-8')
-        hash_bytes = user.password.encode('utf-8')
+        hash_bytes = user.password
 
-        print('password_bytes',password_bytes, hash_bytes, bcrypt.checkpw(password_bytes, hash_bytes))
-
-        if bcrypt.checkpw(password_bytes, hash_bytes):
-            self.user = user
-        else:
+        # print('password_bytes',password_bytes, hash_bytes, bcrypt.checkpw(password_bytes, hash_bytes))
+        self.user = None
+        if hash_bytes.startswith("$2"):
+            try:
+                if bcrypt.checkpw(password_bytes, hash_bytes.encode('utf-8')):
+                    self.user = user
+            except ValueError:
+                pass
+        
+        if self.user is None:
             user = authenticate(email=email, password=password)
 
             if not user:
                 raise forms.ValidationError("Неверный email или пароль")
             
             self.user = user
+
+        if self.user is None:
+            return False
 
         return cleaned_data

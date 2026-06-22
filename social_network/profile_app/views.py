@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest, JsonResponse
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
-from django.http import HttpRequest, JsonResponse
 from django.template.loader import render_to_string
-from django.core.exceptions import PermissionDenied
 
 
 from user_app.models import User, Friendship
@@ -16,7 +16,7 @@ from .services.freind_action import *
 from .services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
 
-class ProfileView(ListView):
+class ProfileView(LoginRequiredMixin, ListView):
     template_name = 'profile_app/profile.html'
     form_class = PostForm
     paginate_by = 6
@@ -97,11 +97,24 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['requests'] = get_friendship_requests(self.request.user)[:3]
-        context['recommendations'] = get_friendship_recommendation(self.request.user)[:6]
-        context['friend'] = get_friends(self.request.user)[:6]
+        # context['requests'] = get_friendship_requests(self.request.user)[:3]
+        # context['recommendations'] = get_friendship_recommendation(self.request.user)[:6]
+        # context['friend'] = get_friends(self.request.user)[:6]
 
         return context
+    
+    # def post(self, request, type, *args, **kwargs):
+    #     friends_list = []
+
+    #     if type == 'requests':
+    #         friends_list = get_friendship_requests(self.request.user)[:3]
+    #     elif type == 'recommendations':
+    #         friends_list = get_friendship_recommendation(self.request.user)[:6]
+    #     elif type == 'friend':
+    #         friends_list = get_friends(self.request.user)[:6]
+
+    #     return JsonResponse(friends_list)
+
     
 
 class FriendsAction(LoginRequiredMixin, TemplateView):

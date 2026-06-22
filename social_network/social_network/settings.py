@@ -1,24 +1,18 @@
 import os
-from dotenv import load_dotenv
 import dj_database_url
+from dotenv import load_dotenv
 from pathlib import Path
 
 load_dotenv()
 JWT_SECRET = os.getenv('SECRET_KEY')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-+ng80axo1h5ejz31p_-5=0=^=%alb!k8m@guy2+i8_(4r@lsj&'
-SECRET_KEY = 'qwerty123456'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True") == "True"
+LOCAL = os.getenv("LOCAL", "True") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -47,16 +41,19 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = 'social_network.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}
-}
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {"hosts": [('127.0.0.1', 6379)]},
-#     },
-# }
+if LOCAL:
+    CHANNEL_LAYERS = {
+        'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}
+    }
+else:
+    # CONNECT
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {"hosts": [('127.0.0.1', 6379)]},
+        },
+    }
 
 AUTH_USER_MODEL = 'user_app.User'
 
@@ -71,8 +68,6 @@ EMAIL_HOST_USER = 'my@gmail.com'
 EMAIL_HOST_PASSWORD = 'my_password'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,25 +100,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'social_network.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+if LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # CONNECT
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASE_URL = "postgresql://neondb_owner:npg_s6ZWd9LmDaJb@ep-quiet-pine-asublnt1-pooler.c-4.eu-central-1.aws.neon.tech/neondb?sslmode=require"
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True 
-    )
-}
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True 
+        )
+    }
 
 
 # Password validation
@@ -162,9 +155,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static'] 
 
-MEDIA_URL = '/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 TIME_ZONE = 'Europe/Kyiv'
 USE_TZ = True
 
@@ -174,17 +164,25 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
-}
+if LOCAL:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # CONNECT
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-STORAGES = {
-    'default': {
-        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
-    },
-}
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+    }
+
+# STORAGES = {
+#     'default': {
+#         'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+#     },
+#     'staticfiles': {
+#         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+#     },
+# }

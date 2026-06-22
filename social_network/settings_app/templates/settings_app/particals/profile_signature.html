@@ -1,0 +1,36 @@
+{% load static %}
+
+<div class="set-container scrolls-container content-border-container">   
+    <div class="set-container-header">
+        <p class="set-container-header-title">Варіанти підпису</p>
+        <img src="{% static 'images/edit_btn.svg' %}" alt="edit_btn" class="set-container-header-btn" id="sing_set">
+    </div>
+
+    <div class="idle-container" id="sing_set_con">
+        <div class="set-container-sign">
+            <div class="sing-column">
+                <div class="sing-row">
+                    {% if request.user.profile.is_text_signature %}
+                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                    {% else %}
+                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                    {% endif %}
+                    <p class="sing-row-text">Псевдонім автора</p>
+                </div>
+                <p class="create-post-text">{{ request.user.profile.pseudonym }}</p>
+            </div>
+            
+            <div class="sing-column">
+                <div class="sing-row">
+                    {% if request.user.profile.is_image_signature %}
+                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                    {% else %}
+                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                    {% endif %}
+                    <p class="sing-row-text">Мій електронний підпис</p>
+                </div>
+                <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
+            </div>
+        </div>
+    </div>
+</div>

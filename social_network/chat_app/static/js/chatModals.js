@@ -11,11 +11,16 @@ $(document).on('click', '.checkbox', function(){
         if (!selectedUsers.includes(id)) {
             selectedUsers.push(id)
         }
+
+        console.log('true', id, selectedUsers)
+        setCountUsersSpan(selectedUsers.length, 'count_select_users')
     } else if (status === 'true'){
         this.dataset.checkbox = 'false'
         this.src = falseCheckbox
 
         selectedUsers = selectedUsers.filter(checkbox => checkbox !== id);
+        console.log('false', id, selectedUsers)
+        setCountUsersSpan(selectedUsers.length, 'count_select_users')
     }
 })
 
@@ -31,12 +36,23 @@ function clearCheckbox(){
         checkbox.dataset.checkbox = 'false'
         checkbox.src = falseCheckbox
     })   
+
+    setCountUsersSpan(selectedUsers.length, 'count_select_users')
 }
 
 function activeCheckBox(){
     let activeCheckBoxArray = []
-    document.querySelectorAll('.checkbox').forEach(checkbox =>{
-        if (checkbox.dataset.checkbox === 'true') {
+    // document.querySelectorAll('.checkbox').forEach(checkbox =>{
+    //     if (checkbox.dataset.checkbox === 'true') {
+    //         activeCheckBoxArray.push(checkbox)
+    //         console.log(checkbox.id)
+    //     }
+    // })
+
+    selectedUsers.forEach(checkboxId => {
+        let checkbox = document.querySelector(`#checkbox_${checkboxId}`)
+
+        if(checkbox){
             activeCheckBoxArray.push(checkbox)
         }
     })
@@ -60,7 +76,6 @@ function deactiveteCheckBox(id){
 
         return
     }
-
 }
 
 $(document).on('click', '#next_add_group_modal', function(event){
@@ -68,14 +83,16 @@ $(document).on('click', '#next_add_group_modal', function(event){
     openModal('modal-create-group-bg')
     closeModal('modal-add-group-bg')
 
-    
     deleteUsersContainer = document.getElementById('delete_users_container')
     deleteUsersContainer.innerHTML = ''
     activeCheckBox().forEach(checkbox => {
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
-                    <img class="followers-image online-img-${checkbox.dataset.profileId}" src=${indicatorImg} alt="">
+                    <div class="status-wrapper">
+                        <img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">
+                        <img class="status-small-img" src=${offlineImg} alt="off">
+                    </div>
                 </div>
                 <div class="user-block-info">
                     <p class="user-block-username">${checkbox.dataset.username}</p>
@@ -108,7 +125,13 @@ $(document).on('click', '#cansle_add_group_modal', function(){
 
 async function createGroup(edit) {
     const formData = new FormData();
-    formData.append("name", document.getElementById('edit_group_name_input').value);
+
+    if (edit) {
+        formData.append("name", document.getElementById('edit_group_name_input').value);
+    } else {
+        formData.append("name", document.getElementById('group_name_input').value);
+    }
+        
 
     selectedUsers.forEach((id) => {
         formData.append("users", id);
@@ -121,6 +144,12 @@ async function createGroup(edit) {
     });
 
     const data = await response.json();
+
+    if (!response.ok || !data.success) {
+        console.log(data.error);
+        return;
+    }
+
     // console.log(data)
     clearCheckbox()
 
@@ -145,4 +174,10 @@ async function createGroup(edit) {
         messagesCurrentPage = 1
         initMessagesObserver()
     }
+}
+
+function setCountUsersSpan(count, spanId) {
+    document.querySelectorAll(`.${spanId}`).forEach(span => {  
+        span.textContent = count
+    });
 }

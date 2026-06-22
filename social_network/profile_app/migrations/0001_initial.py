@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('birth_date', models.DateField(blank=True, null=True)),
                 ('signature', models.ImageField(blank=True, null=True, upload_to='profiles/signatures')),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='profiles/avatarars')),
+                ('avatar', models.ImageField(blank=True, null=True, upload_to='profiles/avatars')),
                 ('pseudonym', models.CharField(blank=True, max_length=50, null=True)),
                 ('is_image_signature', models.BooleanField(default=False)),
                 ('is_text_signature', models.BooleanField(default=False)),

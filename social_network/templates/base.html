@@ -97,17 +97,22 @@
         {% endblock %}
         <script defer>
             let myId = "{{ request.user.id }}"
-            let onlineImg = "{% static 'images/icons/indicator_active.svg' %}"
-            let offlineImg = "{% static 'images/icons/indicator.svg' %}"
+
+            // let onlineImg = "{% static 'images/icons/indicator_active.svg' %}"
+            // let offlineImg = "{% static 'images/icons/indicator.svg' %}"
+            // let avatarImg = '/media/{{ request.user.profile.avatar }}'
+
+            let onlineImg = "{% static 'images/online.svg' %}"
+            let offlineImg = "{% static 'images/offline.svg' %}"
+            let userId = "{{ request.user.id }}"
             let isAuthenticated = "{{ request.user.is_authenticated }}"
         </script>
         
         <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
         <script src="{% static 'js/jquery-4.0.0.min.js' %}" defer></script>
-        <script src="{% static 'js/check_activity.js' %}" defer></script>
+        <script src="{% static 'js/checkActivity.js' %}" defer></script>
         <script src="{% static 'js/manager.js' %}" defer></script>
-        <script src="{% static 'js/open_page.js' %}" defer></script>
-
+        <script src="{% static 'js/openPage.js' %}" defer></script>
         <script src = "{% static 'js/web_socket.js' %}" defer></script>
         {% block script %}{% endblock %}
     </body>

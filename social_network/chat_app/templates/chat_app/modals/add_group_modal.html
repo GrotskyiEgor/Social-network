@@ -14,27 +14,14 @@
 
             <div class="contacts-input-wrap contacts-input-wrap-start">
                 <img src="{% static 'images/icons/search_img.svg' %}" alt="search" class='contacts-input-img contacts-input-img-start'>
-                <input type="text" class='contacts-input' placeholder="Пошук">
+                <input type="text" class='contacts-input' id="create_filter_input" placeholder="Пошук">
             </div>
 
-            <p class="add-group-text">Вибрано: <span>3</span></p>
+            <p class="add-group-text">Вибрано: <span class="count_select_users">0</span></p>
 
             <div class="checkbox-users-container">
-                {% for select_user in all_friends %}   
-                    {% if select_user.letter %}           
-                        <p class="create-post-text">{{ select_user.letter }}</p>
-                    {% else %}
-                        <div class="followers-user-block user-block-border">
-                            <div class="followers-container-image-container">
-                                <img class="followers-image online-img-{{select_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="">
-                            </div>
-                            <div class="user-block-info">
-                                <p class="user-block-username">{{ select_user.profile.pseudonym}}</p>
-                                <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                <div id="users_array"></div>
+                <div id='modal_loader'></div>
             </div>
 
             <div class="create-post-btn-div">

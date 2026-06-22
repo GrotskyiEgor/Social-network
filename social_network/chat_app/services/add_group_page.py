@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.shortcuts import get_object_or_404
 
 from .load_msg import get_msg_list
 from ..models import Chat
@@ -19,7 +20,7 @@ def friends_pages(friends_list):
                 "letter": friend.profile.pseudonym[0]
             })
             
-            last_leter = friend.profile.pseudonym[0]
+            last_leter = friend
 
         all_friends.append(friend)
 
@@ -57,24 +58,23 @@ def edit_create_group(request, chat_id):
         return JsonResponse({'success': False, "error": "add_users"}, status=400)
     
     friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
-    chat = Chat.objects.get(id=chat_id)
+    chat = get_object_or_404(Chat, id=chat_id)
 
-    if chat:
-        chat.name = name
-        chat.users.clear()
-        chat.users.add(request.user)
-        chat.users.add(*User.objects.filter(id__in=friend_ids))
+    chat.name = name
+    chat.users.clear()
+    chat.users.add(request.user)
+    chat.users.add(*User.objects.filter(id__in=friend_ids))
 
-        chat.save()
+    chat.save()
 
-        other_user = chat.users.exclude(id=request.user.id).first()
-        messages = chat.messages.all().order_by('-created_at')[:20]
-        messages = reversed(messages)
-        chat_messages = get_msg_list(messages)
-            
-        return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
-            'chat_app/particals/chat_messages.html',
-            {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
-        })
-    
+    other_user = chat.users.exclude(id=request.user.id).first()
+    messages = chat.messages.all().order_by('-created_at')[:20]
+    messages = reversed(messages)
+    chat_messages = get_msg_list(messages)
+        
+    return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
+        'chat_app/particals/chat_messages.html',
+        {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
+    })
+
     return JsonResponse({'success': False})

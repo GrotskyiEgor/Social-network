@@ -49,8 +49,10 @@ function newMessage(data) {
 
     let imageHtml = ''
     for (let image of data.messageImages){
-        imageHtml += `<img class="send-message-image-other load-message-image" src="http://192.168.0.125:8020/media/${ image.image }" alt="img"></img>`
+        // imageHtml += `<img class="send-message-image-other load-message-image" src="http://192.168.0.125:8020/media/${ image.image }" alt="img"></img>`
+        imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
     }
+
     chatDiv.innerHTML += imageHtml
 
     chatDiv.scrollTo({

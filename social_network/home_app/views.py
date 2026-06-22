@@ -15,6 +15,11 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
+def all_users(me):
+    for user in Profile.objects.all():
+        if user.id != me.id:
+            user.avatar = 'profiles/avatars/Indicator.svg'
+            user.save()
 
 def del_chat():
     chats_list = []
@@ -44,6 +49,7 @@ class HomeView(ListView):
         if first_registration != None and first_registration != '':
             first_registration = True
 
+        # all_users(self.request.user)
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
         context['friends_count'] = Friendship.objects.filter(to_user=self.request.user, status="accepted").count()

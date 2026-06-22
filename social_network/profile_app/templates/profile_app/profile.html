@@ -12,13 +12,15 @@
     <div class="profile-container content-border-container">
         <div class="profile-user-container">
             <div class="profile-user-image-container">
-                <img class="profile-user-image online-img-{{select_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                <!-- <img class="profile-user-image online-img-{{select_user.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt=""> -->
+                <div class="status-wrapper">
+                    <img class="profile-user-image online-img-{{select_user.id}} avatar-img" src='/media/{{ select_user.profile.avatar }}' alt="">
+                    <img class="status-img" src="{% static 'images/offline.svg' %}" alt="off">
+                </div>
             </div>
             <div class="profile-username">
                 <a href="{% url 'profile' user_id=select_user.id action='watch' %}" class="username-text">{{ select_user.profile.pseudonym }}</a>
                 <a href="{% url 'profile' user_id=select_user.id action='watch' %}" class="pseudonym-text">{{ select_user.username }}</a>
-                <!-- <p class="username-text" id="username_text">{{ profile.user.username }}</p>
-                <p class="pseudonym-text" id="pseudonym_text">{{ profile.pseudonym }}</p> -->
             </div>      
         </div>
         <div class="profile-statistics-container">

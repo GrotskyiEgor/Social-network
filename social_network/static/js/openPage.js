@@ -1,17 +1,17 @@
-const pagePath = window.location.pathname;
+const pathname = window.location.pathname;
 
-if (pagePath === '/') {
+if (pathname === '/') {
     clearCookie(['authState'])
 }  
 
-if (pagePath !== '/friends/all_friends'){
+if (pathname !== '/friends/all_friends'){
     clearCookie(['selection'])
 }
 
 document.querySelectorAll('.nav-link').forEach(function(link){
-    if (pagePath.includes(link.id)){
+    if (pathname.includes(link.id)){
         link.classList.toggle("active-link");
-    } else if (pagePath === "/" && link.id === "house") {
+    } else if (pathname === "/" && link.id === "house") {
         link.classList.toggle("active-link");
     };
 });

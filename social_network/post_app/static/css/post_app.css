@@ -63,9 +63,13 @@
     gap: 0.625rem;
 }
 
+.user-info-container-status-wrapper {
+    width: 3.0625rem;
+}
+
 .profile-user-image {
     height: 100%;
-    width: auto;
+    width: 100%;
 }
 
 .username-text {

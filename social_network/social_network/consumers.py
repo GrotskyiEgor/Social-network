@@ -40,14 +40,13 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
                 }
             )
 
-        for uid, count in OnlineStatusConsumer.online_users.items():
-            await self.channel_layer.group_send(
-                self.group_name,
-                {
-                    "type": "sync_online",
-                    "online_users": list(OnlineStatusConsumer.online_users.keys())
-                }
-            )
+        await self.channel_layer.group_send(
+            self.group_name,
+            {
+                "type": "sync_online",
+                "online_users": list(OnlineStatusConsumer.online_users.keys())
+            }
+        )
 
         print('self.user', self.user, self.user.id, OnlineStatusConsumer.online_users)
     

@@ -5,9 +5,13 @@
         <div class="post-conteiner-header">
             <div class="avatar-label">                    
                 <div class="user-info-container">
-                    <img class="profile-user-image online-img-{{post.author.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="avatar">
+                    <!-- <img class="profile-user-image online-img-{{post.author.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt="avatar"> -->
+                    <div class="status-wrapper user-info-container-status-wrapper">
+                        <img class="profile-user-image online-img-{{post.author.id}} avatar-img" src='/media/{{ post.author.profile.avatar }}' alt="avatar">
+                        <img class="status-small-img" src="{% static 'images/offline.svg' %}" alt="off">
+                    </div>
+                    
                     <a href="{% url 'profile' user_id=post.author.id action='watch' %}" class="username-text">{{ post.author.profile.pseudonym }}</a>
-                    <!-- <p class="username-text">{{ post.author.username }}</p> -->
                 </div>
                 <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
             </div>
@@ -31,7 +35,7 @@
         <div class="post-conteiner-content">
             <div class="post-content">
                 <p class="post-conteiner-title">{{ post.title }}</p>
-                <!-- <p class="post-conteiner-topic">{{ post.topic }}</p> -->
+
                 <div class="post-content-text-div">
                     <p class="post-content-text">{{ post.content }}</p>
                     <div class="post-content-tags">
@@ -56,8 +60,8 @@
                 <div class="post-images-preview-container">
                     {% for image in post.images.all %}
                         <div class="post-image-item">
-                            <img src="http://192.168.0.125:8020/media/{{ image.compressed_image }}" alt="img" class="post-image">
-                            <!-- <img src="{{ image.original.url }}" alt="img"> -->
+                            <!-- <img src="http://192.168.0.125:8020/media/{{ image.compressed_image }}" alt="img" class="post-image"> -->
+                            <img src="{{ image.compressed_image.url }}" alt="img" class="post-image">
                         </div>
                     {% endfor %}
                 </div>
