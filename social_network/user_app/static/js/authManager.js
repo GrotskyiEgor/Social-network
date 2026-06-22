@@ -64,26 +64,30 @@ async function ajaxRequests(get_form, form_id, code){
     };
 
     // CONNECT
-    // let response = await fetch("http://192.168.0.125:8020/users/login", {
-    // method: "POST",
-    // headers: {
-    //     "Content-Type": "application/json"
-    // },
-    // body: JSON.stringify(
-    //     user_data
-    // )
-
-    // response = await response.json()
-
-    // if (response.status === 'error'){
-    //     console.log('error')
-    //     return
-    // }
+    if (LOCAL === "False") {
+        let response = await fetch("http://192.168.0.145:8020/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                user_data
+            )
+        })
     
-    // localStorage.setItem('authToken', response.token)    
+        response = await response.json()
+    
+        if (response.status === 'error'){
+            console.log('error')
+            return
+        }
+        
+        localStorage.setItem('authToken', response.token) 
+        if (!response.token) return
+    }
+
     let user_data_serialize = get_form.serialize();
-    
-    // if (response.token){   
+      
     $.ajax({
         url: get_form.attr('action'),
         method: 'POST',

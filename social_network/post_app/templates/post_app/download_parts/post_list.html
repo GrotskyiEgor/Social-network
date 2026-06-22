@@ -13,7 +13,9 @@
                     
                     <a href="{% url 'profile' user_id=post.author.id action='watch' %}" class="username-text">{{ post.author.profile.pseudonym }}</a>
                 </div>
-                <img class="profile-user-sing-image" src="{% static 'images/avatar_sing.svg' %}" alt="avatar_sing">
+                {% if post.author.profile.signature %}            
+                    <img class="profile-user-sing-image" src="{% if not LOCAL %}http://192.168.0.145:8020/media/{% else %}{% endif %}{{ post.author.profile.signature }}" alt="avatar_sing">
+                {% endif %}
             </div>
             
             <div class="interaction-div">            
@@ -60,8 +62,11 @@
                 <div class="post-images-preview-container">
                     {% for image in post.images.all %}
                         <div class="post-image-item">
-                            <!-- <img src="http://192.168.0.125:8020/media/{{ image.compressed_image }}" alt="img" class="post-image"> -->
-                            <img src="{{ image.compressed_image.url }}" alt="img" class="post-image">
+                            {% if not LOCAL %}
+                                <img src="http://192.168.0.145:8020/media/{{ image.compressed_image }}" alt="img" class="post-image">
+                            {% else %}
+                                <img src="{{ image.compressed_image.url }}" alt="img" class="post-image">
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>

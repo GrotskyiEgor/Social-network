@@ -40,6 +40,7 @@ class ChatView(TemplateView):
     def render_to_response(self, context, **response_kwargs):
         if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
             paginator_list = []
+            users_list = []
             paginato_page = int(self.request.GET.get('page', 1))
             filter_text = self.request.GET.get('filter_text', '')
             selection = self.request.GET.get('selection', 0)
@@ -49,6 +50,10 @@ class ChatView(TemplateView):
                 paginator_list = get_friends(self.request.user, filter_text)
             elif selection == 'chats':
                 paginator_list = Chat.objects.filter(users=self.request.user, is_group = False).prefetch_related(messages_prefetch).order_by("id")
+                for chat in paginator_list:
+                    for user in chat.users.all():
+                        if user.id != self.request.user.id:
+                            users_list.append(user.id)
             elif selection == 'groups':
                 paginator_list = Chat.objects.filter(users=self.request.user, is_group = True).prefetch_related(messages_prefetch).order_by("id")
 
@@ -60,6 +65,7 @@ class ChatView(TemplateView):
                         'chat_app/particals/friends.html',
                         {"friends": page_obj}      
                     ),
+                    'friends_ids': list(user.id for user in paginator_list),
                     'has_next': page_obj.has_next()
                 })
             elif selection == 'chats':
@@ -68,6 +74,7 @@ class ChatView(TemplateView):
                         'chat_app/particals/chats.html',
                         {"chats": page_obj, 'user': self.request.user}      
                     ),
+                    'friends_ids': users_list,
                     'has_next': page_obj.has_next()
                 })
             elif selection == 'groups':

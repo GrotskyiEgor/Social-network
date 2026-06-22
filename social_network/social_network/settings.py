@@ -49,11 +49,14 @@ if LOCAL:
 else:
     # CONNECT
     CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels_redis.core.RedisChannelLayer',
-            'CONFIG': {"hosts": [('127.0.0.1', 6379)]},
-        },
+        'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}
     }
+    # CHANNEL_LAYERS = {
+    #     'default': {
+    #         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+    #         'CONFIG': {"hosts": [('127.0.0.1', 6379)]},
+    #     },
+    # }
 
 AUTH_USER_MODEL = 'user_app.User'
 
@@ -92,6 +95,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_network.context_processors.app_settings',
             ],
         },
     },

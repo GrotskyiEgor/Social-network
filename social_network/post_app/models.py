@@ -98,8 +98,8 @@ class PostLink(models.Model):
 
 
 class PostImage(models.Model):
-    original_image = models.ImageField(blank=True)
-    compressed_image = models.ImageField(blank=True)
+    original_image = models.ImageField(blank=True, upload_to="media/post_app/original_images")
+    compressed_image = models.ImageField(blank=True, upload_to="media/post_app/compressed_images")
     post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):

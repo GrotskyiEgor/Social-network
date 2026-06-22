@@ -10,14 +10,15 @@ let selectChatId = getCookie('chatId')
 if (selectChatId){
     connectWebSocket(selectChatId)
     joinToChat(selectChatId)
-    startListeningMessages();
 }
 
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
     connectWebSocket(this.dataset.chatId);
+    
+    let lastChatId = getCookie('chatId')
+    leaveFromChat(lastChatId)
     joinToChat(this.dataset.chatId)
-    startListeningMessages();
 });
 
 $(document).on("click", ".open-chat-with", async function(){
@@ -131,6 +132,7 @@ function connectWebSocket(chatId) {
             chatContainer.innerHTML = ''
             chatContainer.insertAdjacentHTML("afterbegin", data.chat_messages_html) 
             let chatDiv = document.getElementById('chat_message_container')
+            getOnlineUsers(data.friends_ids)
   
             chatDiv.scrollTo({
                 top: chatDiv.scrollHeight

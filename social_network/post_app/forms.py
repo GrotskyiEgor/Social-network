@@ -166,7 +166,72 @@ class PostForm(forms.ModelForm):
         return clean_data
     
     
-    def save(self, author, commit = True):
+    # def save(self, author, commit = True):
+    #     post = super().save(commit=False)
+    #     post.author = author
+    #     print('create post')
+        
+    #     if commit:
+    #         post.save()
+    #         post.tags.set(self.cleaned_data['tags'])
+    #         print('self.cleaned_data', self.cleaned_data['tags'])
+
+    #         for url in self.links_list:
+    #             PostLink.objects.create(post=post, url=url)
+
+    #         for image in self.images_list:
+    #             if not image:
+    #                 continue
+                
+    #             PostImage.objects.create(
+    #                 post=post,
+    #                 original_image=image,
+    #                 compressed_image=self.compress_image(image)
+    #             )
+
+    #     return post
+    
+
+    # def compress_image(self, upload_image):
+    #     upload_image.seek(0)
+    #     origin_name = upload_image.name
+        
+    #     image = Image.open(upload_image)
+    #     image = image.convert('RGB')
+
+    #     quality = 85
+    #     width, height = image.size
+        
+    #     MAX_COMPRESSED_IMAGE_SIZE = 5 * 1024 * 1024
+
+    #     buffer = BytesIO()
+        
+    #     while True:
+    #         buffer.seek(0)
+    #         buffer.truncate()
+    #         image.save(buffer, format='JPEG', quality=quality, optimize=True)
+
+    #         if buffer.tell() <= MAX_COMPRESSED_IMAGE_SIZE:
+    #             break
+
+    #         if quality > 35:
+    #             quality -= 10
+    #         else:
+    #             if width <= 50 or height <= 50:
+    #                 break
+
+    #             width = int(width * 0.9)
+    #             height = int(height * 0.9)
+    #             image = image.resize((width, height), Image.Resampling.LANCZOS)
+        
+    #     content_bytes = buffer.getvalue()
+    #     buffer.close()
+
+    #     file_name = origin_name.rsplit('.', 1)[0]
+    #     compressed_name = f'{file_name}'
+    #     return ContentFile(content_bytes, name=compressed_name)
+
+    def save(self, author, commit=True):
         post = super().save(commit=False)
         post.author = author
         print('create post')
@@ -183,31 +248,45 @@ class PostForm(forms.ModelForm):
                 if not image:
                     continue
                 
+                # КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Сбрасываем указатель оригинального файла
+                image.seek(0)
+                
+                # Генерируем сжатую копию СНАЧАЛА, пока поток гарантированно открыт
+                compressed_file = self.compress_image(image)
+                
+                # Возвращаем указатель оригинального файла, так как Pillow мог его сдвинуть
+                image.seek(0)
+
                 PostImage.objects.create(
                     post=post,
                     original_image=image,
-                    compressed_image=self.compress_image(image)
+                    compressed_image=compressed_file
                 )
 
         return post
     
 
     def compress_image(self, upload_image):
+        # Дополнительно защищаем поток от закрытия
         upload_image.seek(0)
         origin_name = upload_image.name
         
-        image = Image.open(upload_image)
+        # Создаем копию изображения в памяти, отвязанную от файлового дескриптора Django
+        with Image.open(upload_image) as img:
+            image = img.copy()
+            
         image = image.convert('RGB')
 
         quality = 85
         width, height = image.size
-        
         MAX_COMPRESSED_IMAGE_SIZE = 5 * 1024 * 1024
 
         buffer = BytesIO()
         
         while True:
-            buffer = BytesIO()
+            buffer.seek(0)
+            buffer.truncate()
+
             image.save(buffer, format='JPEG', quality=quality, optimize=True)
 
             if buffer.tell() <= MAX_COMPRESSED_IMAGE_SIZE:
@@ -223,8 +302,11 @@ class PostForm(forms.ModelForm):
                 height = int(height * 0.9)
                 image = image.resize((width, height), Image.Resampling.LANCZOS)
         
-        buffer.seek(0)
+        content = buffer.getvalue()
+        buffer.close()
 
-        file_name = origin_name.rsplit('.', 1)[0]
-        compressed_name = f'compressed_{file_name}.jpg'
-        return ContentFile(buffer.getvalue(), name=compressed_name)
+        # Чистим имя от путей операционной системы
+        pure_name = origin_name.split('/')[-1].split('\\')[-1].rsplit('.', 1)[0]
+        compressed_name = f'compressed_{pure_name}.jpg'
+        
+        return ContentFile(content, name=compressed_name)

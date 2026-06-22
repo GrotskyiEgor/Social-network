@@ -85,12 +85,20 @@ $(document).on('click', '#next_add_group_modal', function(event){
 
     deleteUsersContainer = document.getElementById('delete_users_container')
     deleteUsersContainer.innerHTML = ''
+
+    let userModalImg
+    if (LOCAL === 'False') {
+        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src="http://192.168.0.145:8020/media/${indicatorImg} alt="">`
+    } else {
+        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">`
+    }
+
     activeCheckBox().forEach(checkbox => {
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
                     <div class="status-wrapper">
-                        <img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">
+                        ${indicatorImg}
                         <img class="status-small-img" src=${offlineImg} alt="off">
                     </div>
                 </div>

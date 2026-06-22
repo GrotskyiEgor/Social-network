@@ -1,6 +1,6 @@
 const authToken = localStorage.getItem('authToken');
 
-const socket = io("http://192.168.0.125:8020", {
+const socket = io("http://192.168.0.145:8020", {
     auth: {
         token: `Bearer ${authToken}`
     },
@@ -9,10 +9,32 @@ const socket = io("http://192.168.0.125:8020", {
 });
 
 async function joinToChat(chatId) {
-    socket.emit("joinChat", { chatId: chatId}, (response) => {
+    socket.emit("joinChat", { chatId: chatId }, (response) => {
         console.log("connected", response.status)
-        startListeningMessages();
+        startListeningMessages()
     })
+}
+
+async function leaveFromChat(chatId) {
+    socket.emit("leaveChat", { chatId: chatId }, (response) => {
+        console.log("leave")
+    })
+}
+
+async function subscribeOnOnlineChatsUsers(ids) {
+    socket.emit("subscribeAndGetInitialStatuses", ids, (response) => {
+        console.log("subscribeAndGetIntialStatuses", response.userIds)
+        startListeningOnlineStatus() 
+    })
+}
+
+async function startListeningOnlineStatus() {
+    socket.off("userStatusUpdated");
+    socket.on("userStatusUpdated", (response) => {
+        setUserOnline(response.userId, response.status)
+    });
+    
+    console.log("Прослушивание новых статусов");
 }
 
 function startListeningMessages() {
@@ -39,7 +61,7 @@ function newMessage(data) {
                         <div class="msg-text">${ data.text }</div>
                     </div>
                     <div class="msg-info-date">
-                        <p class="msg-date-text">${ data.createdAt }</p>
+                        <p class="msg-date-text">${ formatMessageTime(data.createdAt) }</p>
                         <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open" >
                     </div>
                 </div>
@@ -49,8 +71,11 @@ function newMessage(data) {
 
     let imageHtml = ''
     for (let image of data.messageImages){
-        // imageHtml += `<img class="send-message-image-other load-message-image" src="http://192.168.0.125:8020/media/${ image.image }" alt="img"></img>`
-        imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
+        if (LOCAL === "True"){
+            imageHtml += `<img class="send-message-image-other load-message-image" src="http://192.168.0.145:8020/media/${ image.image }" alt="img"></img>`
+        } else {
+            imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
+        }
     }
 
     chatDiv.innerHTML += imageHtml
@@ -59,4 +84,31 @@ function newMessage(data) {
         top: chatDiv.scrollHeight,
         behavior: 'smooth'
     });
+}
+ const timeFormatter = new Intl.DateTimeFormat("uk-UA", {
+    hour: "2-digit",
+    minute: "2-digit",
+});
+
+function formatMessageTime(createdAt) {
+    return timeFormatter.format(new Date(createdAt));
+}
+
+async function getOnlineUsers(friends_ids){
+    let ids = friends_ids.map((obj, index) => {
+        console.log(obj, 'obj', '=============')
+        return obj
+    })
+
+    setOnlineUsers(ids)
+}
+
+async function setOnlineUsers(ids){
+    console.log(ids, typeof ids)
+    socket.emit("getOnlineUsers", ids, (response) => {
+        console.log("getOnlineUsers", response.userIds, response)
+        for (let id of response.userIds){
+            setUserOnline(id, "online")
+        }
+    })
 }

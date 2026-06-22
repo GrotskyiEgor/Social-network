@@ -22,7 +22,7 @@ class Chat(models.Model):
     name = models.CharField(max_length=30, null=True, blank=True)
     is_group = models.BooleanField(default=False)
     admin = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    avatar = models.ImageField(upload_to='chats/groups', null=True, blank=True)
+    avatar = models.ImageField(upload_to='media/chat_app/group_avatars', null=True, blank=True)
 
     def __str__(self):
         return self.name if self.name else f"Chat {self.id}"
@@ -43,7 +43,7 @@ class Message(models.Model):
     
 class MessageImage(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to="chat_app/message_images")
+    image = models.ImageField(upload_to="media/chat_app/message_images")
 
     def get_json(self):
         return {

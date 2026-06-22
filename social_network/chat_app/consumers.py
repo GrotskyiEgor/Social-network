@@ -31,6 +31,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     {
                         'type': 'connection_confirmation',
                         'chat_messages_html': chat_html,
+                        'friends_ids': list([other_user.id]),
                         'message': 'Підключення до чату було успішно встановлено'
                     }
                 )

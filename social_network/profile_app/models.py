@@ -8,8 +8,8 @@ from user_app.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, null=True)
     birth_date = models.DateField(null=True, blank=True)
-    signature = models.ImageField(upload_to='profiles/signatures', null=True, blank=True)
-    avatar = models.ImageField(upload_to='profiles/avatars', null=True, blank=True)
+    signature = models.ImageField(upload_to='media/profile_app/signatures', null=True, blank=True)
+    avatar = models.ImageField(upload_to='media/profile_app/avatars', null=True, blank=True)
     pseudonym = models.CharField(max_length=50, null=True, blank=True)
     is_image_signature = models.BooleanField(default=False)
     is_text_signature = models.BooleanField(default=False)
@@ -32,7 +32,7 @@ class Album(models.Model):
         return self.name
     
 class AlbumImage(models.Model):
-    image = models.ImageField(upload_to='profiles/albums')
+    image = models.ImageField(upload_to='media/profile_app/albums')
     album = models.ForeignKey(to=Album, on_delete=models.CASCADE, related_name='images')
     is_shown = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
