@@ -3,7 +3,9 @@
 
 {% block title %}WorldIT Налаштування{% endblock %}
 
-{% block links %}{% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+{% endblock %}
 
 {% block info-content %}
     <div class="info-navigations">
@@ -13,16 +15,37 @@
     </div>
 {% endblock %}
 
-{% block main-content %}
-    {% for i in "......................." %}    
-        <div class="scrolls-container content-border-container">   
-            <h1>Налаштування</h1>
-        </div>
-    {% endfor %}
+{% block main-content %} 
+    {% include 'settings_app/particals/profile_picture.html' %}
+    {% include 'settings_app/particals/profile_set.html' %}
+    {% include 'settings_app/particals/profile_signature.html' %}
 {% endblock %}
 
 {% block modals %}{% endblock %}
 
 {% block script %}
+    <script defer>
+        const editBtn = "{% static 'images/edit_btn.svg' %}"
+        const saveBtn = "{% static 'images/save_btn.svg' %}"
+        const inputEye = "{% static 'images/close_eye.svg' %}"
+        
+        const plusImg = "{% static 'images/icons/plus.svg' %}"
+        const imgIconImg = "{% static 'images/icons/img.svg' %}"
+
+        const openEye = "{% static 'images/open_eye.svg' %}"
+        const closeEye = "{% static 'images/close_eye.svg' %}"
+
+        const checkboxFalse = "{% static 'images/icons/checkbox_false.svg' %}"
+        const checkboxTrue = "{% static 'images/icons/checkbox_true.svg' %}"
+
+        // const avatarImg = "{% static 'images/icons/indicator_active.svg' %}"
+        const avatarImg = "/media/{{ request.user.profile.avatar }}"
+        const userUsername = "{{ user.username }}"
+        const profilePseudonym = "{{ user.profile.pseudonym }}"
+        const profileUrlWatch = "{% url 'profile' user_id=user.profile.id action='watch' %}"
+    </script>
+
+    <script src="{% static 'js/settings.js' %}" defer></script>
+    <script src="{% static 'js/settingsInputs.js' %}" defer></script>
     <script src="{% static 'js/themeChange.js' %}" defer></script>
 {% endblock %}

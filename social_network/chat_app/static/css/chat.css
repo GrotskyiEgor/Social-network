@@ -159,7 +159,7 @@
     cursor: pointer;
 }
 
-#chats_loader, #friends_loader, #chats_msg_loader, #groups_loader, #modal_loader {
+#chats_loader, #friends_loader, #chats_msg_loader, #groups_loader, #modal_loader, #edit_modal_loader {
     width: 100%;
     min-height: 1px;
 }

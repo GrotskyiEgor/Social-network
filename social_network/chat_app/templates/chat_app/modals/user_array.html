@@ -6,9 +6,12 @@
     {% else %}
         <div class="followers-user-block user-block-border">
             <div class="followers-container-image-container">
-                <img class="followers-image online-img-{{select_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="">
+                <!-- <img class="followers-image online-img-{{select_user.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt=""> -->
+                <div class="status-wrapper">
+                    <img class="followers-image online-img-{{select_user.id}} avatar-img" src='/media/{{ select_user.profile.avatar }}' alt="">
+                    <img class="status-small-img" src="{% static 'images/offline.svg' %}" alt="off">
+                </div>
             </div>
-            <p>{{ edit_modal }}</p>
             <div class="user-block-info">
                 <p class="user-block-username">{{ select_user.profile.pseudonym}}</p>
                 {% if edit_modal %}

@@ -7,9 +7,11 @@
     
             <div class="chat-header-info">
                 {% if chat.name %}
-                    <img class="message-image" src="{% static 'images/chat_img.svg' %}" alt="indicator">
+                    <img class="message-image avatar-img" src="{% static 'images/chat_img.svg' %}" alt="indicator">
                 {% else %}
-                    <img class="message-image online-img-{{other_user.id}}" src="{% static 'images/icons/indicator.svg' %}" alt="indicator">
+                    <!-- <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt="indicator"> -->
+                    <img class="message-image online-img-{{other_user.id}} avatar-img" src='/media/{{ other_user.profile.avatar }}' alt="indicator">
+                    <!-- <img class="status-img" src="{% static 'images/offline.svg' %}" alt="off"> -->
                 {% endif %}
 
                 <div class="chat-header-text">
@@ -24,7 +26,7 @@
                     <p class="extra-info-text">{{ chat.users.all|length }} учасники</p>
 
                     {% for user in chat_users %}
-                        <p class="get-group-id" data-get-id='{{user.id}}' hiden></p>
+                        <p class="get-group-id" data-get-id='{{user.id}}' hidden></p>
                     {% endfor %}
                 </div>
             </div>
@@ -45,7 +47,7 @@
 <div class="chat-input">
     <form action="" class="message-form" id="message_form">
         <input type="text" placeholder="Повідомлення" class="contacts-input message-input" id="message_form_input">
-        <!-- <button>Відправити</button> -->
+
         <input type="file" accept="image/*" multiple hidden id="message_images_input">
     </form>
 

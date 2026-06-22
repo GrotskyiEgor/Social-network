@@ -1,19 +1,31 @@
 const onlineCache = new Map()
-const onlineSocket = new WebSocket(`ws://${window.location.host}/chat/online/`);
 
-onlineSocket.onmessage = function (event) {
-    const data = JSON.parse(event.data)
-    onlineCache.set(data.user_id, data.status)
-
-    setUserOnline(data.user_id, data.status)
+if (isAuthenticated === 'True'){
+    const onlineSocket = new WebSocket(`ws://${window.location.host}/chat/online/`);
+    
+    onlineSocket.onmessage = function (event) {
+        const data = JSON.parse(event.data)
+        onlineCache.set(data.user_id, data.status)
+    
+        setUserOnline(data.user_id, data.status)
+    }
 }
 
 function setUserOnline(userId, status) {
     document.querySelectorAll(`.online-img-${userId}`).forEach((avatar) => {
+        const statusWrapper = avatar.closest('.status-wrapper')
+        let statusImg = statusWrapper?.querySelector('.status-img')
+
+        if (!statusImg){
+            statusImg = statusWrapper?.querySelector('.status-small-img')
+        }
+
+        if (!statusImg) return
+
         if (status === "offline") {
-            avatar.src = offlineImg
+            statusImg.src = offlineImg
         } else if (status === "online") {
-            avatar.src = onlineImg
+            statusImg.src = onlineImg
         }
     })
 }

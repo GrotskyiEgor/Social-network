@@ -9,7 +9,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, null=True)
     birth_date = models.DateField(null=True, blank=True)
     signature = models.ImageField(upload_to='profiles/signatures', null=True, blank=True)
-    avatar = models.ImageField(upload_to='profiles/avatarars', null=True, blank=True)
+    avatar = models.ImageField(upload_to='profiles/avatars', null=True, blank=True)
     pseudonym = models.CharField(max_length=50, null=True, blank=True)
     is_image_signature = models.BooleanField(default=False)
     is_text_signature = models.BooleanField(default=False)

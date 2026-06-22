@@ -20,7 +20,7 @@ def friends_pages(friends_list):
                 "letter": friend.profile.pseudonym[0]
             })
             
-            last_leter = friend.profile.pseudonym[0]
+            last_leter = friend
 
         all_friends.append(friend)
 
