@@ -20,11 +20,12 @@
 
 
             <div class="group-image-container">
-                <img src="{% static 'images/chat_img.svg' %}" alt="chat_img" class="group-image-img">
+                <img src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}profiles/avatars/chat_img.svg" alt="chat_img" class="group-image-img">
                 
                 <div class="group-image-texts-container">
                     <div class="images-text-div">
-                        <img src="{% static 'images/icons/plus.svg' %}" alt="plus" class="images-text-img">
+                        <input name="avatar" type="file" accept="image/*" multiple="" id="agroup_img_input" hidden>
+                        <img src="{% static 'images/icons/plus.svg' %}" alt="plus" class="images-text-img" id="group_img">
                         <p class="images-text">Додайте фото</p>
                     </div>
                     <div class="images-text-div">

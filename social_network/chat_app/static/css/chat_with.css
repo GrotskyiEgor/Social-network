@@ -84,6 +84,10 @@
     gap: 0.25rem;
 }
 
+.status-wrapper-msg {
+    height: 3rem;
+}
+
 .msg-image{
     margin-top: 0.625rem;
     display: flex;
@@ -212,4 +216,8 @@
     display: flex;
     align-self: flex-start;
     border: 0.0625rem solid var(--border-light);
+}
+
+.status-small-img-msg {
+    bottom: -10;
 }

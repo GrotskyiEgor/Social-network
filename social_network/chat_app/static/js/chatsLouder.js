@@ -18,7 +18,6 @@ const friendsОbeserve = new IntersectionObserver(async (entries)=>{
 
         const objectRespone = await response.json()
         if (objectRespone.friends_html){
-            console.log(objectRespone.friends_ids, 'objectRespone.friends_ids')
             await subscribeOnOnlineChatsUsers(objectRespone.friends_ids)
             await getOnlineUsers(objectRespone.friends_ids)
             friendsSentinel.insertAdjacentHTML("beforebegin", objectRespone.friends_html)
@@ -55,7 +54,6 @@ const chatsObeserve = new IntersectionObserver(async (entries)=>{
         const objectRespone = await response.json()
 
         if (objectRespone.chats_html){
-            console.log(objectRespone.friends_ids, 'objectRespone.friends_ids')
             await subscribeOnOnlineChatsUsers(objectRespone.friends_ids)
             await getOnlineUsers(objectRespone.friends_ids)
             chatsSentinel.insertAdjacentHTML("beforebegin", objectRespone.chats_html)

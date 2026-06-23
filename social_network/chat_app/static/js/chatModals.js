@@ -12,14 +12,12 @@ $(document).on('click', '.checkbox', function(){
             selectedUsers.push(id)
         }
 
-        console.log('true', id, selectedUsers)
         setCountUsersSpan(selectedUsers.length, 'count_select_users')
     } else if (status === 'true'){
         this.dataset.checkbox = 'false'
         this.src = falseCheckbox
 
         selectedUsers = selectedUsers.filter(checkbox => checkbox !== id);
-        console.log('false', id, selectedUsers)
         setCountUsersSpan(selectedUsers.length, 'count_select_users')
     }
 })
@@ -42,12 +40,6 @@ function clearCheckbox(){
 
 function activeCheckBox(){
     let activeCheckBoxArray = []
-    // document.querySelectorAll('.checkbox').forEach(checkbox =>{
-    //     if (checkbox.dataset.checkbox === 'true') {
-    //         activeCheckBoxArray.push(checkbox)
-    //         console.log(checkbox.id)
-    //     }
-    // })
 
     selectedUsers.forEach(checkboxId => {
         let checkbox = document.querySelector(`#checkbox_${checkboxId}`)
@@ -131,16 +123,35 @@ $(document).on('click', '#cansle_add_group_modal', function(){
     closeModal('modal-add-group-bg')
 })
 
+document.getElementById('agroup_img_input').multiple = false
+$(document).on('click', '#group_edit_img', function(){
+    document.getElementById('agroup_img_input').click()
+})
+
+document.getElementById('group_edit_img_input').multiple = false
+$(document).on('click', '#group_img', function(){
+    document.getElementById('group_edit_img_input').click()
+})
+
 async function createGroup(edit) {
     const formData = new FormData();
 
     if (edit) {
-        formData.append("name", document.getElementById('edit_group_name_input').value);
+        formData.append("name", document.getElementById('edit_group_name_input').value)
+
+        let input = document.getElementById('group_edit_img_input')
+        if (input.files.length > 0){
+            formData.append('file', input.files[0])
+        }
     } else {
-        formData.append("name", document.getElementById('group_name_input').value);
+        formData.append("name", document.getElementById('group_name_input').value)
+
+        let input = document.getElementById('agroup_img_input')
+        if (input.files.length > 0){
+            formData.append('file', input.files[0])
+        }
     }
         
-
     selectedUsers.forEach((id) => {
         formData.append("users", id);
     });
@@ -158,7 +169,6 @@ async function createGroup(edit) {
         return;
     }
 
-    // console.log(data)
     clearCheckbox()
 
     closeModal('modal-add-group-bg')

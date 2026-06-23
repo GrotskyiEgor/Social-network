@@ -167,3 +167,7 @@
 .requests-container, .message-container {
     gap: 1.5rem;
 }
+
+.images-text-img {
+    cursor: pointer;
+}

@@ -115,7 +115,6 @@ class AllFriendsView(LoginRequiredMixin, TemplateView):
 
     #     return JsonResponse(friends_list)
 
-    
 
 class FriendsAction(LoginRequiredMixin, TemplateView):
     def post(self, request, action, profile_id, *args, **kwargs):

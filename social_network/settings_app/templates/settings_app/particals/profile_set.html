@@ -9,7 +9,7 @@
     <form method="POST" class="set-container idle-container" id="base_set_con">
         <div class="modal-create-post-inputs-div">
             <p class="create-post-text">Ім’я</p>
-            <input type="text" name="pseudonym" class="create-post-input" value="{{ request.user.profile.pseudonym }}">
+            <input type="text" name="pseudonym" class="create-post-input" value="{{ request.user.profile.pseudonym }}" id="set_pseudonym_input">
         </div>
 
         <div class="modal-create-post-inputs-div">
@@ -21,7 +21,7 @@
             <p class="create-post-text">Дата народження</p>
             <div class="input-wrapper">
                 <input type="date" name="birth_date" class="create-post-input" value="{{ request.user.profile.birth_date|date:'Y-m-d' }}" id='birth_date_input'>
-                <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='input-eye' id='birth_date_input_eye'>
+                <img src="{% static 'images/open_eye.svg' %}" alt="eye" class='input-eye' id='birth_date_input_eye'>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             <p class="create-post-text">Електронна адреса</p>
             <div class="input-wrapper">
                 <input type="email" name="email" class="create-post-input" value="{{ request.user.email }}" id='email_input'>
-                <img src="{% static 'images/close_eye.svg' %}" alt="eye" class='input-eye' id='email_input_eye'>
+                <img src="{% static 'images/open_eye.svg' %}" alt="eye" class='input-eye' id='email_input_eye'>
             </div>
         </div>
     </form>
@@ -39,7 +39,7 @@
         <img src="{% static 'images/edit_btn.svg' %}" alt="edit_btn" class="set-container-header-btn" id="password_set">
     </div>
 
-    <form method="POST" class="idle-container" id="password_set_con">
+    <form method="POST" class="set-container idle-container" id="password_set_con">
         <div class="modal-create-post-inputs-div">
             <p class="create-post-text">Пароль</p>
             <div class="password-wrapper">

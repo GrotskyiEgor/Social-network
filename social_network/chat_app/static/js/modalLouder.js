@@ -87,7 +87,6 @@ $(document).on('input', '#edit_filter_input, #create_filter_input', async functi
         selectionDiv = document.getElementById('edit_users_array')
     }
     
-    console.log(filterText, selectionDiv, this.id)
     if (!selectionDiv) return
 
     const isEmptyText = filterText === ''
@@ -127,7 +126,6 @@ $(document).on('input', '#edit_filter_input, #create_filter_input', async functi
 function reapplySelectedUsers() {
     selectedUsers.forEach(id => {
         let checkbox = document.querySelector(`.checkbox[data-profile-id="${id}"]`)
-        console.log(id, checkbox)
 
         if (checkbox) {
             checkbox.dataset.checkbox = 'true'

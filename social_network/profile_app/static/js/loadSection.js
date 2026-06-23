@@ -4,7 +4,6 @@ async function getFriendsArray(type, selectionDiv){
     let limit = type === 'requests' ? 3 : 6
 
     let fetchUrl = `/friends/all_friends/${type}?page=${currentPage}&filter_text=${filterText}&limit=${limit}`
-    console.log(fetchUrl)
 
     try {
         const response = await fetch(fetchUrl, {
@@ -12,7 +11,6 @@ async function getFriendsArray(type, selectionDiv){
         });
     
         const data = await response.json(); 
-        console.log('type type', type, data)
 
         if (data.html){
             selectionDiv.innerHTML = data.html

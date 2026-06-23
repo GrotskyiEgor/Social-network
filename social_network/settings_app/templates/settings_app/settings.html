@@ -9,16 +9,30 @@
 
 {% block info-content %}
     <div class="info-navigations">
-        <p class="info-navigations-active-test">Особиста інформація</p>
-        <p class="info-navigations-text">Альбоми</p>
-        <p class="info-navigations-text" id="themeToggle">Змінити тему</p>
+        <p class="nav-text info-navigations-active-test" data-id="set_settings_container">Особиста інформація</p>
+        <p class="nav-text info-navigations-text" data-id="set_albums_container">Альбоми</p>
     </div>
 {% endblock %}
 
-{% block main-content %} 
-    {% include 'settings_app/particals/profile_picture.html' %}
-    {% include 'settings_app/particals/profile_set.html' %}
-    {% include 'settings_app/particals/profile_signature.html' %}
+{% block main-content %}
+    <div class="set-container visible" id="set_settings_container">
+        {% include 'settings_app/particals/profile_picture.html' %}
+        {% include 'settings_app/particals/profile_set.html' %}
+        {% include 'settings_app/particals/profile_signature.html' %}
+    
+        <div class="info-navigations-text-div">
+            <p class="info-navigations-theme" id="themeToggle1">Змінити тему</p>
+        </div>
+    </div>
+
+    <div class="set-container hidden" id="set_albums_container">
+        {% include 'settings_app/particals/add_photo.html' %}
+        {% include 'settings_app/particals/create_almubs.html' %}
+
+        <div class="info-navigations-text-div">
+            <p class="info-navigations-theme" id="themeToggle2">Змінити тему</p>
+        </div>
+    </div>
 {% endblock %}
 
 {% block modals %}{% endblock %}
@@ -39,7 +53,7 @@
         const checkboxTrue = "{% static 'images/icons/checkbox_true.svg' %}"
 
         // const avatarImg = "{% static 'images/icons/indicator_active.svg' %}"
-        const avatarImg = "/media/{{ request.user.profile.avatar }}"
+        const avatarImg = "{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
         const userUsername = "{{ user.username }}"
         const profilePseudonym = "{{ user.profile.pseudonym }}"
         const profileUrlWatch = "{% url 'profile' user_id=user.profile.id action='watch' %}"
@@ -48,4 +62,5 @@
     <script src="{% static 'js/settings.js' %}" defer></script>
     <script src="{% static 'js/settingsInputs.js' %}" defer></script>
     <script src="{% static 'js/themeChange.js' %}" defer></script>
+    <script src="{% static 'js/switchPages.js' %}" defer></script>
 {% endblock %}

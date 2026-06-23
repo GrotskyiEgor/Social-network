@@ -72,9 +72,9 @@ function newMessage(data) {
     let imageHtml = ''
     for (let image of data.messageImages){
         if (LOCAL === "True"){
-            imageHtml += `<img class="send-message-image-other load-message-image" src="http://192.168.0.145:8020/media/${ image.image }" alt="img"></img>`
+            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
         } else {
-            imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
+            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
         }
     }
 

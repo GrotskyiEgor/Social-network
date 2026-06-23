@@ -15,10 +15,20 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
+def all_chat():
+    print('start =====================')
+
+    for chat in Chat.objects.all():
+        chat.avatar = 'profiles/avatars/chat_img.svg'
+        chat.save()
+
 def all_users(me):
     for user in Profile.objects.all():
-        if user.id != me.id:
-            user.avatar = 'profiles/avatars/Indicator.svg'
+        # if user.id != me.id:
+            # user.signature = 'profiles/signatures/avatar_sing.svg'
+
+            user.is_image_signature = True
+            user.is_text_signature = True
             user.save()
 
 def del_chat():
@@ -49,6 +59,7 @@ class HomeView(ListView):
         if first_registration != None and first_registration != '':
             first_registration = True
 
+        # all_chat()
         # all_users(self.request.user)
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class

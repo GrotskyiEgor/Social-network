@@ -82,7 +82,7 @@
                     
                 {% endblock %}
             </div>
-            <div class="main-container">  
+            <div class="main-container" id="main_container">  
                 {% block main-content %}
                 
                 {% endblock %}
@@ -101,7 +101,7 @@
 
             // let onlineImg = "{% static 'images/icons/indicator_active.svg' %}"
             // let offlineImg = "{% static 'images/icons/indicator.svg' %}"
-            // let avatarImg = '/media/{{ request.user.profile.avatar }}'
+            // let avatarImg = "{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
 
             let onlineImg = "{% static 'images/online.svg' %}"
             let offlineImg = "{% static 'images/offline.svg' %}"

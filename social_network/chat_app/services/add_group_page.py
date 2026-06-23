@@ -27,6 +27,7 @@ def friends_pages(friends_list):
     return all_friends
 
 def create_group(request):
+    file = request.FILES.get('file')
     name = request.POST.get("name", "").strip()
     user_ids = request.POST.getlist("users")
 
@@ -38,6 +39,7 @@ def create_group(request):
     
     friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
     chat = Chat.objects.create(name=name, is_group=True, admin=request.user)
+    chat.avatar = file if file else 'profiles/avatars/chat_img.svg'
     chat.users.add(request.user)
     chat.users.add(*User.objects.filter(id__in=friend_ids))
 

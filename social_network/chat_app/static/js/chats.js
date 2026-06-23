@@ -143,10 +143,7 @@ function connectWebSocket(chatId) {
             initMessagesObserver()
         } else if (data.type === 'chat_message'){
             let chatDiv = document.getElementById('chat_message_container')
-            console.log(data, data.input_message, data.message_id)
 
-            // if (data.input_message) {}
-            console.log(data.message_images)
             socket.emit('sendMessage', {chatId: selectChatId, text: data.input_message, commit: false, messageId: data.message_id, messageImages: data.message_images})
             chatDiv.innerHTML += data.msg_html
 

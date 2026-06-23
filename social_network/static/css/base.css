@@ -335,7 +335,7 @@ main {
     padding: 1rem 1rem;
 }
 
-.info-navigations-text {
+.info-navigations-text, .info-navigations-theme {
     font-weight: 500;
     font-size: 1rem;
     color: var(--text-muted);

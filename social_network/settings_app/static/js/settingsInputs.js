@@ -8,14 +8,22 @@ $(document).on('click', '.checkbox', function(){
     }
 })
 
-
-
 $(document).on('click', '#avatar_img_div', function(){
-    let input = document.getElementById('avatar_img')
+    let input = document.getElementById('avatar_img_input')
     input.click()
 })
 
+$(document).on('click', '#my_password_eye', function(){
+    let input = document.getElementById('my_password')
 
+    if (input.type === 'text') {
+        input.type = 'password'
+        this.src = closeEye
+    } else if (input.type === 'password') {
+        input.type = 'text'
+        this.src = openEye
+    }
+})
 
 $(document).on('click', '#new_password_eye', function(){
     let input = document.getElementById('new_password')
@@ -65,4 +73,8 @@ $(document).on('click', '#birth_date_input_eye', function(){
         delete input.dataset.real;
         this.src = openEye
     }
+})
+
+$(document).on('click', '#user_sign_board', function(){
+    console.log('')
 })

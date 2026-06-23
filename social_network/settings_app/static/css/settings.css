@@ -185,3 +185,17 @@
 .checkbox {
     cursor: pointer;
 }
+
+.info-navigations-text-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0.4rem;
+    padding-right: 0.625rem;
+}
+
+.user-sign-board {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-light);
+}

@@ -6,14 +6,14 @@
         <img src="{% static 'images/edit_btn.svg' %}" alt="edit_btn" class="set-container-header-btn" id="sing_set">
     </div>
 
-    <div class="idle-container" id="sing_set_con">
+    <div class="set-container idle-container" id="sing_set_con">
         <div class="set-container-sign">
             <div class="sing-column">
                 <div class="sing-row">
                     {% if request.user.profile.is_text_signature %}
-                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" id="is_text_signature_checkbox">
                     {% else %}
-                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" id="is_text_signature_checkbox">
                     {% endif %}
                     <p class="sing-row-text">Псевдонім автора</p>
                 </div>
@@ -23,15 +23,14 @@
             <div class="sing-column">
                 <div class="sing-row">
                     {% if request.user.profile.is_image_signature %}
-                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                        <img src="{% static 'images/icons/checkbox_true.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="true" id="is_image_signature_checkbox">
                     {% else %}
-                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" data-profile-id='{{ select_user.id }}' data-username='{{ select_user.profile.pseudonym }}' id="checkbox_{{ select_user.id }}">
+                        <img src="{% static 'images/icons/checkbox_false.svg' %}" alt="checkbox" class="del-img checkbox" data-checkbox="false" id="is_image_signature_checkbox">
                     {% endif %}
                     <p class="sing-row-text">Мій електронний підпис</p>
                 </div>
-                {% if post.author.profile.signature %}  
-                    <img class="profile-user-sing-image" src="{% if not LOCAL %}http://192.168.0.145:8020/media/{% else %}{% endif %}{{ request.user.profile.signature }}" alt="avatar_sing">
-                {% endif %}
+
+                <img class="profile-user-sing-image user-sign-board" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.signature }}" alt="avatar_sing" id="user_sign_board">
             </div>
         </div>
     </div>  

@@ -29,12 +29,12 @@ function closeModal(modalClass){
     $(`.${modalClass}`).removeClass('visible');
 };
 
-function openModalId(modalClass){
-    $(`#${modalClass}`).removeClass('hidden');
-    $(`#${modalClass}`).addClass('visible');
+function openModalId(modalId){
+    $(`#${modalId}`).removeClass('hidden');
+    $(`#${modalId}`).addClass('visible');
 };
 
-function closeModalId(modalClass){
-    $(`#${modalClass}`).addClass('hidden');
-    $(`#${modalClass}`).removeClass('visible');
+function closeModalId(modalId){
+    $(`#${modalId}`).addClass('hidden');
+    $(`#${modalId}`).removeClass('visible');
 };

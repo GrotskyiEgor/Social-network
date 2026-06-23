@@ -105,7 +105,7 @@
         const trueCheckbox = "{% static 'images/icons/checkbox_true.svg' %}"
 
         // const indicatorImg= "{% static 'images/icons/indicator.svg' %}"
-        const indicatorImg = '/media/{{ request.user.profile.avatar }}'
+        const indicatorImg = '{% if LOCAL == "False" %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}'
         const deleteImg = "{% static 'images/icons/del.svg' %}"
     </script>
 

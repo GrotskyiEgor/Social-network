@@ -20,10 +20,8 @@ function setUserOnline(userId, status) {
             statusImg = statusWrapper?.querySelector('.status-small-img')
         }
         
-        console.log(2)
         if (!statusImg) return
 
-        console.log(3, statusImg)
         if (status === "offline") {
             statusImg.src = offlineImg
         } else if (status === "online") {

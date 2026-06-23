@@ -54,7 +54,7 @@ class SettingsSaveView(View):
             user.save()
             profile.save()
 
-            return JsonResponse({'success': True})
+            return JsonResponse({'success': True, 'username': user.username, 'avatar_url': profile.avatar.url })
 
         elif action == 'base_set':
             user.email = request.POST.get('email', user.email)
@@ -68,24 +68,36 @@ class SettingsSaveView(View):
             user.save()
             profile.save()
 
-            return JsonResponse({'success': True}) 
+            return JsonResponse({'success': True, 'pseudonym': profile.pseudonym, 'birth_date': profile.birth_date, 'email': user.email }) 
         elif action == 'password_set':
+            my_password = request.POST.get('my_password')
             new_password = request.POST.get('new_password')
             check_password = request.POST.get('check_password')
 
-            if not new_password or not check_password:
+            if not new_password or not check_password or not my_password:
                 return JsonResponse({'success': False}, status=400) 
             
             if new_password != check_password:
                 return JsonResponse({'success': False}, status=400) 
             
-            user.set_password(new_password)
-            user.save()
+            if request.user.check_password(my_password):
+                user.set_password(new_password)
+                user.save()
 
-            update_session_auth_hash(request, user)
+                update_session_auth_hash(request, user)
+
+                return JsonResponse({'success': True}) 
+        elif action == 'sing_set':
+            avatar = request.POST.get('avatar') == 'true'
+            signature = request.POST.get('signature') == 'true'
+
+            print(avatar, signature, 'signature')
+            profile.is_text_signature = avatar
+            profile.is_image_signature = signature
+            profile.save()
 
             return JsonResponse({'success': True}) 
-        
+            
         return JsonResponse({'success': False}, status=400) 
 
     
