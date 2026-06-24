@@ -85,79 +85,29 @@
   ⚙️ <a href="#base-mechanics">Опис платформи</a>
    <ul style="font-size: 16px; line-height: 1.6;">   
    <li>
-    <a href="#services">Налаштування сервісів</a>
+    <a href="#user-app">User app</a>
    </li>
    
    <li>
-    <a href="#db">Робота з базою даних</a>
+    <a href="#home-app">Home app</a>
    </li>
    
    <li>
-    <a href="#render">Рендеринг сторінок та доступи</a>
+    <a href="#post-app">Post app</a>
    </li>
    
    <li>
-    <a href="#base-template">Базовий шаблон інтерфейсу</a>
+    <a href="#profile-app">Profile app</a>
    </li>
 
    <li>
-    <a href="#csrf">CSRF захист</a>
+    <a href="#chat-app">Chat app</a>
+   </li>
+
+   <li>
+    <a href="#settings-app">Settings app</a>
    </li>
   </ul>
-
-  <li>
-    👨‍🏫 <a href="#teacher-features">Можливості вчителя</a>
-    <ul>
-      <li><a href="#test-creation">Створення тестів</a></li>
-      <li><a href="#ai-test">AI генерація</a></li>
-      <li><a href="#manual-test">Ручне створення</a></li>
-      <li><a href="#edit-test">Редагування тестів</a></li>
-      <li><a href="#edit-question">Редагування питань</a></li>
-    </ul>
-  </li>
-
-  <li>
-  🧑‍🎓 <a href="#student-features">Можливості учня</a>
-  <ul>
-    <li><a href="#passing-tests">Проходження тестів</a></li>
-    <li><a href="#progress-tracking">Прогрес у профілі</a></li>
-  </ul>
-  </li>
-
-  <li>
-    📈 <a href="#classes">Класи та аналітика</a>
-    <ul>
-      <li><a href="#class-sorte">Сортування класів</a></li>
-      <li><a href="#render-class-page">Сторінка класів</a></li>
-      <li><a href="#delete-class">Видалення класу</a></li>
-      <li><a href="#delete-task">Видалення завдання</a></li>
-      <li><a href="#delete-user">Видалення учня</a></li>
-    </ul>
-  </li>
-  <li>
-   🌐 <a href="#online-test">Онлайн тест</a>
-   
-   <ul style="font-size: 16px; line-height: 1.6;">
-   
-   <li><a href="#socket-connection">Socket підключення</a></li>
-   <li><a href="#connect-room">Підключення користувачів</a></li>
-   <li><a href="#room-start">Запуск тесту</a></li>
-   
-   <li><a href="#timer-control">Управління таймером</a></li>
-   <li><a href="#timer-system">Логіка таймера</a></li>
-   
-   <li><a href="#kick-system">Управління користувачами</a></li>
-   <li><a href="#user-flow">Прохід тесту учнем</a></li>
-   
-   <li><a href="#navigation-events">Навігація питань</a></li>
-   <li><a href="#user-results">Збереження результатів</a></li>
-   <li><a href="#reconnect-system">Відновлення сесії</a></li>
-   
-   <li><a href="#teacher-results">Результати онлайн тесту</a></li>
-   <li><a href="#teacher-server-results">Результати всіх учасників онлайн тесту</a></li>
-   <li><a href="#user-server-results">Результати учасника онлайн тесту</a></li>
-   </ul>
-  </li>
 
   <li>🎯 <a href="#result">Висновок</a></li>
 </ul>
@@ -182,65 +132,32 @@
   <li>🛠️ <a href="#download-modules-eng">Installing Dependencies</a></li>
   <li>🚀 <a href="#start-project-eng">Project Start</a></li>
 
-  <li>
-    ⚙️ <a href="#base-mechanics-eng">Platform Description</a>
-    <ul style="font-size: 16px; line-height: 1.6;">
-      <li><a href="#services-eng">Service Setup</a></li>
-      <li><a href="#db-eng">Database Management</a></li>
-      <li><a href="#render-eng">Page Rendering & Access Control</a></li>
-      <li><a href="#base-template-eng">Base Interface Template</a></li>
-      <li><a href="#csrf-eng">CSRF Protection</a></li>
-    </ul>
-  </li>
+  ⚙️ <a href="#base-mechanics">Опис платформи</a>
+   <ul style="font-size: 16px; line-height: 1.6;">   
+   <li>
+    <a href="#user-app">User app</a>
+   </li>
+   
+   <li>
+    <a href="#home-app">Home app</a>
+   </li>
+   
+   <li>
+    <a href="#post-app">Post app</a>
+   </li>
+   
+   <li>
+    <a href="#profile-app">Profile app</a>
+   </li>
 
-  <li>
-    👨‍🏫 <a href="#teacher-features-eng">Teacher Features</a>
-    <ul>
-      <li><a href="#test-creation-eng">Creating Tests</a></li>
-      <li><a href="#ai-test-eng">AI Generation</a></li>
-      <li><a href="#manual-test-eng">Manual Creation</a></li>
-      <li><a href="#edit-test-eng">Editing Tests</a></li>
-      <li><a href="#edit-question-eng">Editing Questions</a></li>
-    </ul>
-  </li>
+   <li>
+    <a href="#chat-app">Chat app</a>
+   </li>
 
-  <li>
-    🧑‍🎓 <a href="#student-features-eng">Student Features</a>
-    <ul>
-      <li><a href="#passing-tests-eng">Taking Tests</a></li>
-      <li><a href="#progress-tracking-eng">Profile Progress</a></li>
-    </ul>
-  </li>
-
-  <li>
-    📈 <a href="#classes-eng">Classes & Analytics</a>
-    <ul>
-      <li><a href="#class-sorte-eng">Sorting Classes</a></li>
-      <li><a href="#render-class-page">Class Page</a></li>
-      <li><a href="#delete-class">Delete Class</a></li>
-      <li><a href="#delete-task">Delete Task</a></li>
-      <li><a href="#delete-user">Delete Student</a></li>
-    </ul>
-  </li>
-
-  <li>
-    🌐 <a href="#online-test-eng">Online Test</a>
-    <ul style="font-size: 16px; line-height: 1.6;">
-      <li><a href="#socket-connection-eng">Socket Connection</a></li>
-      <li><a href="#connect-room-eng">User Connection</a></li>
-      <li><a href="#room-start-eng">Test Start</a></li>
-      <li><a href="#timer-control-eng">Timer Control</a></li>
-      <li><a href="#timer-system-eng">Timer Logic</a></li>
-      <li><a href="#kick-system-eng">User Management</a></li>
-      <li><a href="#user-flow-eng">Student Test Flow</a></li>
-      <li><a href="#navigation-events-eng">Question Navigation</a></li>
-      <li><a href="#user-results-eng">Saving Results</a></li>
-      <li><a href="#reconnect-system-eng">Session Reconnection</a></li>
-      <li><a href="#teacher-results-eng">Online Test Results</a></li>
-      <li><a href="#teacher-server-results-eng">All Participants’ Results</a></li>
-      <li><a href="#user-server-results-eng">Individual Participant Results</a></li>
-    </ul>
-  </li>
+   <li>
+    <a href="#settings-app">Settings app</a>
+   </li>
+  </ul>
 
   <li>🎯 <a href="#result-eng">Conclusion</a></li>
 </ul>
@@ -271,9 +188,9 @@ flowchart LR
     social_network --> profile_app["profile_app"]
     social_network --> settings_app["settings_app"]
     social_network --> social_network["social_network"]
+    social_network --> user_app["user_app"]
     social_network --> static["static"]
     social_network --> templates["templates"]
-    social_network --> user_app["user_app"]
     media --> M1["media"]
     M1 --> M2["chats_app"]
     M2 --> M3["message_image"]
@@ -294,24 +211,71 @@ flowchart LR
     C2 --> CC5["js"]
     home_app --> H2["static"]
     home_app --> H3["templates"]
-    home_app --> H4["consumers.py"]
     home_app --> H5["models.py"]
     home_app --> H6["forms.py"]
-    home_app --> H6["urls.py"]
-    home_app --> H7["views.py"]
-    H2 --> CC3["css"]
-    H2 --> CC4["images"]
-    H2 --> CC5["js"]
+    home_app --> H7["urls.py"]
+    home_app --> H8["views.py"]
+    H2 --> HH3["css"]
+    H2 --> HH4["images"]
+    H2 --> HH5["js"]
     post_app --> P2["static"]
     post_app --> P3["templates"]
-    post_app --> P4["consumers.py"]
     post_app --> P5["models.py"]
     post_app --> P6["forms.py"]
-    post_app --> P6["urls.py"]
-    post_app --> P7["views.py"]
-    P2 --> CC3["css"]
-    P2 --> CC4["images"]
-    P2 --> CC5["js"]
+    post_app --> P7["urls.py"]
+    post_app --> P8["views.py"]
+    P2 --> PP3["css"]
+    P2 --> PP4["images"]
+    P2 --> PP5["js"]
+    profile_app --> PA2["static"]
+    profile_app --> PA3["templates"]
+    profile_app --> PA5["models.py"]
+    profile_app --> PA6["forms.py"]
+    profile_app --> PA6["urls.py"]
+    profile_app --> PA7["views.py"]
+    profile_app --> PA8["services"]
+    PA2 --> PPA3["css"]
+    PA2 --> PPA4["images"]
+    PA2 --> PPA5["js"]
+    PA8 --> PPA4["freind_action.py"]
+    PA8 --> PPA5["freind_qureist.py"]
+    settings_app --> SS2["static"]
+    settings_app --> SS3["templates"]
+    settings_app --> SS5["models.py"]
+    settings_app --> SS6["forms.py"]
+    settings_app --> SS6["urls.py"]
+    settings_app --> SS7["views.py"]
+    settings_app --> SS8["services"]
+    SS2 --> PPA3["css"]
+    SS2 --> PPA4["images"]
+    SS2 --> PPA5["js"]
+    user_app --> UA2["static"]
+    user_app --> UA3["templates"]
+    user_app --> UA1["forms"]
+    user_app --> UA5["models.py"]
+    user_app --> UA6["urls.py"]
+    user_app --> UA7["views.py"]
+    user_app --> UA8["services"]
+    UA1 --> UAS3["confirm_email_form.py"]
+    UA1 --> UAS4["login_form.py"]
+    UA1 --> UAS4["registration_form.py"]
+    UA2 --> UAS3["css"]
+    UA2 --> UAS4["images"]
+    UA2 --> UAS5["js"]
+    UA8 --> UAS6["auth_service.py"]
+    UA8 --> UAS7["email_service.py"]
+    social_network --> SSN2["asgi.py"]
+    social_network --> SSN3["consumers.py"]
+    social_network --> SSN5["modecontext_processors.py"]
+    social_network --> SSN6["routing.py"]
+    social_network --> SSN6["settings.py"]
+    social_network --> SSN7["urls.py"]
+    social_network --> SSN8["wsgi.py"]
+    static --> MSS6["css"]
+    static --> MSS6["fonts"]
+    static --> MSS7["images"]
+    static --> MSS8["js"]
+    templates --> MT1["base.html"]
 ```
 </details>
 <br>
@@ -778,7 +742,7 @@ flowchart LR
 <!--  -->
 <h1 id="base-mechanics">Опис платформи</h1>
 
-<h2 id="base-mechanics">User app</h2>
+<h2 id="user-app">User app</h2>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     одаток призначений для роботи з користувачами платформи. Вся логіка — реєстрація, авторизація та підтвердження пароля — реалізована на одній сторінці. Зміна Django-форм відбувається за допомогою JavaScript.
@@ -803,80 +767,94 @@ flowchart LR
 <br>
 
 ```python
-    class RegistrationView(CreateView):
-        model = User
-        form_class = RegistrationForm
-        success_url = reverse_lazy('home')
+class RegistrationView(CreateView):
+    model = User
+    form_class = RegistrationForm
+    success_url = reverse_lazy('home')
 
-        def post(self, request: HttpRequest, *args, **kwargs):
-            form = self.form_class(request.POST)
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = self.form_class(request.POST)
 
-            if form.is_valid():
-                user_data = form.cleaned_data
-                save_registration(request=request, cleaned_data=user_data)
-                request.session['first_registration'] = user_data['email']
-                
-                return JsonResponse({'success': True})
+        if form.is_valid():
+            user_data = form.cleaned_data
+            save_registration(request=request, cleaned_data=user_data)
+            request.session['first_registration'] = user_data['email']
             
-            return JsonResponse({'success': False, 'error': form.errors}, status=400)
+            return JsonResponse({'success': True})
+        
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Після реєстрації підтвердження пароля відбувається за допомогою ConfirmEmaiView (представлень).
 </p>
 
 ```python
-    class ConfirmEmaiView(View):
-        model = User
-        form_class = ConfirmEmail
+class ConfirmEmaiView(View):
+    model = User
+    form_class = ConfirmEmail
+    
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = self.form_class(request.POST)
         
-        def post(self, request: HttpRequest, *args, **kwargs):
-            form = self.form_class(request.POST)
-            
-            if form.is_valid():
-                user_data = form.cleaned_data
-                user = confirm_email(request=request, cleaned_data=user_data)
+        if form.is_valid():
+            user_data = form.cleaned_data
+            user = confirm_email(request=request, cleaned_data=user_data)
 
-                if not user:
-                    return JsonResponse({
-                        'success': False, 
-                        'error': {
-                            'confirm_code': ['Неправильний код']
-                        }
-                    }, status=400)
+            if not user:
+                return JsonResponse({
+                    'success': False, 
+                    'error': {
+                        'confirm_code': ['Неправильний код']
+                    }
+                }, status=400)
 
-                return JsonResponse({'success': True})
+            return JsonResponse({'success': True})
 
-            return JsonResponse({'success': False, 'error': form.errors}, status=400)
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)
 ```
 
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Безпечну авторизацію (вхід в акаунт), вихід із системи, керування сесіями та правами доступу користувачів на платформі.
 </p>
 
 ```python
-    class LoginPageView(LoginView):
-        form_class = LoginForm
+class LoginPageView(LoginView):
+    form_class = LoginForm
 
-        def post(self, request: HttpRequest, *args, **kwargs):
-            form = self.form_class(request.POST)
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = self.form_class(request.POST)
 
-            if form.is_valid():
-                print('form', form, form.user)
-                login(request, form.user)
-                return JsonResponse({'success': True})
-            
-            return JsonResponse({'success': False, 'error': form.errors}, status=400)
-            
+        if form.is_valid():
+            print('form', form, form.user)
+            login(request, form.user)
+            return JsonResponse({'success': True})
+        
+        return JsonResponse({'success': False, 'error': form.errors}, status=400)
+        
 
-    class LogoutView(LogoutView):
-        def post(self, request, *args, **kwargs):
-            logout(request)
-            return redirect('home')
+class LogoutView(LogoutView):
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('home')
 ```
 
-<h2 id="base-mechanics">Home app</h2>
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<h2 id="home-app">Home app</h2>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Додаток призначений для роботи з головною сторінкою. Відповідає за відображення чужих постів та створення своїх, відображення перші 3 запити та перших 3 чатів з повідомленнями ще можна переходити на користувачів які створили пост.
@@ -900,86 +878,96 @@ flowchart LR
 </details>
 
 ```python
-    def render_to_response(self, context, **response_kwargs):
-        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
-            page_obj = context['page_obj']
-            posts = context['posts']
+def render_to_response(self, context, **response_kwargs):
+    if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
+        page_obj = context['page_obj']
+        posts = context['posts']
 
-            for post in posts:
-                post.toggleInteract('views', self.request.user)
-            
-            return JsonResponse({
-                'posts_html': render_to_string(
-                    'post_app/download_parts/post_list.html',
-                    {"posts": posts}      
-                ),
-                'has_next': page_obj.has_next()
-            })
-            
-        return super().render_to_response(context, **response_kwargs)
+        for post in posts:
+            post.toggleInteract('views', self.request.user)
+        
+        return JsonResponse({
+            'posts_html': render_to_string(
+                'post_app/download_parts/post_list.html',
+                {"posts": posts}      
+            ),
+            'has_next': page_obj.has_next()
+        })
+        
+    return super().render_to_response(context, **response_kwargs)
 ```
 
-<h2 id="base-mechanics">Post app</h2>
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<h2 id="post-app">Post app</h2>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
-    Додаток призначений для роботи з постами, створення та їx відобрження також створення власних тегів для постів.
+Додаток призначений для роботи з постами, створення та їx відобрження також створення власних тегів для постів.
 </p>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
-    Створення постів відбувається через асинхронні AJAX-запити та JSON.
+Створення постів відбувається через асинхронні AJAX-запити та JSON.
 </p>
 
 <details>
-  <summary style="font-style: italic; font-size: 14px;">English translation</summary>
-  <br>
+<summary style="font-style: italic; font-size: 14px;">English translation</summary>
+<br>
 
-  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
-    The application is designed to work with posts, create and display posts.
-  </p>
-  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
-      Post creation occurs via asynchronous AJAX requests and JSON.
-  </p>
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+The application is designed to work with posts, create and display posts.
+</p>
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Post creation occurs via asynchronous AJAX requests and JSON.
+</p>
 </details>
 
 ```python
-    class PostCreateView(LoginRequiredMixin, View):
-        login_url = reverse_lazy('auth')
+class PostCreateView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('auth')
 
-        def get_form_kwargs(self):
-            kwargs = super().get_form_kwargs() 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs() 
 
-            if self.request.method == "POST":
-                kwargs['links'] = self.request.POST.getlist('links')
-                kwargs['images'] = self.request.FILES.getlist('images')
+        if self.request.method == "POST":
+            kwargs['links'] = self.request.POST.getlist('links')
+            kwargs['images'] = self.request.FILES.getlist('images')
 
-            return kwargs
+        return kwargs
         
-        def post(self, request, *args, **kwargs):
-            form = PostForm(
-                request.POST, 
-                request.FILES,
-                links=self.request.POST.getlist('links'),
-                images=request.FILES.getlist('images')
-            )
+    def post(self, request, *args, **kwargs):
+        form = PostForm(
+            request.POST, 
+            request.FILES,
+            links=self.request.POST.getlist('links'),
+            images=request.FILES.getlist('images')
+        )
 
-            print('form.is_valid()', form.is_valid())
-            if form.is_valid():
-                post = form.save(author=self.request.user)
+        print('form.is_valid()', form.is_valid())
+        if form.is_valid():
+            post = form.save(author=self.request.user)
 
-                return JsonResponse({
-                    'success': True,
-                    'message': 'Публікація успішно створена',
-                    'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post]})
-                })
-            
-            print(form.errors)
-            print(form.non_field_errors())
-        
             return JsonResponse({
-                'success': False,
-                'message': 'Публікація не була створена'
+                'success': True,
+                'message': 'Публікація успішно створена',
+                'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post]})
             })
+        
+        print(form.errors)
+        print(form.non_field_errors())
+    
+        return JsonResponse({
+            'success': False,
+            'message': 'Публікація не була створена'
+        })
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Відображення постів.
@@ -1047,7 +1035,7 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    class TagCreateView(LoginRequiredMixin, View):
+class TagCreateView(LoginRequiredMixin, View):
     login_url = reverse_lazy('auth')
 
     def post(self, request, *args, **kwargs):
@@ -1068,9 +1056,12 @@ class PostView(LoginRequiredMixin, ListView):
         })
 ```
 
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
-
-<h2 id="base-mechanics">Profile app</h2>
+<h2 id="profile-app">Profile app</h2>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Додаток відповідає за відображення та керування профілем конкретного користувача, а також за отримання і відображення списку його друзів, рекомендацій та запитів у друзі.
@@ -1093,79 +1084,84 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    class ProfileView(LoginRequiredMixin, ListView):
-        template_name = 'profile_app/profile.html'
-        form_class = PostForm
-        paginate_by = 6
-        context_object_name = 'posts'
+class ProfileView(LoginRequiredMixin, ListView):
+    template_name = 'profile_app/profile.html'
+    form_class = PostForm
+    paginate_by = 6
+    context_object_name = 'posts'
 
-        def dispatch(self, request, *args, **kwargs):
-            if not request.user.is_authenticated:
-                return redirect('auth')
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('auth')
+        
+        if not User.objects.filter(id=self.kwargs.get('user_id')).exists():
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        first_registration = self.request.session.get('first_registration')
+        if first_registration != None and first_registration != '':
+            first_registration = True
+
+        context['first_registration'] = first_registration
+        context['modal_form'] = self.form_class
+        context['select_user'] = User.objects.filter(id=self.kwargs.get('user_id')).first()
+        context['action'] = self.kwargs.get('action')
+
+        for post in context['posts']:
+            post.toggleInteract('views', self.request.user)
+        
+        return context
+    
+    def post(self, request: HttpRequest, *args, **kwargs):
+        form = self.form_class(request.POST)
+        
+        if form.is_valid():
+                
+            return JsonResponse({
+                'success': True
+            })
             
-            if not User.objects.filter(id=self.kwargs.get('user_id')).exists():
-                raise PermissionDenied
+        return JsonResponse({  
+            'success': False, 
+            'error': form.errors
+        }, status=400)
+        
 
-            return super().dispatch(request, *args, **kwargs)
+    def render_to_response(self, context, **response_kwargs):
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
+            page_obj = context['page_obj']
+            posts = context['posts']
 
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-
-            first_registration = self.request.session.get('first_registration')
-            if first_registration != None and first_registration != '':
-                first_registration = True
-
-            context['first_registration'] = first_registration
-            context['modal_form'] = self.form_class
-            context['select_user'] = User.objects.filter(id=self.kwargs.get('user_id')).first()
-            context['action'] = self.kwargs.get('action')
-
-            for post in context['posts']:
+            for post in posts:
                 post.toggleInteract('views', self.request.user)
             
-            return context
-        
-        def post(self, request: HttpRequest, *args, **kwargs):
-            form = self.form_class(request.POST)
+            return JsonResponse({
+                'posts_html': render_to_string(
+                    'post_app/download_parts/post_list.html',
+                    {"posts": posts}      
+                ),
+                'has_next': page_obj.has_next()
+            })
             
-            if form.is_valid():
-                    
-                return JsonResponse({
-                    'success': True
-                })
-                
-            return JsonResponse({  
-                'success': False, 
-                'error': form.errors
-            }, status=400)
-            
-
-        def render_to_response(self, context, **response_kwargs):
-            if self.request.headers.get("X-Requested-With") == "XMLHttpRequest": 
-                page_obj = context['page_obj']
-                posts = context['posts']
-
-                for post in posts:
-                    post.toggleInteract('views', self.request.user)
-                
-                return JsonResponse({
-                    'posts_html': render_to_string(
-                        'post_app/download_parts/post_list.html',
-                        {"posts": posts}      
-                    ),
-                    'has_next': page_obj.has_next()
-                })
-                
-            return super().render_to_response(context, **response_kwargs)
-        
-        def get_queryset(self):   
-            return (
-                Post.objects.filter(author=User.objects.filter(id=self.kwargs.get('user_id')).first()).
-                select_related('author').
-                prefetch_related('tags', 'links', 'images').
-                order_by('-id')
-            )
+        return super().render_to_response(context, **response_kwargs)
+    
+    def get_queryset(self):   
+        return (
+            Post.objects.filter(author=User.objects.filter(id=self.kwargs.get('user_id')).first()).
+            select_related('author').
+            prefetch_related('tags', 'links', 'images').
+            order_by('-id')
+        )
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Відповідає за логіку взаємодії та виведення списку друзів; також відображаються люди, які не є вашими друзями, а просто рекомендовані вам, та надіслані вам запити у друзі.
@@ -1181,68 +1177,73 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    class AllFriendsView(LoginRequiredMixin, TemplateView):
-        template_name = 'friends_app/friend.html'
-        login_url = reverse_lazy('auth')
+class AllFriendsView(LoginRequiredMixin, TemplateView):
+    template_name = 'friends_app/friend.html'
+    login_url = reverse_lazy('auth')
 
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-            return context
+        return context
 
-    class FriendsAction(LoginRequiredMixin, TemplateView):
-        def post(self, request, action, profile_id, *args, **kwargs):
-            other_user_profile = User.objects.get(id=profile_id)
+class FriendsAction(LoginRequiredMixin, TemplateView):
+    def post(self, request, action, profile_id, *args, **kwargs):
+        other_user_profile = User.objects.get(id=profile_id)
 
-            if action == 'accept':
-                result = accept_friend_request(request.user, other_user_profile)
+        if action == 'accept':
+            result = accept_friend_request(request.user, other_user_profile)
 
-                return JsonResponse(result)
-            elif action == 'request':
-                result = add_friend_request(request.user, other_user_profile)
+            return JsonResponse(result)
+        elif action == 'request':
+            result = add_friend_request(request.user, other_user_profile)
 
-                return JsonResponse(result)
-            elif action == 'delete_frienship':
-                result = delete_friendship(request.user, other_user_profile)
+            return JsonResponse(result)
+        elif action == 'delete_frienship':
+            result = delete_friendship(request.user, other_user_profile)
 
-                return JsonResponse(result)
-            elif action == 'dismissed':
-                result = dismiss_recommendation(request.user, other_user_profile)
+            return JsonResponse(result)
+        elif action == 'dismissed':
+            result = dismiss_recommendation(request.user, other_user_profile)
 
-                return JsonResponse(result)
-            
-            return JsonResponse({'success': False})
-
-
+            return JsonResponse(result)
         
-    class FriendsSelectionView(LoginRequiredMixin, View):
-        def get(self, request, selection, *args, **kwargs ):
-            limit = int(request.GET.get('limit', 0))
-            filter_input = request.GET.get('filter_text', '')
-            user = [] 
-            html = ''
+        return JsonResponse({'success': False})
 
-            if selection == 'requests':
-                user = get_friendship_requests(request.user, filter_input)
-            elif selection == 'recommendations':
-                user = get_friendship_recommendation(request.user, filter_input)
-            elif selection == 'friend':
-                user = get_friends(request.user, filter_input)
 
-            page_obj = Paginator(user, limit if limit else 6).get_page(request.GET.get('page', 1))
+    
+class FriendsSelectionView(LoginRequiredMixin, View):
+    def get(self, request, selection, *args, **kwargs ):
+        limit = int(request.GET.get('limit', 0))
+        filter_input = request.GET.get('filter_text', '')
+        user = [] 
+        html = ''
 
-            if (page_obj.number == int(request.GET.get('page', 1))):
-                html = render_to_string( 
-                    f"friends_app/particals/{selection}.html",
-                    {selection: page_obj.object_list},
-                    request=request
-                )
-            
-            return JsonResponse({"html": html, "has_next_page": page_obj.has_next()})
+        if selection == 'requests':
+            user = get_friendship_requests(request.user, filter_input)
+        elif selection == 'recommendations':
+            user = get_friendship_recommendation(request.user, filter_input)
+        elif selection == 'friend':
+            user = get_friends(request.user, filter_input)
+
+        page_obj = Paginator(user, limit if limit else 6).get_page(request.GET.get('page', 1))
+
+        if (page_obj.number == int(request.GET.get('page', 1))):
+            html = render_to_string( 
+                f"friends_app/particals/{selection}.html",
+                {selection: page_obj.object_list},
+                request=request
+            )
+        
+        return JsonResponse({"html": html, "has_next_page": page_obj.has_next()})
 
 ```
 
-<h2 id="base-mechanics">Chat app</h2>
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<h2 id="chat-app">Chat app</h2>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Цей додаток відповідає за спілкування, створення приватних та групових чатів, можна відправляти різні типи повідомлень такі як - текстові повідомлення та повідомлень із зображенням.
@@ -1265,71 +1266,76 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```js
-    async function openChatWithUser(userId, username) {
-        const response = await fetch(`/chats/chat_with/${userId}/`, {
-            method: "POST",
-            headers: { "X-CSRFToken": csrfToken },
-        });
+async function openChatWithUser(userId, username) {
+    const response = await fetch(`/chats/chat_with/${userId}/`, {
+        method: "POST",
+        headers: { "X-CSRFToken": csrfToken },
+    });
 
-        const data = await response.json();
-        if (data.success) {
-            if (data.chats_html.trim() !== ''){
-                chatsSentinel.insertAdjacentHTML("beforebegin", data.chats_html)
-                let chatsContainer = document.getElementById('chats_container')
+    const data = await response.json();
+    if (data.success) {
+        if (data.chats_html.trim() !== ''){
+            chatsSentinel.insertAdjacentHTML("beforebegin", data.chats_html)
+            let chatsContainer = document.getElementById('chats_container')
 
-                chatsContainer.scrollTo({
-                    top: chatsContainer.scrollHeight,
-                    behavior: 'smooth'
-                });
-            }
-
-            $(emptyChatContainer).remove()
-            connectWebSocket(data.chat_id);
+            chatsContainer.scrollTo({
+                top: chatsContainer.scrollHeight,
+                behavior: 'smooth'
+            });
         }
+
+        $(emptyChatContainer).remove()
+        connectWebSocket(data.chat_id);
     }
+}
 
-    async function send_message(){
-        const formIntput = document.getElementById('message_form_input')
-        const messageImagesInput = document.getElementById('message_images_input')
-        inputMessage = formIntput.value.trim()
-        hasImages = getSelectImages().length > 0
+async function send_message(){
+    const formIntput = document.getElementById('message_form_input')
+    const messageImagesInput = document.getElementById('message_images_input')
+    inputMessage = formIntput.value.trim()
+    hasImages = getSelectImages().length > 0
 
-        if (!inputMessage && !hasImages) return;
+    if (!inputMessage && !hasImages) return;
 
-        if (hasImages) {
-            const data = await sendMessageWithImages(inputMessage);
-            
-            if (!data.success) return;
-
-            formIntput.value = '';
-            messageImagesInput.value = ""; 
-        }
-
-
-        if (!hasImages){
-            chatSocket.send(JSON.stringify({ messageText: inputMessage }));
-            formIntput.value = ''
-        }
-    }
-
-    async function sendMessageWithImages(text) {
-        const selectChatId = getCookie('chatId')
-        const formData = new FormData();
-        formData.append("text", text);
+    if (hasImages) {
+        const data = await sendMessageWithImages(inputMessage);
         
-        getSelectImages().forEach((image) => {
-            formData.append("images", image);
-        });
+        if (!data.success) return;
 
-        const response = await fetch(`/chats/upload_images/${selectChatId}/`, {
-            method: "POST",
-            headers: { "X-CSRFToken": csrfToken },
-            body: formData,
-        });
-
-        return response.json();
+        formIntput.value = '';
+        messageImagesInput.value = ""; 
     }
+
+
+    if (!hasImages){
+        chatSocket.send(JSON.stringify({ messageText: inputMessage }));
+        formIntput.value = ''
+    }
+}
+
+async function sendMessageWithImages(text) {
+    const selectChatId = getCookie('chatId')
+    const formData = new FormData();
+    formData.append("text", text);
+    
+    getSelectImages().forEach((image) => {
+        formData.append("images", image);
+    });
+
+    const response = await fetch(`/chats/upload_images/${selectChatId}/`, {
+        method: "POST",
+        headers: { "X-CSRFToken": csrfToken },
+        body: formData,
+    });
+
+    return response.json();
+}
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     У приватних чатах із друзями ви можете обмінюватися текстовими повідомленнями, а також ділитися зображеннями в режимі реального часу.
@@ -1345,38 +1351,42 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    class ChatWithView(LoginRequiredMixin, View):
-        login_url = reverse_lazy("auth")
+class ChatWithView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("auth")
 
 
-        def post(self, request, user_id, *args, **kwargs):
-            add_new_user = False
-            current_user = request.user
-            other_user = User.objects.get(id = user_id)
+    def post(self, request, user_id, *args, **kwargs):
+        add_new_user = False
+        current_user = request.user
+        other_user = User.objects.get(id = user_id)
 
-            friends = get_friends(current_user)
+        friends = get_friends(current_user)
 
-            if other_user not in friends:
-                return JsonResponse({"success": False}, status=403)
-            
-            user_chat_ids = Chat.objects.filter(users=current_user, is_group=False).values_list("id", flat=True)
-            chat = Chat.objects.filter(id__in = user_chat_ids, users=other_user, is_group=False).first()
+        if other_user not in friends:
+            return JsonResponse({"success": False}, status=403)
+        
+        user_chat_ids = Chat.objects.filter(users=current_user, is_group=False).values_list("id", flat=True)
+        chat = Chat.objects.filter(id__in = user_chat_ids, users=other_user, is_group=False).first()
 
-            if chat is None:
-                add_new_user = True
-                chat = Chat.objects.create(is_group=False)
-                chat.users.add(current_user, other_user)
-            
-            return JsonResponse({
-                "success": True, 
-                'chats_html': render_to_string(
-                        'chat_app/particals/chats.html',
-                        {"chats": [chat if add_new_user else []], 'user': self.request.user}      
-                    ),
-                "chat_id": chat.id
-            })  
+        if chat is None:
+            add_new_user = True
+            chat = Chat.objects.create(is_group=False)
+            chat.users.add(current_user, other_user)
+        
+        return JsonResponse({
+            "success": True, 
+            'chats_html': render_to_string(
+                    'chat_app/particals/chats.html',
+                    {"chats": [chat if add_new_user else []], 'user': self.request.user}      
+                ),
+            "chat_id": chat.id
+        })  
 ```
 
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Можна створювати групи з друзями.
@@ -1392,29 +1402,33 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    def create_group(request):
-        file = request.FILES.get('file')
-        name = request.POST.get("name", "").strip()
-        user_ids = request.POST.getlist("users")
+def create_group(request):
+    file = request.FILES.get('file')
+    name = request.POST.get("name", "").strip()
+    user_ids = request.POST.getlist("users")
 
-        if not name:
-            return JsonResponse({'success': False, "error": "name_required"}, status=400)
-        
-        if len(user_ids) <= 1:
-            return JsonResponse({'success': False, "error": "add_users"}, status=400)
-        
-        friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
-        chat = Chat.objects.create(name=name, is_group=True, admin=request.user)
-        # chat.avatar = file if file else 'profiles/avatars/chat_img.svg'
-        chat.avatar = 'profiles/avatars/chat_img.svg'
-        chat.users.add(request.user)
-        chat.users.add(*User.objects.filter(id__in=friend_ids))
+    if not name:
+        return JsonResponse({'success': False, "error": "name_required"}, status=400)
+    
+    if len(user_ids) <= 1:
+        return JsonResponse({'success': False, "error": "add_users"}, status=400)
+    
+    friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
+    chat = Chat.objects.create(name=name, is_group=True, admin=request.user)
+    chat.avatar = 'profiles/avatars/chat_img.svg'
+    chat.users.add(request.user)
+    chat.users.add(*User.objects.filter(id__in=friend_ids))
 
-        return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'chat_html':  render_to_string(
-                            'chat_app/particals/groups.html',
-                            {"groups": [chat]}      
-                        ),})
+    return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'chat_html':  render_to_string(
+                        'chat_app/particals/groups.html',
+                        {"groups": [chat]}      
+                    ),})
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
     Можна редагувати групи.
@@ -1430,35 +1444,204 @@ class PostView(LoginRequiredMixin, ListView):
 </details>
 
 ```python
-    def edit_create_group(request, chat_id):
-        name = request.POST.get("name", "").strip()
-        user_ids = request.POST.getlist("users")
+def edit_create_group(request, chat_id):
+    name = request.POST.get("name", "").strip()
+    user_ids = request.POST.getlist("users")
 
-        if not name:
-            return JsonResponse({'success': False, "error": "name_required"}, status=400)
+    if not name:
+        return JsonResponse({'success': False, "error": "name_required"}, status=400)
+    
+    if len(user_ids) <= 1:
+        return JsonResponse({'success': False, "error": "add_users"}, status=400)
+    
+    friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
+    chat = get_object_or_404(Chat, id=chat_id)
+
+    chat.name = name
+    chat.users.clear()
+    chat.users.add(request.user)
+    chat.users.add(*User.objects.filter(id__in=friend_ids))
+
+    chat.save()
+
+    other_user = chat.users.exclude(id=request.user.id).first()
+    messages = chat.messages.all().order_by('-created_at')[:20]
+    messages = reversed(messages)
+    chat_messages = get_msg_list(messages)
         
-        if len(user_ids) <= 1:
-            return JsonResponse({'success': False, "error": "add_users"}, status=400)
-        
-        friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
-        chat = get_object_or_404(Chat, id=chat_id)
-
-        chat.name = name
-        chat.users.clear()
-        chat.users.add(request.user)
-        chat.users.add(*User.objects.filter(id__in=friend_ids))
-
-        chat.save()
-
-        other_user = chat.users.exclude(id=request.user.id).first()
-        messages = chat.messages.all().order_by('-created_at')[:20]
-        messages = reversed(messages)
-        chat_messages = get_msg_list(messages)
-            
-        return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
-            'chat_app/particals/chat_messages.html',
-            {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
-        })
+    return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
+        'chat_app/particals/chat_messages.html',
+        {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
+    })
 ```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<h2 id="settings-app">Settings app</h2>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Цей додаток відповідає за налаштування та зміни даних акаунта, аватарки, імені, псевдоніма, пароля та розпису.
+</p>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Зміна стандартних даних.
+</p>
+
+<details>
+  <summary style="font-style: italic; font-size: 14px;">English translation</summary>
+  <br>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    This add-on is for setting up and changing your account data, avatar, name, nickname, password and signature.
+  </p>
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Changing default data.
+  </p>
+</details>
+
+```python
+class SettingsSaveView(View):
+    def post(self, request, action, *args, **kwargs):
+        user = request.user
+        profile = user.profile
+
+        if action == 'pictire_set':
+            print('pictire_set', user)
+
+            avatar = request.FILES.get('avatar')
+
+            if (avatar):
+                profile.avatar = avatar
+
+            user.username = clean_username(request.POST.get('username', user.username), user)
+
+            user.save()
+            profile.save()
+
+            return JsonResponse({'success': True, 'username': user.username, 'avatar_url': profile.avatar.url })
+
+        elif action == 'base_set':
+            user.email = request.POST.get('email', user.email)
+            print('last_name', request.POST.get('last_name', 'Прізвище'))
+            profile.pseudonym = request.POST.get('pseudonym', user.profile.pseudonym)
+
+            birth_date = request.POST.get('birth_date')
+            if birth_date:
+                profile.birth_date = birth_date
+
+            user.save()
+            profile.save()
+
+            return JsonResponse({'success': True, 'pseudonym': profile.pseudonym, 'birth_date': profile.birth_date, 'email': user.email }) 
+        elif action == 'password_set':
+            my_password = request.POST.get('my_password')
+            new_password = request.POST.get('new_password')
+            check_password = request.POST.get('check_password')
+
+            if not new_password or not check_password or not my_password:
+                return JsonResponse({'success': False}, status=400) 
+            
+            if new_password != check_password:
+                return JsonResponse({'success': False}, status=400) 
+            
+            if request.user.check_password(my_password):
+                user.set_password(new_password)
+                user.save()
+
+                update_session_auth_hash(request, user)
+
+                return JsonResponse({'success': True}) 
+        elif action == 'sing_set':
+            avatar = request.POST.get('avatar') == 'true'
+            signature = request.POST.get('signature') == 'true'
+
+            print(avatar, signature, 'signature')
+            profile.is_text_signature = avatar
+            profile.is_image_signature = signature
+            profile.save()
+
+            return JsonResponse({'success': True}) 
+            
+        return JsonResponse({'success': False}, status=400) 
+```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Створення розпису.
+</p>
+
+<details>
+  <summary style="font-style: italic; font-size: 14px;">English translation</summary>
+  <br>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Creating a mural.
+  </p>
+</details>
+
+```python
+class SettingsSaveSignView(View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        profile = user.profile
+
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('image')
+
+            if not image_data:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'No image provided'
+                }, status=400)
+
+            format_part, imgstr = image_data.split(';base64,')
+            ext = format_part.split('/')[-1]
+
+            file_name = f"signature_{uuid.uuid4()}.{ext}"
+
+            decoded_file = base64.b64decode(imgstr)
+
+            profile.signature.save(
+                file_name,
+                ContentFile(decoded_file),
+                save=True
+            )
+
+            profile.is_image_signature = True
+            profile.save()
+
+            return JsonResponse({
+                'success': True,
+                'signature_url': profile.signature.url
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)
+```
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
+
+<hr>
+
+<h1 id="result">Висновок</h1>
+
+<div align="right">
+    <a href="#top">⬆ До початку сторінки</a>
+</div>
+<br>
 
 <hr>
