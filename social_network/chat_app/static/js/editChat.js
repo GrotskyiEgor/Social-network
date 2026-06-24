@@ -23,19 +23,19 @@ $(document).on('click', '#edit_next_add_group_modal', function(event){
     deleteUsersContainer = document.getElementById('edit_delete_users_container')
 
     let userModalImg
-    if (LOCAL === 'False') {
-        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src="http://192.168.0.145:8020/media/${indicatorImg} alt="">`
-    } else {
-        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">`
-    }
-
     deleteUsersContainer.innerHTML = ''
     activeCheckBox().forEach(checkbox => {
+        if (LOCAL === 'False') {
+            userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src="http://192.168.0.145:${PORT}/media/${checkbox.dataset.userAvatar} alt="">`
+        } else {
+            userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${checkbox.dataset.userAvatar} alt="">`
+        }
+
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
                     <div class="status-wrapper">
-                        <img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">
+                        ${userModalImg}
                         <img class="status-small-img" src=${offlineImg} alt="off">
                     </div>
                 </div>
@@ -120,6 +120,7 @@ $(document).on('click', '.context-menu-interactive ', function(event){
 
 function clearChat(){
     clearCookie(["chatId"])
+    stopListeningOnlineStatus()
 
     document.getElementById('chat_container').innerHTML = `
         <div class="empty-chat-conteiner" id="empty_chat_conteiner">

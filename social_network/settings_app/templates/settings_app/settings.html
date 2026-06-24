@@ -35,7 +35,19 @@
     </div>
 {% endblock %}
 
-{% block modals %}{% endblock %}
+{% block modals %}
+    <div id="signature_modal" class="signature-modal hidden">
+        <div class="signature-box">
+            <canvas class="signature-canvas" id="signature_canvas"></canvas>
+
+            <div class="signature-actions">
+                <button class="signature-btn" id="clear_signature">Очистить</button>
+                <button class="signature-btn" id="save_signature">Сохранить</button>
+                <button class="signature-btn" id="close_signature">Закрыть</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block script %}
     <script defer>
@@ -53,7 +65,7 @@
         const checkboxTrue = "{% static 'images/icons/checkbox_true.svg' %}"
 
         // const avatarImg = "{% static 'images/icons/indicator_active.svg' %}"
-        const avatarImg = "{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
+        const avatarImg = "{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
         const userUsername = "{{ user.username }}"
         const profilePseudonym = "{{ user.profile.pseudonym }}"
         const profileUrlWatch = "{% url 'profile' user_id=user.profile.id action='watch' %}"
@@ -63,4 +75,5 @@
     <script src="{% static 'js/settingsInputs.js' %}" defer></script>
     <script src="{% static 'js/themeChange.js' %}" defer></script>
     <script src="{% static 'js/switchPages.js' %}" defer></script>
+    <script src="{% static 'js/paintSing.js' %}" defer></script>
 {% endblock %}

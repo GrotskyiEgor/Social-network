@@ -15,9 +15,8 @@ from post_app.views import unionTagList
 
 from profile_app.services.freind_qureist import get_friends, get_friendship_recommendation, get_friendship_requests
 
-def all_chat():
-    print('start =====================')
 
+def all_chat():
     for chat in Chat.objects.all():
         chat.avatar = 'profiles/avatars/chat_img.svg'
         chat.save()
@@ -59,8 +58,6 @@ class HomeView(ListView):
         if first_registration != None and first_registration != '':
             first_registration = True
 
-        # all_chat()
-        # all_users(self.request.user)
         context['first_registration'] = first_registration
         context['modal_form'] = self.form_class
         context['friends_count'] = Friendship.objects.filter(to_user=self.request.user, status="accepted").count()
@@ -85,18 +82,17 @@ class HomeView(ListView):
             user = User.objects.filter(email=request.session.get('first_registration')).first()
             
             if user:    
-                print(1, user_data['user_handle'], user_data['username'])
                 user.username = user_data['user_handle']
                 user.save()
 
                 profile = Profile.objects.create(
                     user = user,
-                    pseudonym = user_data['username']
+                    pseudonym = user_data['username'],
+                    avatar = 'profiles/avatars/Indicator.svg',
+                    signature = 'profiles/signatures/avatar_sing.svg'
                 )
                 
                 request.session.pop('first_registration', None)
-
-                # return redirect('home')
 
                 return JsonResponse({
                     'success': True,
@@ -145,17 +141,22 @@ class HomeLoaderView(LoginRequiredMixin, View):
 
             for user in requests:
                 friends_count_list.append(Friendship.objects.filter(to_user=user, status="accepted").count())
-                
-            return JsonResponse({
-                'chats_html': render_to_string(
-                    'home_app/particals/requests.html',
-                    {"requests": get_friendship_requests(self.request.user)[:3], 'user_profile': self.request.user.profile, 'friends_count_list': friends_count_list}      
-                )
-            })
+            
+            profile = getattr(self.request.user, "profile", None)
+
+            if (profile):
+                return JsonResponse({
+                    'chats_html': render_to_string(
+                        'home_app/particals/requests.html',
+                        {"requests": get_friendship_requests(self.request.user)[:3], 'user_profile': profile, 'friends_count_list': friends_count_list}      
+                    )
+                })
+            
+            return JsonResponse({"sucsess": False})
         elif selection == 'chats':
             messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
             chats = Chat.objects.filter(users=self.request.user, is_group = False).prefetch_related(messages_prefetch).order_by("id")[:3]
-            print('chats', chats)
+
             return JsonResponse({
                 'chats_html': render_to_string(
                     'home_app/particals/chats.html',

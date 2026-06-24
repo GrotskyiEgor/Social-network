@@ -14,7 +14,11 @@
         <div class="profile-user-container">
             <div class="profile-user-image-container">
                 <div class="status-wrapper">
-                    <img class="profile-user-image avatar-img online-img-{{request.user.id}} avatar-img" src='{% if LOCAL == "False" %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}' alt="indicator">
+                    {% if request.user.profile.avatar %}
+                        <img class="profile-user-image avatar-img online-img-{{request.user.id}} avatar-img" src='{% if LOCAL == "False" %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}' alt="indicator">
+                    {% else %}
+                        <img class="profile-user-image avatar-img online-img-{{request.user.id}} avatar-img" src='{% if LOCAL == "False" %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}profiles/avatars/Indicator.svg' alt="indicator">
+                    {% endif %}
                     <img class="status-img" src="{% static 'images/offline.svg' %}" alt="off">
                 </div>
             </div>

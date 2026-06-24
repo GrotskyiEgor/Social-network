@@ -54,24 +54,24 @@ authForm.forEach(auth => {
 });
 
 async function ajaxRequests(get_form, form_id, code){
-    const form = document.querySelector('#login_form');
+    const form = document.querySelector(`#${form_id}`);
     let user_data = new FormData(form)
     
-    user_data = Object.fromEntries(user_data.entries())
-    
+    let react_user_data = Object.fromEntries(user_data.entries())
+
     if (code){
         user_data += `&confirm_code=${code}`;
     };
 
     // CONNECT
     if (LOCAL === "False") {
-        let response = await fetch("http://192.168.0.145:8020/users/login", {
+        let response = await fetch(`http://${ IP }:${ PORT }/users/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(
-                user_data
+                react_user_data
             )
         })
     
@@ -92,6 +92,9 @@ async function ajaxRequests(get_form, form_id, code){
         url: get_form.attr('action'),
         method: 'POST',
         data: user_data,
+        headers: {
+            "X-CSRFToken": csrfToken
+        },
         success: function(response){
             const errorText = getErrorText(form);
             errorText.innerText = '';

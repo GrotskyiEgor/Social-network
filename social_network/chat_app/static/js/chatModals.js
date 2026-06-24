@@ -23,8 +23,11 @@ $(document).on('click', '.checkbox', function(){
 })
 
 $(document).on('click', '.del-user', function(){
-    $(document.getElementById('user_' + this.dataset.delUser)).remove()
-    deactiveteCheckBox(this.dataset.delUser)
+    let userId = String(this.dataset.delUser)
+    $(document.getElementById('user_' + userId)).remove()
+    deactiveteCheckBox(userId)
+    selectedUsers = selectedUsers.filter(checkboxId => checkboxId !== userId)
+    setCountUsersSpan(selectedUsers.length, 'count_select_users')
 })
 
 function clearCheckbox(){
@@ -78,19 +81,19 @@ $(document).on('click', '#next_add_group_modal', function(event){
     deleteUsersContainer = document.getElementById('delete_users_container')
     deleteUsersContainer.innerHTML = ''
 
-    let userModalImg
-    if (LOCAL === 'False') {
-        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src="http://192.168.0.145:8020/media/${indicatorImg} alt="">`
-    } else {
-        userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${indicatorImg} alt="">`
-    }
-
+    let userModalImg   
     activeCheckBox().forEach(checkbox => {
+        if (LOCAL === 'False') {
+            userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src="http://192.168.0.145:${PORT}/media/${checkbox.dataset.userAvatar} alt="">`
+        } else {
+            userModalImg = `<img class="followers-image online-img-${checkbox.dataset.profileId} avatar-img" src=${checkbox.dataset.userAvatar} alt="">`
+        }
+
         deleteUsersContainer.innerHTML += `
             <div class="followers-user-block" id=user_${checkbox.dataset.profileId}>
                 <div class="followers-container-image-container">
                     <div class="status-wrapper">
-                        ${indicatorImg}
+                        ${userModalImg}
                         <img class="status-small-img" src=${offlineImg} alt="off">
                     </div>
                 </div>
@@ -140,6 +143,7 @@ async function createGroup(edit) {
         formData.append("name", document.getElementById('edit_group_name_input').value)
 
         let input = document.getElementById('group_edit_img_input')
+        console.log('input', input, input.files.length > 0)
         if (input.files.length > 0){
             formData.append('file', input.files[0])
         }
@@ -147,6 +151,7 @@ async function createGroup(edit) {
         formData.append("name", document.getElementById('group_name_input').value)
 
         let input = document.getElementById('agroup_img_input')
+        console.log('input', input, input.files.length > 0)
         if (input.files.length > 0){
             formData.append('file', input.files[0])
         }

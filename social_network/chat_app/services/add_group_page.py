@@ -20,7 +20,7 @@ def friends_pages(friends_list):
                 "letter": friend.profile.pseudonym[0]
             })
             
-            last_leter = friend
+            last_leter = friend.profile.pseudonym[0]
 
         all_friends.append(friend)
 
@@ -39,7 +39,8 @@ def create_group(request):
     
     friend_ids = get_friends(request.user).filter(id__in=user_ids).values_list("id", flat=True)
     chat = Chat.objects.create(name=name, is_group=True, admin=request.user)
-    chat.avatar = file if file else 'profiles/avatars/chat_img.svg'
+    # chat.avatar = file if file else 'profiles/avatars/chat_img.svg'
+    chat.avatar = 'profiles/avatars/chat_img.svg'
     chat.users.add(request.user)
     chat.users.add(*User.objects.filter(id__in=friend_ids))
 
@@ -78,5 +79,3 @@ def edit_create_group(request, chat_id):
         'chat_app/particals/chat_messages.html',
         {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
     })
-
-    return JsonResponse({'success': False})

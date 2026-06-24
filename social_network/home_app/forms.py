@@ -32,9 +32,6 @@ class ProfileForm(forms.Form):
 
     def clean_user_handle(self):
         user_handle = self.cleaned_data.get('user_handle', '').strip()
-
-        print('user_handle', user_handle)
-
         user_handle = user_handle.lstrip('@')
 
         if not user_handle:
@@ -50,7 +47,5 @@ class ProfileForm(forms.Form):
         if Profile.objects.filter(pseudonym=user_handle).exists():
             print("Такий username вже зайнятий")
             raise forms.ValidationError('Такий username вже зайнятий') 
-
-        print('user_handle', user_handle)
 
         return user_handle

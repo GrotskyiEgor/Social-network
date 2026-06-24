@@ -77,8 +77,8 @@
 }
 
 .msg-container {
-    max-width: 80%;
-    min-height: 3.875rem;
+    max-width: 90%;
+    /* min-height: 3.875rem; */
     display: flex;
     flex-direction: row;
     gap: 0.25rem;
@@ -86,10 +86,11 @@
 
 .status-wrapper-msg {
     height: 3rem;
+    flex-shrink: 0;
 }
 
 .msg-image{
-    margin-top: 0.625rem;
+    margin-top: 0.30rem;
     display: flex;
     align-self: flex-start;
 }
@@ -102,11 +103,19 @@
     padding: 0.625rem;
 }
 
+.msg-info-column {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.625rem;
+}
+
 .msg-info-text {
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
 }
 
 .msg-info-date {
@@ -127,9 +136,14 @@
     max-width: 100%;
     font-size: 0.875rem;
     font-weight: 400;
+    color: var(--text-main);
+
     display: flex;
     align-items: center;
-    color: var(--text-main);
+
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .msg-date-text {
@@ -158,6 +172,11 @@
 }
 
 .my-msg-container {
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: max-content; 
+
+    position: relative;
     min-height: 2.625rem;
     max-width: 80%;
 
@@ -167,6 +186,25 @@
     border-radius: 0.625rem;
     padding: 0.625rem;
     gap: 0.625rem;
+    background-color: var(--border-light);
+}
+
+.my-msg-container-column {
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: max-content; 
+
+    position: relative;
+    min-height: 2.625rem;
+    max-width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    border-radius: 0.625rem;
+    padding: 0.625rem;
+    /* gap: 0.625rem; */
+    gap: 0.25rem;
     background-color: var(--border-light);
 }
 
@@ -200,18 +238,19 @@
     width: 2.5rem;
 }
 
-.send-message-image-my{
+.send-message-image-my {
     height: auto;
-    width: 80%;
+    width: 100%;
     border-radius: 0.625rem;
     display: flex;
-    align-self: flex-end;
+    justify-content: center;
+    /* align-self: flex-end; */
     border: 0.0625rem solid var(--border-light);
 }
 
 .send-message-image-other{
     height: auto;
-    width: 80%;
+    width: 100%;
     border-radius: 0.625rem;
     display: flex;
     align-self: flex-start;
@@ -219,5 +258,27 @@
 }
 
 .status-small-img-msg {
-    bottom: -10;
+    bottom: -8;
+}
+
+.post-images-preview-container {
+    margin-left: 3.25rem;
+    max-width: 80%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+}
+
+.my-post-images-preview-container {
+    max-width: 80%;
+    align-self: flex-end;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+}
+
+.msg-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }

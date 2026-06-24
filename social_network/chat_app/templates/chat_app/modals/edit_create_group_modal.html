@@ -20,7 +20,7 @@
 
 
             <div class="group-image-container">
-                <img src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}profiles/avatars/chat_img.svg" alt="chat_img" class="group-image-img">
+                <img src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}profiles/avatars/chat_img.svg" alt="chat_img" class="group-image-img">
                 
                 <div class="group-image-texts-container">
                     <div class="images-text-div">

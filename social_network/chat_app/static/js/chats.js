@@ -120,7 +120,6 @@ function connectWebSocket(chatId) {
         chatSocket.close();
     }
 
-    console.log(`ws://${window.location.host}/chat_chanel/${chatId}/`)
     chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`);
     setCookie("chatId", chatId)
 

@@ -199,3 +199,51 @@
     border-radius: 1rem;
     border: 1px solid var(--border-light);
 }
+
+
+.signature-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.signature-btn {
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text-accent);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-light);
+}
+
+.signature-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signature-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.signature-canvas {
+    width: 31.25rem;
+    height: 18.75rem;
+    cursor: crosshair;
+
+    background-color: white;
+    border-radius: 1rem;
+    border: 1px solid var(--border-light);
+}

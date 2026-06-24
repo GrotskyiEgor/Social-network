@@ -3,7 +3,7 @@
 {% for group in groups %}
     <div class="message-user-block user-select" data-chat-id="{{ group.id }}">
         <div class="message-container-image-container">
-            <img class="message-image" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}{{ group.avatar }}" alt="">
+            <img class="message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ group.avatar }}" alt="">
         </div>
         
         {% with last_message=group.messages.first %}

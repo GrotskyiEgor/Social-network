@@ -12,7 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv("DEBUG", "True") == "True"
+
 LOCAL = os.getenv("LOCAL", "True") == "True"
+IP = os.getenv("IP")
+PORT = os.getenv("PORT")
 
 ALLOWED_HOSTS = []
 
@@ -60,15 +63,16 @@ else:
 
 AUTH_USER_MODEL = 'user_app.User'
 
-# EMAIL_BACKEND = 'django.core.email.backend.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'my@gmail.com'
-EMAIL_HOST_PASSWORD = 'my_password'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

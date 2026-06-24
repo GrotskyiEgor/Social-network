@@ -34,6 +34,11 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
         
         email = cleaned_data.get('email').strip()
+
+        if not email:
+            raise forms.ValidationError("Email is required")
+        email = email.strip()
+
         password = cleaned_data.get('password')
         user = User.objects.filter(email=email).first()
 

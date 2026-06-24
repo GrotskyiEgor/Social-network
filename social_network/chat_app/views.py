@@ -194,7 +194,6 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
         
         for image in images:
            msg = MessageImage.objects.create(message=message, image=image)
-           print(msg.image.url) 
            message_list.append(msg.get_json())
 
         channel_layer = get_channel_layer()

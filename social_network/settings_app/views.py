@@ -1,7 +1,11 @@
+import base64
+import uuid
+import json
 from django.shortcuts import render
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, JsonResponse
+from django.core.files.base import ContentFile
 from django.contrib.auth import update_session_auth_hash
 from django import forms
 import re
@@ -100,4 +104,44 @@ class SettingsSaveView(View):
             
         return JsonResponse({'success': False}, status=400) 
 
-    
+class SettingsSaveSignView(View):
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        profile = user.profile
+
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('image')
+
+            if not image_data:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'No image provided'
+                }, status=400)
+
+            format_part, imgstr = image_data.split(';base64,')
+            ext = format_part.split('/')[-1]
+
+            file_name = f"signature_{uuid.uuid4()}.{ext}"
+
+            decoded_file = base64.b64decode(imgstr)
+
+            profile.signature.save(
+                file_name,
+                ContentFile(decoded_file),
+                save=True
+            )
+
+            profile.is_image_signature = True
+            profile.save()
+
+            return JsonResponse({
+                'success': True,
+                'signature_url': profile.signature.url
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)

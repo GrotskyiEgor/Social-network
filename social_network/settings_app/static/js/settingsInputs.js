@@ -74,7 +74,3 @@ $(document).on('click', '#birth_date_input_eye', function(){
         this.src = openEye
     }
 })
-
-$(document).on('click', '#user_sign_board', function(){
-    console.log('')
-})

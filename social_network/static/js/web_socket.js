@@ -1,6 +1,6 @@
 const authToken = localStorage.getItem('authToken');
 
-const socket = io("http://192.168.0.145:8020", {
+const socket = io(`http://${ IP }:${ PORT }`, {
     auth: {
         token: `Bearer ${authToken}`
     },
@@ -35,6 +35,12 @@ async function startListeningOnlineStatus() {
     });
     
     console.log("Прослушивание новых статусов");
+}
+
+async function stopListeningOnlineStatus() {
+    socket.off("userStatusUpdated");
+
+    console.log("Прослушивание отключение");
 }
 
 function startListeningMessages() {
@@ -72,9 +78,9 @@ function newMessage(data) {
     let imageHtml = ''
     for (let image of data.messageImages){
         if (LOCAL === "True"){
-            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
+            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://${ IP }:${ PORT }/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
         } else {
-            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://192.168.0.145:8020/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
+            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://${ IP }:${ PORT }/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
         }
     }
 
@@ -96,7 +102,6 @@ function formatMessageTime(createdAt) {
 
 async function getOnlineUsers(friends_ids){
     let ids = friends_ids.map((obj, index) => {
-        console.log(obj, 'obj', '=============')
         return obj
     })
 
@@ -104,7 +109,6 @@ async function getOnlineUsers(friends_ids){
 }
 
 async function setOnlineUsers(ids){
-    console.log(ids, typeof ids)
     socket.emit("getOnlineUsers", ids, (response) => {
         console.log("getOnlineUsers", response.userIds, response)
         for (let id of response.userIds){
