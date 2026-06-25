@@ -201,7 +201,7 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
         channel_layer = get_channel_layer()
 
         msg_list = []
-        last_msg = chat.messages.order_by('-created_at').first()
+        last_msg = Message.objects.filter(chat_id=chat_id).exclude(id=message.id).order_by('-created_at').first()
 
         if not last_msg or last_msg.created_at.date() != message.created_at.date():
             msg_list.append({

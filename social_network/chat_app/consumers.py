@@ -116,7 +116,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def msg_to_string(self, messages, chat_id):
         msg_list = []
-        last_msg = await self.get_last_messages(chat_id)
+        last_msg = await self.get_last_messages(chat_id, messages.id)
 
         if not last_msg or last_msg.created_at.date() != messages.created_at.date():
             msg_list.append({
@@ -147,8 +147,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             return None
         
     @database_sync_to_async
-    def get_last_messages(self, chat_id):
-        return Message.objects.filter(chat_id=chat_id).order_by('-created_at').first()
+    def get_last_messages(self, chat_id, message_id):
+        return Message.objects.filter(chat_id=chat_id).exclude(id=message_id).order_by('-created_at').first()
         
 
     @database_sync_to_async
