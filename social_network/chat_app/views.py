@@ -180,7 +180,9 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
     
 
     def post(self, request: HttpRequest, chat_id):
-        if not Chat.objects.filter(id=chat_id, users=request.user).exists():
+        chat = Chat.objects.filter(id=chat_id, users=request.user).first()
+
+        if not chat:
             return JsonResponse({"success": False}, status=403)
         
         text = request.POST.get("text", "").strip()
@@ -198,6 +200,17 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
 
         channel_layer = get_channel_layer()
 
+        msg_list = []
+        last_msg = chat.messages.order_by('-created_at').first()
+
+        if not last_msg or last_msg.created_at.date() != message.created_at.date():
+            msg_list.append({
+                'type': 'date-block',
+                'date': message.format_ua_date()
+            })
+
+        msg_list.append(message)
+
         async_to_sync(channel_layer.group_send)(
             f'chat{chat_id}',
             {
@@ -206,14 +219,18 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
                 'input_message': message.text,
                 'message_images': message_list,
                 'sender': request.user.username,
-                'my_msg_html': render_to_string(
-                    'chat_app/chat_msg/my_msg.html',
-                    {'msg': message, 'user': request.user.username}      
-                ),
-                'other_msg_html': render_to_string(
-                    'chat_app/chat_msg/other_msg.html',
-                    {'msg': message, 'user': request.user.username}      
+                'msg_html' : render_to_string(
+                    'chat_app/chat_msg/msg.html',
+                    {'chat_messages': msg_list, 'user': request.user}      
                 )
+                # 'my_msg_html': render_to_string(
+                #     'chat_app/chat_msg/my_msg.html',
+                #     {'msg': message, 'user': request.user.username}      
+                # ),
+                # 'other_msg_html': render_to_string(
+                #     'chat_app/chat_msg/other_msg.html',
+                #     {'msg': message, 'user': request.user.username}      
+                # )
             }
         )
 

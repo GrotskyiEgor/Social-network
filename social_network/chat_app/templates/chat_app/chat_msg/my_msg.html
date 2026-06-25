@@ -11,13 +11,21 @@
         </div>
     {% endif %}
     
-    <div class="my-post-images-preview-container">
-        {% for image_obj in msg.images.all %}
-            {% if LOCAL == "False" %}
-                <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http:/{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
-            {% else %}
-                <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
-            {% endif %}
-        {% endfor %}
-    </div>
+    {% if msg.images.all %} 
+        <div class="my-msg-container-column">
+            <div class="my-post-images-preview-container">
+                {% for image_obj in msg.images.all %}
+                    {% if LOCAL == "False" %}
+                        <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http:/{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                    {% else %}
+                        <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="msg-info-date">
+                <p class="msg-date-text">{{ msg.created_at|date:"H:i" }}</p>
+                <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+            </div>
+        </div>
+    {% endif %}
 </div>

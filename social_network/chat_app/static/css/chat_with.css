@@ -262,23 +262,77 @@
 }
 
 .post-images-preview-container {
+    /* max-width: 80%; */
+    width: 100%;
     margin-left: 3.25rem;
-    max-width: 80%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.25rem;
+    border-radius: 1rem;
+    background-color: var(--border-light);
 }
 
 .my-post-images-preview-container {
-    max-width: 80%;
+    /* max-width: 80%; */
+    width: 100%;
     align-self: flex-end;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.25rem;
+    border-radius: 1rem;
+    background-color: var(--border-light);
 }
 
 .msg-block {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+}
+
+.preview-images {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+}
+
+.preview-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 5rem;
+    height: 4rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.preview-img {
+    width: 5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0.5rem;
+}
+
+.preview-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 5rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 0, 0, 0.35);
+    opacity: 0;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.preview-item:hover::after {
+    opacity: 1;
+}
+
+.preview-img {
+    display: block;
 }

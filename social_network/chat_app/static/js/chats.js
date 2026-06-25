@@ -1,4 +1,5 @@
-let chatSocket = null;
+let chatSocket = null
+let selectedImages = []
 
 const csrfToken = document.getElementById('meta_csrf_token').dataset.csrfToken
 
@@ -12,6 +13,50 @@ if (selectChatId){
     joinToChat(selectChatId)
 }
 
+$(document).on('change', '#message_images_input', function(){
+    selectedImages.push(...Array.from(this.files))
+
+    renderImagesPreview()
+    this.value = ''
+})
+
+function renderImagesPreview() {
+    const msgInput = document.getElementById('chat_input')
+
+    let imgsContainer = document.getElementById('preview_images')
+
+    if (!imgsContainer){
+        imgsContainer = document.createElement('div')
+        imgsContainer.className = 'preview-images'
+        imgsContainer.id = 'preview_images'
+    } else {
+        imgsContainer.innerHTML = ''
+    }
+
+    selectedImages.forEach((file, index) => {
+        const imageUrl = URL.createObjectURL(file)
+
+        imgsContainer.innerHTML += `
+            <div class="preview-item" onclick="removeImage(${index})">
+                <img src="${imageUrl}" class="preview-img">
+            </div>
+        `
+    })
+
+    msgInput.before(imgsContainer)
+}
+
+function removeImage(index) {
+    selectedImages.splice(index, 1)
+
+    if (selectedImages.length <= 0) {
+        let imgsContainer = document.getElementById('preview_images')
+        imgsContainer.remove()
+    } else {
+        renderImagesPreview()
+    }
+}
+
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
     connectWebSocket(this.dataset.chatId);
@@ -19,14 +64,14 @@ $(document).on("click", '.message-user-block', function(){
     let lastChatId = getCookie('chatId')
     leaveFromChat(lastChatId)
     joinToChat(this.dataset.chatId)
-});
+})
 
 $(document).on("click", ".open-chat-with", async function(){
     await openChatWithUser(
         this.dataset.userId,
         this.dataset.chatUsername,
     );
-});
+})
 
 $(document).on('click', '#message_form_btn', function(){
     send_message()
@@ -43,8 +88,9 @@ $(document).on('click', ".message-image-triger", function(){
 })
 
 function getSelectImages() {
-    const messageImagesInput = document.getElementById('message_images_input')
-    return Array.from(messageImagesInput.files);
+    // const messageImagesInput = document.getElementById('message_images_input')
+    // return Array.from(messageImagesInput.files);
+    return selectedImages
 }
 
 async function send_message(){
@@ -56,7 +102,7 @@ async function send_message(){
     if (!inputMessage && !hasImages) return;
 
     if (hasImages) {
-        const data = await sendMessageWithImages(inputMessage);
+        const data = await sendMessageWithImages(inputMessage)
         
         if (!data.success) return;
 
@@ -66,7 +112,7 @@ async function send_message(){
 
 
     if (!hasImages){
-        chatSocket.send(JSON.stringify({ messageText: inputMessage }));
+        chatSocket.send(JSON.stringify({ messageText: inputMessage }))
         formIntput.value = ''
     }
 }
@@ -77,7 +123,7 @@ async function sendMessageWithImages(text) {
     formData.append("text", text);
     
     getSelectImages().forEach((image) => {
-        formData.append("images", image);
+        formData.append("images", image)
     });
 
     const response = await fetch(`/chats/upload_images/${selectChatId}/`, {
@@ -85,6 +131,16 @@ async function sendMessageWithImages(text) {
         headers: { "X-CSRFToken": csrfToken },
         body: formData,
     });
+
+    console.log('img response.success', response.ok, response)
+    if (response.ok) {
+        selectedImages = []
+
+        const preview = document.getElementById('preview_images')
+        if (preview) {
+            preview.remove()
+        }
+    }
 
     return response.json();
 }
@@ -120,11 +176,11 @@ function connectWebSocket(chatId) {
         chatSocket.close();
     }
 
-    chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`);
+    chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`)
     setCookie("chatId", chatId)
 
     chatSocket.onmessage = function (event) {
-        let data = JSON.parse(event.data);
+        let data = JSON.parse(event.data)
         
         console.log('WEBSOCKET -', data.type)
         if (data.type === 'connection_confirmation'){
@@ -151,7 +207,7 @@ function connectWebSocket(chatId) {
                 behavior: 'smooth'
             });
         }
-    };
+    }
 }
 
 const messagesObeserve = new IntersectionObserver(async (entries)=>{
@@ -205,9 +261,9 @@ document.addEventListener('load', function(event) {
         chatDiv.scrollTo({
             top: chatDiv.scrollHeight,
             behavior: 'smooth'
-        });
+        })
     }
-}, true);
+}, true)
 
 document.addEventListener('load', function(event) {
     if (event.target.tagName === 'IMG' && event.target.classList.contains('load-message-image')) {
@@ -217,6 +273,6 @@ document.addEventListener('load', function(event) {
         chatDiv.scrollTo({
             top: chatDiv.scrollHeight,
             behavior: 'smooth'
-        });
+        })
     }
-}, true);
+}, true)
