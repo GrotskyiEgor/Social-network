@@ -149,7 +149,8 @@ class HomeLoaderView(LoginRequiredMixin, View):
                     'chats_html': render_to_string(
                         'home_app/particals/requests.html',
                         {"requests": get_friendship_requests(self.request.user)[:3], 'user_profile': profile, 'friends_count_list': friends_count_list}      
-                    )
+                    ),
+                    'friends_ids': list(user.id for user in requests)
                 })
             
             return JsonResponse({"sucsess": False})

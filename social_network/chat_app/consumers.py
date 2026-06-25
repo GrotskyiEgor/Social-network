@@ -50,7 +50,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if message_text:
             message = await self.save_message(message_text)
 
-            print(1, message.id, message.text, "message chat id")
+            print('===', message.id, message.text, "message chat id")
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -64,7 +64,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     # 'other_msg_html': await self.other_msg_to_string(message),
                 }
             )
-        
+
+            await self.notify_unread()
+
     
     async def send_chat_message(self, event):
         # msg_html = None
@@ -83,7 +85,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'msg_html': event['msg_html']
         }))
     
-    
     @database_sync_to_async
     def save_message(self, text):
         user = self.scope['user']
@@ -100,19 +101,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def get_all_users(self, chat):
         return chat.users.all()
     
-    # @database_sync_to_async
-    # def my_msg_to_string(self, messages):
-    #     return render_to_string(
-    #         'chat_app/chat_msg/my_msg.html',
-    #         {'msg': messages, 'user': self.scope['user']}      
-    #     )
+    @database_sync_to_async
+    def get_chat_users_ids(self):
+        return list(
+            Chat.objects.get(id=self.chat_id)
+            .users
+            .values_list("id", flat=True)
+        )
     
-    # @database_sync_to_async
-    # def other_msg_to_string(self, messages):
-    #     return render_to_string(
-    #         'chat_app/chat_msg/other_msg.html',
-    #         {'msg': messages, 'user': self.scope['user']}      
-    #     )
+    
+    async def notify_unread(self):
+        user_ids = await self.get_chat_users_ids()
+
+        for uid in user_ids:
+            await self.channel_layer.group_send(
+                f"unread_{uid}",
+                {
+                    "type": "unread_update"
+                }
+            )
 
     async def msg_to_string(self, messages, chat_id):
         msg_list = []
@@ -174,5 +181,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
             images_list.append(image.get_json())
 
         return images_list 
+    
+    # @database_sync_to_async
+    # def my_msg_to_string(self, messages):
+    #     return render_to_string(
+    #         'chat_app/chat_msg/my_msg.html',
+    #         {'msg': messages, 'user': self.scope['user']}      
+    #     )
+    
+    # @database_sync_to_async
+    # def other_msg_to_string(self, messages):
+    #     return render_to_string(
+    #         'chat_app/chat_msg/other_msg.html',
+    #         {'msg': messages, 'user': self.scope['user']}      
+    #     )
+    
 
         

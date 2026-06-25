@@ -120,7 +120,6 @@ $(document).on('click', '.context-menu-interactive ', function(event){
 
 function clearChat(){
     clearCookie(["chatId"])
-    stopListeningOnlineStatus()
 
     document.getElementById('chat_container').innerHTML = `
         <div class="empty-chat-conteiner" id="empty_chat_conteiner">

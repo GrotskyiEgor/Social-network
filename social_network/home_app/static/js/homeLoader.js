@@ -29,6 +29,7 @@ async function loadRequests() {
     const objectRespone = await response.json()
 
     if (objectRespone.chats_html){
+        await subscribeOnOnlineChatsUsers(objectRespone.friends_ids)
         container.insertAdjacentHTML("afterbegin", objectRespone.chats_html)
         $(document.getElementById('followers_container')).remove()
     }

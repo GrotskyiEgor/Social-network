@@ -49,6 +49,7 @@
                             <a href="{% url 'chat' %}" class="nav-link" id="chat">
                                 <img src="{% static 'images/icons/chat.svg' %}" alt="chat" class="nav-image-div svg-icon">
                                 <span class="nav-span">Чати</span>
+                                <p><span id="headerUnreadCount">0</span> непрочитаных</p>
                             </a>
 
                             <a href="{% url 'settings' %}" class="nav-link" id="settings">
@@ -118,6 +119,7 @@
         <script src="{% static 'js/manager.js' %}" defer></script>
         <script src="{% static 'js/openPage.js' %}" defer></script>
         <script src = "{% static 'js/web_socket.js' %}" defer></script>
+        <script src = "{% static 'js/addUnread.js' %}" defer></script>
         {% block script %}{% endblock %}
     </body>
 </html>

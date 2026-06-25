@@ -164,4 +164,4 @@ class FriendsSelectionView(LoginRequiredMixin, View):
                 request=request
             )
         
-        return JsonResponse({"html": html, "has_next_page": page_obj.has_next()})
+        return JsonResponse({"html": html, "has_next_page": page_obj.has_next(), 'friends_ids': list(user.id for user in page_obj)})

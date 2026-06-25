@@ -17,7 +17,7 @@ async function joinToChat(chatId) {
 
 async function leaveFromChat(chatId) {
     socket.emit("leaveChat", { chatId: chatId }, (response) => {
-        console.log("leave")
+        stopListeningOnlineStatus()
     })
 }
 
@@ -39,7 +39,6 @@ async function startListeningOnlineStatus() {
 
 async function stopListeningOnlineStatus() {
     socket.off("userStatusUpdated");
-
     console.log("Прослушивание отключение");
 }
 

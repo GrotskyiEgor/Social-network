@@ -5,6 +5,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
 
 from profile_app.models import Profile
+from chat_app.models import Chat
 
 
 class OnlineStatusConsumer(AsyncWebsocketConsumer):
@@ -99,27 +100,64 @@ class OnlineStatusConsumer(AsyncWebsocketConsumer):
         }))
 
 
-from datetime import datetime, timedelta
+class UnreadConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.user = self.scope['user']
+        self.group_name = f'unread_{self.user.id}' 
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        await self.accept()
+        await self.send_unread_data()
 
-import jwt
-from django.views import View
-from django.conf import settings
-from django.http import HttpRequest, JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+    async def disconnect(self, code):
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        
+    async def receive(self, text_data):
+        await self.send_unread_data()
+
+    async def unread_update(self, event):
+        await self.send_unread_data()
 
 
-class SocketTokenView(LoginRequiredMixin, View):
-    def get(self, request: HttpRequest):
-        token = jwt.encode(
-            {
-                "id": request.user.id,
-                "iat": datetime.now(),
-                "exp": datetime.now() + timedelta(days=7),
-            },
-            settings.JWT_SECRET,
-            algorithm="HS256"
-        )
+    async def send_unread_data(self):
+        data = await self.get_unread_data()
+        await self.send(text_data= json.dumps(data))
+        
 
-        return JsonResponse({
-            "token": token
-        })
+    @database_sync_to_async
+    def get_unread_data(self):
+        personal_total = 0
+        group_total = 0
+        chat_data = []
+        chats = Chat.objects.filter(users=self.user)
+        for chat in chats:
+            last_message = chat.messages.order_by('-created_at', '-id').first()
+            last_text = ''
+            if last_message:   
+                if last_message.text:
+                    last_text = last_message.text[:20]
+                else:
+                    last_text = 'Надіслано файл'
+            
+            unread = chat.messages.exclude(sender = self.user).exclude(readers = self.user).count()
+            if chat.is_group:
+                group_total += unread
+            else:
+                personal_total += unread
+            
+            chat_data.append({
+                "id": chat.id,
+                "unread": unread,
+                "last": last_text
+            })
+
+        return {
+            "personal_total": personal_total,
+            "group_total": group_total,
+            "total": personal_total + group_total,
+            "chats": chat_data
+        }
+        
+        
+
+            
+        
