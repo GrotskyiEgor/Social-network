@@ -9,7 +9,11 @@
                     <div class="message-container-image-container">
                         <!-- <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt="indicator"> -->
                         <div class="status-wrapper">
-                            <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}{{ PORT }}/media/{% else %}/media/{% endif %}{{ other_user.profile.avatar }}" alt="indicator">
+                            {% if other_user.profile.avatar %}
+                                <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ other_user.profile.avatar }}" alt="indicator">
+                            {% else %}
+                                <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}original/default-avatar.jpg" alt="indicator">
+                            {% endif %}
                             <img class="status-small-img" src="{% static 'images/offline.svg' %}" alt="off">
                         </div>
                     </div>

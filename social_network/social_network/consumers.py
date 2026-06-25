@@ -120,7 +120,7 @@ class UnreadConsumer(AsyncWebsocketConsumer):
 
     async def send_unread_data(self):
         data = await self.get_unread_data()
-        await self.send(text_data= json.dumps(data))
+        await self.send(text_data=json.dumps(data))
         
 
     @database_sync_to_async
@@ -128,7 +128,12 @@ class UnreadConsumer(AsyncWebsocketConsumer):
         personal_total = 0
         group_total = 0
         chat_data = []
-        chats = Chat.objects.filter(users=self.user)
+        user = self.scope["user"]
+
+        if not user.is_authenticated:
+            return 
+        
+        chats = list(Chat.objects.filter(users__id=user.id))
         for chat in chats:
             last_message = chat.messages.order_by('-created_at', '-id').first()
             last_text = ''

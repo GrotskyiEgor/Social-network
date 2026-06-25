@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 
 from .load_msg import get_msg_list
 from ..models import Chat
@@ -77,5 +78,13 @@ def edit_create_group(request, chat_id):
         
     return JsonResponse({'success': True, 'chat_id': chat.id, "name": chat.name, 'group_html':  render_to_string(
         'chat_app/particals/chat_messages.html',
-        {'chat': chat, 'chat_users': chat.users.all(), 'other_user': other_user, 'chat_messages': chat_messages, 'user': request.user})     
+        {
+            'chat': chat, 
+            'chat_users': chat.users.all(), 
+            'other_user': other_user, 
+            'chat_messages': chat_messages, 
+            'user': request.user, 
+            'LOCAL': str(settings.LOCAL),
+            'IP': settings.IP,
+            'PORT': settings.PORT})     
     })

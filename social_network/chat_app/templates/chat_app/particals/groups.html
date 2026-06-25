@@ -3,7 +3,11 @@
 {% for group in groups %}
     <div class="message-user-block user-select" data-chat-id="{{ group.id }}">
         <div class="message-container-image-container">
-            <img class="message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ group.avatar }}" alt="">
+            {% if group.avatar %}
+                <img class="message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ group.avatar }}" alt="">
+            {% else %}
+                <img class="message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}original/default-group-avatar.jpg" alt="">
+            {% endif %}
         </div>
         
         {% with last_message=group.messages.first %}

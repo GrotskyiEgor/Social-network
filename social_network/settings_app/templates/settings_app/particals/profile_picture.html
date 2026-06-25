@@ -10,7 +10,7 @@
         <div class="profile-user-image-container">
             <!-- <img class="profile-user-image avatar-img" src="{% static 'images/icons/indicator_active.svg' %}" alt="indicator"> -->
             <div class="status-wrapper">
-                <img class="profile-user-image online-img-{{request.user.id}} avatar-img" src='/media/{{ request.user.profile.avatar }}' alt="indicator" id="avatar_img">
+                <img class="profile-user-image online-img-{{request.user.id}} avatar-img" src='{% if LOCAL == "False" %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}' alt="indicator" id="avatar_img">
                 <img class="status-img" src="{% static 'images/offline.svg' %}" alt="off">
             </div>
         </div>

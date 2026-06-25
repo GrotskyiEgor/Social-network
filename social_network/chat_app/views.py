@@ -9,6 +9,7 @@ from django.http import HttpRequest
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.utils import timezone
+from django.conf import settings
 
 
 from .models import Chat, Message, MessageImage
@@ -63,16 +64,27 @@ class ChatView(TemplateView):
                 return JsonResponse({
                     'friends_html': render_to_string(
                         'chat_app/particals/friends.html',
-                        {"friends": page_obj}      
+                        {
+                            "friends": page_obj,
+                            'LOCAL': str(settings.LOCAL),
+                            'IP': settings.IP,
+                            'PORT': settings.PORT
+                        }      
                     ),
                     'friends_ids': list(user.id for user in paginator_list),
-                    'has_next': page_obj.has_next()
+                    'has_next': page_obj.has_next(),
                 })
             elif selection == 'chats':
                 return JsonResponse({
                     'chats_html': render_to_string(
                         'chat_app/particals/chats.html',
-                        {"chats": page_obj, 'user': self.request.user}      
+                        {
+                            "chats": page_obj, 
+                            'user': self.request.user,
+                            'LOCAL': str(settings.LOCAL),
+                            'IP': settings.IP,
+                            'PORT': settings.PORT
+                        }      
                     ),
                     'friends_ids': users_list,
                     'has_next': page_obj.has_next()
@@ -82,9 +94,15 @@ class ChatView(TemplateView):
                     return JsonResponse({
                         'groups_html': render_to_string(
                             'chat_app/particals/groups.html',
-                            {"groups": page_obj, 'user_profile': self.request.user}      
+                            {
+                                "groups": page_obj, 
+                                'user_profile': self.request.user,
+                                'LOCAL': str(settings.LOCAL),
+                                'IP': settings.IP,
+                                'PORT': settings.PORT
+                            }      
                         ),
-                        'has_next': page_obj.has_next()
+                        'has_next': page_obj.has_next(),
                     })         
             elif selection == 'messages':
                 chat = Chat.objects.get(id=int(self.request.GET.get('chat_id', None)))
@@ -100,7 +118,13 @@ class ChatView(TemplateView):
                         return JsonResponse({
                             'messages_html': render_to_string(
                                 'chat_app/chat_msg/msg.html',
-                                {'chat_messages': messages_with_dates, 'user': self.request.user}
+                                {
+                                    'chat_messages': messages_with_dates, 
+                                    'user': self.request.user,
+                                    'LOCAL': str(settings.LOCAL),
+                                    'IP': settings.IP,
+                                    'PORT': settings.PORT    
+                                }
                             ),
                             'has_next': page_obj.has_next()
                         })
@@ -154,9 +178,15 @@ class ChatWithView(LoginRequiredMixin, View):
             "success": True, 
             'chats_html': render_to_string(
                     'chat_app/particals/chats.html',
-                    {"chats": [chat if add_new_user else []], 'user': self.request.user}      
-                ),
-            "chat_id": chat.id
+                    {
+                        "chats": [chat if add_new_user else []], 
+                        'user': self.request.user,
+                        "chat_id": chat.id,
+                        'LOCAL': str(settings.LOCAL),
+                        'IP': settings.IP,
+                        'PORT': settings.PORT
+                    }      
+                )
         })
     
 
@@ -221,7 +251,10 @@ class ChatMessageWithImages(LoginRequiredMixin, View):
                 'sender': request.user.username,
                 'msg_html' : render_to_string(
                     'chat_app/chat_msg/msg.html',
-                    {'chat_messages': msg_list, 'user': request.user}      
+                    {'chat_messages': msg_list, 'user': request.user,
+                            'LOCAL': str(settings.LOCAL),
+                            'IP': settings.IP,
+                            'PORT': settings.PORT}      
                 )
                 # 'my_msg_html': render_to_string(
                 #     'chat_app/chat_msg/my_msg.html',

@@ -414,7 +414,14 @@ main {
     gap: 0.5rem;
 }
 
-.message-image, .followers-container-image-container, .message-container-image-container {
+.message-image {
+    width: 2.875rem;
+    height: 2.875rem;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+.followers-container-image-container, .message-container-image-container {
     width: 2.875rem;
     height: 2.875rem;
 }

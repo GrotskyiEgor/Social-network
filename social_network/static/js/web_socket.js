@@ -1,12 +1,21 @@
 const authToken = localStorage.getItem('authToken');
 
-const socket = io(`http://${ IP }:${ PORT }`, {
+const socket = io(`${ IP_WS }`, {
     auth: {
         token: `Bearer ${authToken}`
     },
     transports: ["websocket"],
     autoConnect: true
 });
+
+// const socket = io(`ws://10.214.228.175:8020`, {
+//     auth: {
+//         token: `Bearer ${authToken}`
+//     },
+//     transports: ["websocket"],
+//     autoConnect: true
+// });
+
 
 async function joinToChat(chatId) {
     socket.emit("joinChat", { chatId: chatId }, (response) => {
@@ -17,6 +26,7 @@ async function joinToChat(chatId) {
 
 async function leaveFromChat(chatId) {
     socket.emit("leaveChat", { chatId: chatId }, (response) => {
+        console.log('LLLLLLLL')
         stopListeningOnlineStatus()
     })
 }
@@ -55,10 +65,20 @@ function newMessage(data) {
 
     let chatDiv = document.getElementById('chat_message_container')
 
+    let msgImg
+    if (LOCAL == 'False')
+        msgImg = `<img class="message-image msg-image online-img-${data.senderId} avatar-img" src="${ IP }/media/${ data.sender.profile.avatar }" alt="indicator"></img>`
+    else {
+        msgImg = `<img class="message-image msg-image online-img-${data.senderId} avatar-img" src=media/${ data.sender.profile.avatar }" alt="indicator"></img>`
+    }
+    
     if (data.text){
         chatDiv.innerHTML += `
             <div class="msg-container">
-                <img class="message-image msg-image online-img-${data.senderId}" src="${offlineImg}" alt="indicator">
+                <div class="status-wrapper status-wrapper-msg">  
+                    ${msgImg}
+                    <img class="status-small-img status-small-img-msg" src=${onlineImg} alt="on">
+                </div>
     
                 <div class="msg-info content-border-container">
                     <div class="msg-info-text">
@@ -76,12 +96,16 @@ function newMessage(data) {
 
     let imageHtml = ''
     for (let image of data.messageImages){
-        if (LOCAL === "True"){
-            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://${ IP }:${ PORT }/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
+        if (LOCAL === "False"){
+            console.log('false')
+            imageHtml += `<img class="send-message-image-other load-message-image" src="${ IP }/media/${ image.image }" alt="img"></img>`
         } else {
-            imageHtml += `<img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://${ IP }:${ PORT }/media/{% else %}/media/{% endif %}${ image.image }" alt="img"></img>`
+            console.log('aloooooo')
+            imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
         }
     }
+
+    console.log(imageHtml)
 
     chatDiv.innerHTML += imageHtml
 

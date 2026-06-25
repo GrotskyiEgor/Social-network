@@ -15,10 +15,12 @@
         <div class="my-msg-container-column">
             <div class="my-post-images-preview-container">
                 {% for image_obj in msg.images.all %}
+                    <!-- <p>{{ LOCAL }}</p>
+                    <p>{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}</p> -->
                     {% if LOCAL == "False" %}
-                        <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http:/{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                        <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
                     {% else %}
-                        <img class="send-message-image-my load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                        <img class="send-message-image-my load-message-image" src="media/{{ image_obj.image }}" alt="img">
                     {% endif %}
                 {% endfor %}
             </div>

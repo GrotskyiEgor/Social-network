@@ -80,7 +80,10 @@
 
 .profile-user-sing-image {
     height: 3.125rem;
-    width: auto;
+    width: 8rem;
+    object-fit: cover;
+    object-position: center;
+    display: block; 
 }
 
 .interaction-div {

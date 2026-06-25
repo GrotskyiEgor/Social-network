@@ -13,7 +13,7 @@ class Friendship(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_friendships")
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_friendships")
     status = models.CharField(max_length=10, default="pending")
-    create_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("from_user", "to_user")

@@ -4,6 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from django.template.loader import render_to_string
+from django.conf import settings
 
 
 from .services.load_msg import get_msg_list
@@ -94,7 +95,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def chat_render_to_string(self, chat, other_user, chat_messages, all_users):
         return render_to_string(
             'chat_app/particals/chat_messages.html',
-            {'chat': chat, 'chat_users': all_users, 'other_user': other_user, 'chat_messages': chat_messages, 'user': self.scope['user']}      
+            {
+                'chat': chat, 
+                'chat_users': all_users, 
+                'other_user': other_user, 
+                'chat_messages': chat_messages, 
+                'user': self.scope['user'],
+                'LOCAL': str(settings.LOCAL),
+                'IP': settings.IP,
+                'PORT': settings.PORT
+            }      
         )
     
     @database_sync_to_async

@@ -8,7 +8,7 @@
             <div class="followers-container-image-container">
                 <!-- <img class="followers-image online-img-{{select_user.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt=""> -->
                 <div class="status-wrapper">
-                    <img class="followers-image online-img-{{select_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ select_user.profile.avatar }}" alt="">
+                    <img class="followers-image online-img-{{select_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ select_user.profile.avatar }}" alt="">
                     <img class="status-small-img" src="{% static 'images/offline.svg' %}" alt="off">
                 </div>
             </div>

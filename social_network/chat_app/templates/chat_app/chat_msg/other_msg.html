@@ -5,7 +5,7 @@
         <div class="msg-container">
             <!-- <img class="message-image msg-image online-img-{{msg.sender.username.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt="indicator"> -->
             <div class="status-wrapper status-wrapper-msg">  
-                <img class="message-image msg-image online-img-{{msg.sender.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ msg.sender.profile.avatar }}"" alt="indicator">
+                <img class="message-image msg-image online-img-{{msg.sender.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ msg.sender.profile.avatar }}" alt="indicator">
                 <img class="status-small-img status-small-img-msg" src="{% static 'images/offline.svg' %}" alt="off">
             </div>
     
@@ -25,9 +25,9 @@
     <div class="post-images-preview-container">
         {% for image_obj in msg.images.all %}
             {% if LOCAL == 'False' %}
-                <img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                <img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
             {% else %}
-                <img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
+                <img class="send-message-image-other load-message-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ image_obj.image }}" alt="img">
             {% endif %}
         {% endfor %}
     </div>

@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Prefetch
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from .forms import ProfileForm
 from post_app.forms import PostForm, TagForm
@@ -117,7 +118,12 @@ class HomeView(ListView):
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": posts}      
+                    {
+                        "posts": posts,
+                        'LOCAL': str(settings.LOCAL),
+                        'IP': settings.IP,
+                        'PORT': settings.PORT
+                    }      
                 ),
                 'has_next': page_obj.has_next()
             })
@@ -148,7 +154,14 @@ class HomeLoaderView(LoginRequiredMixin, View):
                 return JsonResponse({
                     'chats_html': render_to_string(
                         'home_app/particals/requests.html',
-                        {"requests": get_friendship_requests(self.request.user)[:3], 'user_profile': profile, 'friends_count_list': friends_count_list}      
+                        {
+                            "requests": get_friendship_requests(self.request.user)[:3], 
+                            'user_profile': profile, 
+                            'friends_count_list': friends_count_list,
+                            'LOCAL': str(settings.LOCAL),
+                            'IP': settings.IP,
+                            'PORT': settings.PORT
+                        }      
                     ),
                     'friends_ids': list(user.id for user in requests)
                 })
@@ -161,7 +174,13 @@ class HomeLoaderView(LoginRequiredMixin, View):
             return JsonResponse({
                 'chats_html': render_to_string(
                     'home_app/particals/chats.html',
-                    {"chats": chats, 'user': self.request.user}      
+                    {
+                        "chats": chats, 
+                        'user': self.request.user,
+                        'LOCAL': str(settings.LOCAL),
+                        'IP': settings.IP,
+                        'PORT': settings.PORT
+                    }      
                 )
             })
     

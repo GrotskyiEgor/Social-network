@@ -97,15 +97,17 @@
         
         {% endblock %}
         <script defer>
+            const IP_WS = "{{IP_WS}}"
             const IP = "{{ IP }}"
             const LOCAL = "{{ LOCAL }}"
             const PORT = "{{ PORT }}"
-
+            
+            console.log(IP, PORT, LOCAL)
             let myId = "{{ request.user.id }}"
 
             // let onlineImg = "{% static 'images/icons/indicator_active.svg' %}"
             // let offlineImg = "{% static 'images/icons/indicator.svg' %}"
-            // let avatarImg = "{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
+            // let avatarImg = "{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
 
             let onlineImg = "{% static 'images/online.svg' %}"
             let offlineImg = "{% static 'images/offline.svg' %}"

@@ -65,7 +65,7 @@
         const checkboxTrue = "{% static 'images/icons/checkbox_true.svg' %}"
 
         // const avatarImg = "{% static 'images/icons/indicator_active.svg' %}"
-        const avatarImg = "{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
+        const avatarImg = "{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ request.user.profile.avatar }}"
         const userUsername = "{{ user.username }}"
         const profilePseudonym = "{{ user.profile.pseudonym }}"
         const profileUrlWatch = "{% url 'profile' user_id=user.profile.id action='watch' %}"

@@ -5,7 +5,11 @@
         <div class="profile-user-image-container">
             <!-- <img class="profile-user-image online-img-{{select_user.id}}avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt=""> -->
             <div class="status-wrapper">
-                <img class="profile-user-image online-img-{{select_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ select_user.profile.avatar }}" alt="">
+                {% if select_user.profile.avatar %}
+                    <img class="profile-user-image online-img-{{select_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ select_user.profile.avatar }}" alt="">
+                {% else %}
+                    <img class="message-image online-img-{{other_user.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}original/default-avatar.jpg" alt="indicator">
+                {% endif %}
                 <img class="status-img" src="{% static 'images/offline.svg' %}" alt="off">
             </div>
         </div>

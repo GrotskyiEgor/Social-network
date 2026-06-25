@@ -65,7 +65,7 @@ async function ajaxRequests(get_form, form_id, code){
 
     // CONNECT
     if (LOCAL === "False") {
-        let response = await fetch(`http://${ IP }:${ PORT }/users/login`, {
+        let response = await fetch(`${ IP_WS }/users/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

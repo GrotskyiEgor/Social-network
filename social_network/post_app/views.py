@@ -4,6 +4,7 @@ from django .views.generic import TemplateView, View, ListView
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 
 from .forms import PostForm, TagForm
 from .models import Tag, Post
@@ -18,7 +19,7 @@ class PostView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # user_posts = Post.objects.filter(author=self.request.user).order_by('-create_at')[:2]
+        # user_posts = Post.objects.filter(author=self.request.user).order_by('-created_at')[:2]
         # post_tags = Tag.objects.filter(posts__in=user_posts).distinct()
         # tag_list = list(Tag.objects.all()[:10]) + list(post_tags) + list(user_tags)
 
@@ -35,7 +36,10 @@ class PostView(LoginRequiredMixin, ListView):
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": context['posts']}      
+                    {"posts": context['posts'],
+                'LOCAL': str(settings.LOCAL),
+                'IP': settings.IP,
+                'PORT': settings.PORT}      
                 ),
                 'has_next': page_obj.has_next()
             })
@@ -99,7 +103,10 @@ class PostCreateView(LoginRequiredMixin, View):
             return JsonResponse({
                 'success': True,
                 'message': 'Публікація успішно створена',
-                'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post]})
+                'post_html': render_to_string('post_app/download_parts/post_list.html', context={"posts": [post],
+                'LOCAL': str(settings.LOCAL),
+                'IP': settings.IP,
+                'PORT': settings.PORT})
             })
         
         print(form.errors)

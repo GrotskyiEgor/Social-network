@@ -7,7 +7,7 @@
                 <div class="user-info-container">
                     <!-- <img class="profile-user-image online-img-{{post.author.id}} avatar-img" src="{% static 'images/icons/indicator.svg' %}" alt="avatar"> -->
                     <div class="status-wrapper user-info-container-status-wrapper">
-                        <img class="profile-user-image online-img-{{post.author.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ post.author.profile.avatar }}" alt="avatar">
+                        <img class="profile-user-image online-img-{{post.author.id}} avatar-img" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ post.author.profile.avatar }}" alt="avatar">
                         <img class="status-small-img" src="{% static 'images/offline.svg' %}" alt="off">
                     </div>
                     
@@ -16,8 +16,8 @@
                     {% endif %}
                 </div>
 
-                {% if post.author.profile.is_image_signature %}            
-                    <img class="profile-user-sing-image" src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ post.author.profile.signature }}" alt="avatar_sing">
+                {% if post.author.profile.is_image_signature %}  
+                    <img class="profile-user-sing-image" src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ post.author.profile.signature  }}" alt="avatar_sing">
                 {% endif %}
             </div>
             
@@ -66,7 +66,7 @@
                     {% for image in post.images.all %}
                         <div class="post-image-item">
                             {% if LOCAL == 'False' %}
-                                <img src="{% if LOCAL == 'False' %}http://{{ IP }}:{{ PORT }}/media/{% else %}/media/{% endif %}{{ image.compressed_image }}" alt="img" class="post-image">
+                                <img src="{% if LOCAL == 'False' %}http://{{ IP }}/media/{% else %}/media/{% endif %}{{ image.compressed_image }}" alt="img" class="post-image">
                             {% else %}
                                 <img src="{{ image.compressed_image.url }}" alt="img" class="post-image">
                             {% endif %}

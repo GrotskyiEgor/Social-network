@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
+from django.conf import settings
 
 
 from user_app.models import User, Friendship
@@ -74,7 +75,10 @@ class ProfileView(LoginRequiredMixin, ListView):
             return JsonResponse({
                 'posts_html': render_to_string(
                     'post_app/download_parts/post_list.html',
-                    {"posts": posts}      
+                    {"posts": posts,
+                'LOCAL': str(settings.LOCAL),
+                'IP': settings.IP,
+                'PORT': settings.PORT}      
                 ),
                 'has_next': page_obj.has_next()
             })
