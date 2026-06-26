@@ -1639,6 +1639,51 @@ class SettingsSaveSignView(View):
 
 <h1 id="result">Висновок</h1>
 
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    У ході виконання цього проєкту було розроблено вебзастосунок соціальної мережі на базі Django. Платформа дозволяє користувачам реєструватися та авторизуватися, створювати власні пости, додавати друзів, переглядати профілі інших користувачів, обмінюватися повідомленнями в приватних і групових чатах, змінювати налаштування акаунта та працювати з медіафайлами. Для реалізації чату в режимі реального часу було використано WebSocket, що забезпечує швидкий обмін повідомленнями між користувачами без перезавантаження сторінки.
+</p>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Робота над створенням цього проєкту стала для нас дуже цікавим і корисним практичним досвідом. Це була чудова можливість закріпити знання, отримані під час навчання, а також навчитися працювати з новими технологіями. Особливо цікаво було створювати застосунок, який максимально наближений до справжньої соціальної мережі.
+</p>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Під час виконання проєкту ми навчилися працювати з ORM Django, створювати зручний та сучасний інтерфейс за допомогою Figma, використовувати JavaScript для взаємодії з користувачем, а також працювати з AJAX і Fetch для асинхронного обміну даними. Окремим важливим досвідом стало використання WebSocket для реалізації чату в реальному часі. Крім цього, ми навчилися завантажувати проєкти на віддалений сервер Railway, використовувати Cloudinary для зберігання медіафайлів, працювати з базами даних, обробкою зображень та організацією великого Django-проєкту. Весь час розробка проходила в команді, що допомогло покращити навички спільної роботи, розподілу завдань і взаємодії між учасниками.
+</p>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    У результаті було створено працездатний вебзастосунок, який уже зараз реалізує більшість основних можливостей сучасної соціальної мережі. У майбутньому проєкт можна вдосконалити, додавши систему альбомів для фотографій, розширити можливості чату (редагування та видалення повідомлень, голосові повідомлення, реакції, пересилання повідомлень), а також реалізувати додаткові функції взаємодії між користувачами. Після таких доопрацювань платформу можна буде використовувати як повноцінну соціальну мережу, розгорнути на сервері та надалі розвивати як реальний вебпроєкт.
+</p>
+
+<p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Отже, виконання цього проєкту дозволило не лише отримати цінний практичний досвід роботи з сучасними вебтехнологіями, а й показало, як знання, отримані під час навчання, можна застосувати для створення повноцінного програмного продукту. Ми отримали багато нових навичок, покращили вміння працювати в команді.
+</p>
+
+<details>
+  <summary style="font-style: italic; font-size: 14px;">English translation</summary>
+  <br>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    During the implementation of this project, a social network web application based on Django was developed. The platform allows users to register and log in, create their own posts, add friends, view other users' profiles, exchange messages in private and group chats, change account settings, and work with media files. WebSocket was used to implement real-time chat, which provides fast messaging between users without reloading the page.
+  </p>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Working on this project was a very interesting and useful practical experience for us. It was a great opportunity to consolidate the knowledge gained during the studies, as well as learn how to work with new technologies. It was especially interesting to create an application that is as close as possible to a real social network.
+  </p>
+  
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    During the project, we learned how to work with the Django ORM, create a convenient and modern interface using Figma, use JavaScript for user interaction, and work with AJAX and Fetch for asynchronous data exchange. A separate important experience was using WebSocket to implement real-time chat. In addition, we learned how to upload projects to a remote Railway server, use Cloudinary to store media files, work with databases, image processing, and organize a large Django project. The entire development process took place in a team, which helped improve teamwork skills, task distribution, and interaction between participants.
+  </p>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    As a result, a functional web application was created, which already implements most of the basic capabilities of a modern social network. In the future, the project can be improved by adding a photo album system, expanding chat capabilities (editing and deleting messages, voice messages, reactions, forwarding messages), as well as implementing additional functions for interaction between users. After such improvements, the platform can be used as a full-fledged social network, deployed on a server, and further developed as a real web project.
+  </p>
+
+  <p style="text-align: justify; font-size: 18px; line-height: 1.7;">
+    Therefore, the implementation of this project allowed us not only to gain valuable practical experience in working with modern web technologies, but also showed how the knowledge gained during training can be applied to create a full-fledged software product. We gained many new skills and improved our ability to work in a team.
+  </p>
+</details>
+
 <div align="right">
     <a href="#top">⬆ До початку сторінки</a>
 </div>

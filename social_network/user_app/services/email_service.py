@@ -7,7 +7,6 @@ def send_email_code(email, code):
     subject = "Пробное заголовок"
     message = f"Пробное текст, код: {code}"
     
-    print(settings.DEFAULT_FROM_EMAIL, email, 'settings.DEFAULT_FROM_EMAIL ============== ')
     try:
         send_mail(
             subject=subject,

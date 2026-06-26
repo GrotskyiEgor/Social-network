@@ -13,8 +13,9 @@ async function getFriendsArray(type, selectionDiv){
         const data = await response.json(); 
 
         if (data.html){
-            await subscribeOnOnlineChatsUsers(data.friends_ids)
             selectionDiv.innerHTML = data.html
+            await subscribeOnOnlineChatsUsers(data.friends_ids)
+            await getOnlineUsers(data.friends_ids)
         }
     }
     catch (error){

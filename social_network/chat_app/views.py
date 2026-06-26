@@ -186,7 +186,8 @@ class ChatWithView(LoginRequiredMixin, View):
                         'IP': settings.IP,
                         'PORT': settings.PORT
                     }      
-                )
+                ),
+            'chat_id': chat.id
         })
     
 

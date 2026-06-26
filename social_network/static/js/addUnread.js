@@ -1,13 +1,15 @@
 const headerUnreadCount = document.querySelector("#headerUnreadCount");
 const personalUnreadCount = document.querySelector("#personalUnreadCount");
+const personalUnreadHomeCount = document.querySelector("#personalUnreadHomeCount");
 const groupUnreadCount = document.querySelector("#groupUnreadCount");
+
 
 function unreadText(count) {
     if (count == 0) {
         return "";
     }
 
-    return `(${count})`;
+    return `${count}`;
 }
 
 function setUnreadText(element, count) {
@@ -41,6 +43,7 @@ function updateChatButton(chat) {
 function showUnreadData(data) {
     setUnreadText(headerUnreadCount, data.total);
     setUnreadText(personalUnreadCount, data.personal_total);
+    setUnreadText(personalUnreadHomeCount, data.personal_total);
     setUnreadText(groupUnreadCount, data.group_total);
 
     data.chats.forEach((chat) => {

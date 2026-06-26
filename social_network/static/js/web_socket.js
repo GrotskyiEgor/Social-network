@@ -67,7 +67,7 @@ function newMessage(data) {
 
     let msgImg
     if (LOCAL == 'False')
-        msgImg = `<img class="message-image msg-image online-img-${data.senderId} avatar-img" src="${ IP }/media/${ data.sender.profile.avatar }" alt="indicator"></img>`
+        msgImg = `<img class="message-image msg-image online-img-${data.senderId} avatar-img" src="https://${ IP }/media/${ data.sender.profile.avatar }" alt="indicator"></img>`
     else {
         msgImg = `<img class="message-image msg-image online-img-${data.senderId} avatar-img" src=media/${ data.sender.profile.avatar }" alt="indicator"></img>`
     }
@@ -97,15 +97,23 @@ function newMessage(data) {
     let imageHtml = ''
     for (let image of data.messageImages){
         if (LOCAL === "False"){
-            console.log('false')
-            imageHtml += `<img class="send-message-image-other load-message-image" src="${ IP }/media/${ image.image }" alt="img"></img>`
+            imageHtml += `<img class="send-message-image-other load-message-image" src="https://${ IP }/media/${ image.image }" alt="img"></img>`
         } else {
-            console.log('aloooooo')
             imageHtml += `<img class="send-message-image-other load-message-image" src="/media/${ image.image }" alt="img"></img>`
         }
     }
 
-    console.log(imageHtml)
+        let imageDivHtml = `
+            <div class="msg-info-column">
+                <div class="my-post-images-preview-container">
+                    ${imageHtml}
+                </div>
+                <div class="msg-info-date">
+                    <p class="msg-date-text">${formatMessageTime(data.createdAt)}<</p>
+                    <img class="msg-img" src="{% static 'images/msg/open.svg' %}" alt="open">
+                </div>
+            </div>
+        `
 
     chatDiv.innerHTML += imageHtml
 

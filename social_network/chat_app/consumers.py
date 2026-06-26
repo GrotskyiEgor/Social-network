@@ -51,7 +51,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if message_text:
             message = await self.save_message(message_text)
 
-            print('===', message.id, message.text, "message chat id")
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {

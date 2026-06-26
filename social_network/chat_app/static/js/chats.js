@@ -9,7 +9,9 @@ const emptyChatContainer = document.getElementById("empty_chat_conteiner")
 let selectChatId = getCookie('chatId')
 
 if (selectChatId){
+    console.log(1, selectChatId)
     connectWebSocket(selectChatId)
+    // updateUnreadData()
     joinToChat(selectChatId)
 }
 
@@ -59,7 +61,9 @@ function removeImage(index) {
 
 $(document).on("click", '.message-user-block', function(){
     $(emptyChatContainer).remove()
+    console.log(2, this.dataset.chatId)
     connectWebSocket(this.dataset.chatId);
+    // updateUnreadData()
     
     let lastChatId = getCookie('chatId')
     leaveFromChat(lastChatId)
@@ -152,6 +156,9 @@ async function openChatWithUser(userId, username) {
     });
 
     const data = await response.json();
+
+    console.log(data)
+
     if (data.success) {
         if (data.chats_html.trim() !== ''){
             chatsSentinel.insertAdjacentHTML("beforebegin", data.chats_html)
@@ -164,6 +171,7 @@ async function openChatWithUser(userId, username) {
         }
 
         $(emptyChatContainer).remove()
+        console.log(3, data.chat_id)
         connectWebSocket(data.chat_id);
     }
 }
@@ -174,6 +182,11 @@ let messagesCurrentPage = 0
 function connectWebSocket(chatId) {
     if (chatSocket) {
         chatSocket.close();
+    }
+
+    if (chatId === undefined || chatId === null){
+        console.log('not have chat id', chatId)
+        return
     }
 
     chatSocket = new WebSocket(`ws://${window.location.host}/chat_chanel/${chatId}/`)

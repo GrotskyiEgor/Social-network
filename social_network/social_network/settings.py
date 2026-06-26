@@ -5,7 +5,6 @@ from pathlib import Path
 
 load_dotenv()
 JWT_SECRET = os.getenv('SECRET_KEY')
-print('==========', os.getenv('SECRET_KEY'), "os.getenv('SECRET_KEY')")
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY = 'django-insecure-+ng80axo1h5ejz31p_-5=0=^=%alb!k8m@guy2+i8_(4r@lsj&'

@@ -235,9 +235,12 @@
 }
 
 .post-images-preview-container {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.625rem;
+    gap: 0.25rem;
+    border-radius: 1rem;
+    background-color: var(--border-light);
 }
 
 .post-image-item .post-image {

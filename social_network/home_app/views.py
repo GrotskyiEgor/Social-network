@@ -155,7 +155,7 @@ class HomeLoaderView(LoginRequiredMixin, View):
                     'chats_html': render_to_string(
                         'home_app/particals/requests.html',
                         {
-                            "requests": get_friendship_requests(self.request.user)[:3], 
+                            "requests": requests, 
                             'user_profile': profile, 
                             'friends_count_list': friends_count_list,
                             'LOCAL': str(settings.LOCAL),
@@ -171,6 +171,11 @@ class HomeLoaderView(LoginRequiredMixin, View):
             messages_prefetch = Prefetch('messages',queryset=Message.objects.order_by('-created_at'))
             chats = Chat.objects.filter(users=self.request.user, is_group = False).prefetch_related(messages_prefetch).order_by("id")[:3]
 
+            friends_ids = []
+            for chat in chats:
+                for user in chat.users.all():
+                    friends_ids.append(user.id)
+
             return JsonResponse({
                 'chats_html': render_to_string(
                     'home_app/particals/chats.html',
@@ -180,8 +185,8 @@ class HomeLoaderView(LoginRequiredMixin, View):
                         'LOCAL': str(settings.LOCAL),
                         'IP': settings.IP,
                         'PORT': settings.PORT
-                    }      
-                )
+                    }),
+                'friends_ids': friends_ids  
             })
     
         return super().render_to_response(context, **response_kwargs)

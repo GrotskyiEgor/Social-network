@@ -26,7 +26,6 @@ def save_registration(request: HttpRequest, cleaned_data):
         }
         request.session['confirm_code'] = code
 
-        print(f'================={code}==================')
         send_email_code(cleaned_data['email'], code)
         
     except IntegrityError:
